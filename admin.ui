@@ -26,10 +26,10 @@
       <widget class="QWidget" name="">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>40</y>
-         <width>451</width>
-         <height>268</height>
+         <x>0</x>
+         <y>7</y>
+         <width>501</width>
+         <height>301</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -243,10 +243,10 @@
       <widget class="QWidget" name="">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>70</y>
-         <width>441</width>
-         <height>268</height>
+         <x>0</x>
+         <y>7</y>
+         <width>471</width>
+         <height>331</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_9">
