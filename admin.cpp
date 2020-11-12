@@ -16,6 +16,8 @@ admin::~admin()
 
 
 
+
+//初始化选择框内的选项
 void admin::initbox(){
     //初始化学期下拉框
     QVector<QString> year=getyear();
@@ -28,6 +30,10 @@ void admin::initbox(){
     ui->cbox_grade_year1->setCurrentIndex(-1);
 
 }
+
+
+//-------成绩 part--------林嘉欣
+//根据输入框获取查询成绩sql语句
 QString admin::get_grade_querysql(){
     QString sql="select * from grade_view ";
     QString condition="";
@@ -58,6 +64,7 @@ QString admin::get_grade_querysql(){
     return sql;
 
 }
+//根据输入框获取添加成绩sql语句
 QString admin::get_grade_addsql(){
     QString sno=ui->ld_grade_sno1->text();
     QString cno=ui->ld_grade_cno1->text();
@@ -73,6 +80,7 @@ QString admin::get_grade_addsql(){
     return sql;
 
 }
+//成绩查询按钮
 void admin::on_btn_grade_query_clicked()
 {
     ui->table_grade->blockSignals(true);
@@ -100,7 +108,7 @@ void admin::on_btn_grade_query_clicked()
     }
     ui->table_grade->blockSignals(false);
 }
-
+//成绩修改信号
 void admin::on_table_grade_itemChanged(QTableWidgetItem *item)
 {
     ui->table_grade->blockSignals(true);
@@ -122,8 +130,7 @@ void admin::on_table_grade_itemChanged(QTableWidgetItem *item)
     ui->table_grade->blockSignals(false);
 
 }
-
-
+//成绩删除按钮
 void admin::on_btn_grade_delete_clicked()
 {
     int row=ui->table_grade->currentRow();
@@ -164,9 +171,7 @@ void admin::on_btn_grade_delete_clicked()
         QMessageBox::information(nullptr,"未选中","未选中删除行,请选择一行进行删除");
     }
 }
-
-
-
+//成绩查询重置按钮
 void admin::on_btn_grade_clear_clicked()
 {
     ui->ld_grade_cno->setText("");
@@ -175,7 +180,7 @@ void admin::on_btn_grade_clear_clicked()
     ui->ld_grade_sname->setText("");
     ui->cbox_grade_year->setCurrentIndex(-1);
 }
-
+//成绩添加按钮
 void admin::on_bbtn_grade_add_clicked()
 {
     QString sql=get_grade_addsql();
