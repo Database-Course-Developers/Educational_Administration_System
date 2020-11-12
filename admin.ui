@@ -17,13 +17,13 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_tea">
       <attribute name="title">
        <string>教师管理</string>
       </attribute>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -240,7 +240,7 @@
       <attribute name="title">
        <string>学生管理</string>
       </attribute>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -715,7 +715,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QLineEdit" name="lineEdit_9"/>
+              <widget class="QLineEdit" name="ld_grade_cno"/>
              </item>
              <item row="0" column="0">
               <widget class="QLabel" name="label_13">
@@ -725,13 +725,13 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QLineEdit" name="lineEdit_7"/>
+              <widget class="QLineEdit" name="ld_grade_sno"/>
              </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_8"/>
+              <widget class="QLineEdit" name="ld_grade_sname"/>
              </item>
              <item row="4" column="1">
-              <widget class="QComboBox" name="comboBox_3"/>
+              <widget class="QComboBox" name="cbox_grade_year"/>
              </item>
              <item row="6" column="1">
               <widget class="QPushButton" name="pushButton_15">
@@ -769,10 +769,10 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QLineEdit" name="lineEdit_10"/>
+              <widget class="QLineEdit" name="ld_grade_cname"/>
              </item>
              <item row="5" column="0">
-              <widget class="QPushButton" name="pushButton_12">
+              <widget class="QPushButton" name="btn_grade_query">
                <property name="text">
                 <string>查询</string>
                </property>
@@ -858,15 +858,10 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <widget class="QTableWidget" name="tableWidget_2">
+          <widget class="QTableWidget" name="table_grade">
            <column>
             <property name="text">
              <string>学号</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>新建列</string>
             </property>
            </column>
            <column>
@@ -889,39 +884,12 @@
              <string>开课学期</string>
             </property>
            </column>
+           <column>
+            <property name="text">
+             <string>成绩</string>
+            </property>
+           </column>
           </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item>
-            <widget class="QPushButton" name="pushButton_11">
-             <property name="text">
-              <string>上一页</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_10">
-             <property name="text">
-              <string>下一页</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_22">
-             <property name="text">
-              <string>第 1 页</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_23">
-             <property name="text">
-              <string>共 5 页</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </item>
         </layout>
        </item>
