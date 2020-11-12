@@ -3,6 +3,8 @@
 #include<QString>
 #include<QVector>
 #include<QDate>
+#include<QTableWidget>
+#include<QMessageBox>
 //基本类的定义
 class stu{
 public:

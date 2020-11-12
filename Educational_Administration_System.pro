@@ -20,7 +20,6 @@ SOURCES += \
     admin.cpp \
     admin_add_exam.cpp \
     admin_update_exam.cpp \
-    admin_update_grade.cpp \
     base.cpp \
     database_util.cpp \
     main.cpp \
@@ -33,7 +32,6 @@ HEADERS += \
     admin.h \
     admin_add_exam.h \
     admin_update_exam.h \
-    admin_update_grade.h \
     base.h \
     database_util.h \
     student.h \
@@ -45,7 +43,6 @@ FORMS += \
     admin.ui \
     admin_add_exam.ui \
     admin_update_exam.ui \
-    admin_update_grade.ui \
     student.ui \
     teacher.ui \
     updatepwd.ui

@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include<base.h>
 #include<database_util.h>
-#include<QMessageBox>
 #include<updatepwd.h>
 #include<student.h>
 #include<teacher.h>

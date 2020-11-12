@@ -23,6 +23,11 @@ signals:
 private slots:
     void on_btn_grade_query_clicked();
 
+    void on_table_grade_itemChanged(QTableWidgetItem *item);
+
+
+    void on_btn_grade_delete_clicked();
+
 private:
     Ui::admin *ui;
 

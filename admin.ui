@@ -707,57 +707,13 @@
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_17">
-               <property name="text">
-                <string>学期</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="ld_grade_cno"/>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_13">
-               <property name="text">
-                <string>学号</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="ld_grade_sno"/>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="ld_grade_sname"/>
-             </item>
-             <item row="4" column="1">
-              <widget class="QComboBox" name="cbox_grade_year"/>
-             </item>
-             <item row="6" column="1">
-              <widget class="QPushButton" name="pushButton_15">
-               <property name="text">
-                <string>删除</string>
-               </property>
-              </widget>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_15">
                <property name="text">
                 <string>课程号</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QPushButton" name="pushButton_13">
-               <property name="text">
-                <string>重置</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QPushButton" name="pushButton_14">
-               <property name="text">
-                <string>修改</string>
                </property>
               </widget>
              </item>
@@ -771,17 +727,54 @@
              <item row="3" column="1">
               <widget class="QLineEdit" name="ld_grade_cname"/>
              </item>
-             <item row="5" column="0">
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>课程名</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QComboBox" name="cbox_grade_year"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>学号</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="ld_grade_sname"/>
+             </item>
+             <item row="6" column="0">
               <widget class="QPushButton" name="btn_grade_query">
                <property name="text">
                 <string>查询</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_16">
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="ld_grade_cno"/>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_17">
                <property name="text">
-                <string>课程名</string>
+                <string>学期</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QPushButton" name="btn_grade_clear">
+               <property name="text">
+                <string>重置</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QPushButton" name="btn_grade_delete">
+               <property name="text">
+                <string>删除</string>
                </property>
               </widget>
              </item>
