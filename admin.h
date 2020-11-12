@@ -15,6 +15,7 @@ class admin : public QWidget
 public:
     explicit admin(adm curadmin,QWidget *parent = nullptr);
     QString get_grade_querysql();
+    QString get_grade_addsql();
     void initbox();
     ~admin();
     adm cur_admin;
@@ -27,6 +28,11 @@ private slots:
 
 
     void on_btn_grade_delete_clicked();
+
+
+    void on_btn_grade_clear_clicked();
+
+    void on_bbtn_grade_add_clicked();
 
 private:
     Ui::admin *ui;

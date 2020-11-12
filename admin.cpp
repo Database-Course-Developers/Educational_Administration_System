@@ -21,8 +21,11 @@ void admin::initbox(){
     QVector<QString> year=getyear();
     for(QString& s:year){
         ui->cbox_grade_year->addItem(s);
+        ui->cbox_grade_year1->addItem(s);
+
     }
-    ui->cbox_grade_year->addItem(QString("无"));
+    ui->cbox_grade_year->setCurrentIndex(-1);
+    ui->cbox_grade_year1->setCurrentIndex(-1);
 
 }
 QString admin::get_grade_querysql(){
@@ -45,13 +48,28 @@ QString admin::get_grade_querysql(){
     if(sname.size()){
         condition+=(QString("sname='"+sname+"' and " ));
     }
-    if(year.size()&&year!="无"){
+    if(year.size()){
         condition+=(QString("year='"+year+"' and " ));
     }
 
     if(condition.size()){
         sql=sql+"where "+ condition.left(condition.size()-4 );//-3去掉最后一个and
     }
+    return sql;
+
+}
+QString admin::get_grade_addsql(){
+    QString sno=ui->ld_grade_sno1->text();
+    QString cno=ui->ld_grade_cno1->text();
+    QString year=ui->cbox_grade_year1->currentText();
+    QString grade=ui->ld_grade_grade1->text();
+    if(sno.size()==0||cno.size()==0||year.size()==0||grade.size()==0){
+        return "";
+    }
+    QString sql=QString::asprintf("insert into  grade values('%s','%s','%s',%d)",
+                                  sno.toStdString().c_str(),cno.toStdString().c_str(),
+                                  year.toStdString().c_str(),grade.toInt());
+
     return sql;
 
 }
@@ -77,7 +95,8 @@ void admin::on_btn_grade_query_clicked()
             }
         }
     }else{
-        qDebug()<<query.lastError().text();
+        connectErrorMsg=query.lastError().text();
+        QMessageBox::information(nullptr,"数据库查找错误！","数据库查找错误，错误信息:"+connectErrorMsg);
     }
     ui->table_grade->blockSignals(false);
 }
@@ -143,5 +162,38 @@ void admin::on_btn_grade_delete_clicked()
 
     }else{
         QMessageBox::information(nullptr,"未选中","未选中删除行,请选择一行进行删除");
+    }
+}
+
+
+
+void admin::on_btn_grade_clear_clicked()
+{
+    ui->ld_grade_cno->setText("");
+    ui->ld_grade_sno->setText("");
+    ui->ld_grade_cname->setText("");
+    ui->ld_grade_sname->setText("");
+    ui->cbox_grade_year->setCurrentIndex(-1);
+}
+
+void admin::on_bbtn_grade_add_clicked()
+{
+    QString sql=get_grade_addsql();
+    if(sql.size()==0){
+        QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
+    }else{
+        QSqlQuery query;
+        if(query.exec(sql)){
+            ui->ld_grade_cno1->setText("");
+            ui->ld_grade_sno1->setText("");
+            ui->ld_grade_grade1->setText("");
+            ui->cbox_grade_year1->setCurrentIndex(-1);
+            QMessageBox::information(nullptr,"添加成功","添加成功");
+
+        }else{
+
+            connectErrorMsg=query.lastError().text();
+            QMessageBox::information(nullptr,"数据库插入错误！","数据库插入错误，错误信息:"+connectErrorMsg);
+        }
     }
 }
