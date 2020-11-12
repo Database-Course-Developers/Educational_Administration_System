@@ -16,6 +16,7 @@ public:
     explicit admin(adm curadmin,QWidget *parent = nullptr);
     QString get_grade_querysql();
     QString get_grade_addsql();
+    QString get_exxam_querysql();
     void initbox();
     ~admin();
     adm cur_admin;

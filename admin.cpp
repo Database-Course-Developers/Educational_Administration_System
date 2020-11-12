@@ -43,8 +43,38 @@ void admin::initbox(){
     ui->dt_end_time->setDate(date.addMonths(1));
 
 }
+//-------考务 part -------林嘉欣
+QString admin::get_exxam_querysql(){
+//    QString sql="select * from exam_view ";
+//    QString condition="";
+//    QString rcno=ui->ld_exam_rcno->text();
+//    QString cno=ui->ld_exam_cno->text();
+//    QString tno=ui->ld_exam_tno->text();
+//    QString tno1=ui->ld_exam_tno1->text();
+//    QString tno2=ui->ld_exam_tno2->text();
+//    QString clr=ui->cbox_exam_clr->currentText();
+//    QString collegename=ui->cbox_exam_collegename->currentText();
+//    if(sno.size()){
+//        condition+=(QString("sno='"+sno+"' and " ));
+//    }
+//    if(cno.size()){
+//        condition+=(QString("cno='"+cno+"' and " ));
+//    }
+//    if(cname.size()){
+//        condition+=(QString("cname='"+cname+"' and " ));
+//    }
+//    if(sname.size()){
+//        condition+=(QString("sname='"+sname+"' and " ));
+//    }
+//    if(year.size()){
+//        condition+=(QString("year='"+year+"' and " ));
+//    }
 
-
+//    if(condition.size()){
+//        sql=sql+"where "+ condition.left(condition.size()-4 );//-3去掉最后一个and
+//    }
+//    return sql;
+}
 //-------成绩 part--------林嘉欣
 //根据输入框获取查询成绩sql语句
 QString admin::get_grade_querysql(){
