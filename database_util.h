@@ -7,10 +7,15 @@
 #include<QString>
 #include<QDebug>
 #include<QSqlError>
-
+#include<QDate>
+#include<QTableWidget>
+#include<QMessageBox>
 
 extern QString connectErrorMsg;
 bool connectDB();
+QVector<QString> getyear();
+QVector<QString> getclassroom();
+QVector<QString> getcollegename();
 
 
 

@@ -28,6 +28,19 @@ void admin::initbox(){
     }
     ui->cbox_grade_year->setCurrentIndex(-1);
     ui->cbox_grade_year1->setCurrentIndex(-1);
+    QVector<QString> clr=getclassroom();
+    for(QString& s:clr){
+        ui->cbox_exam_clr->addItem(s);
+    }
+    ui->cbox_exam_clr->setCurrentIndex(-1);
+    QVector<QString> collegename=getcollegename();
+    for(QString&s:collegename){
+        ui->cbox_exam_collegename->addItem(s);
+    }
+    ui->cbox_exam_collegename->setCurrentIndex(-1);
+    QDate date(QDate::currentDate());
+    ui->dt_begin_time->setDate(date);
+    ui->dt_end_time->setDate(date.addMonths(1));
 
 }
 

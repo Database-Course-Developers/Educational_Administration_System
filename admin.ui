@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>5</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab_tea">
       <attribute name="title">
@@ -449,25 +449,59 @@
           <layout class="QVBoxLayout" name="verticalLayout_4" stretch="3,2">
            <item>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_6"/>
-             </item>
-             <item row="10" column="1">
-              <widget class="QPushButton" name="pushButton_2">
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>查询</string>
+                <string>地点</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="0">
+             <item row="9" column="0">
               <widget class="QPushButton" name="pushButton">
                <property name="text">
                 <string>重置</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="lineEdit_4"/>
+             <item row="10" column="0">
+              <widget class="QPushButton" name="pushButton_3">
+               <property name="text">
+                <string>修改</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <widget class="QPushButton" name="pushButton_2">
+               <property name="text">
+                <string>查询</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="ld_exam_rcno"/>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="ld_exam_tno"/>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>结束时间</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QDateTimeEdit" name="dt_end_time"/>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>开始时间</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QDateTimeEdit" name="dt_begin_time"/>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_2">
@@ -476,45 +510,6 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="1">
-              <widget class="QComboBox" name="comboBox"/>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="lineEdit_2"/>
-             </item>
-             <item row="5" column="1">
-              <widget class="QLineEdit" name="lineEdit_5"/>
-             </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>开始时间</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>地点</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>学院</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="lineEdit_3"/>
-             </item>
-             <item row="7" column="1">
-              <widget class="QComboBox" name="comboBox_2"/>
-             </item>
-             <item row="9" column="1">
-              <widget class="QDateTimeEdit" name="dateTimeEdit_2"/>
-             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="label">
                <property name="text">
@@ -522,17 +517,36 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_12">
+             <item row="10" column="1">
+              <widget class="QPushButton" name="pushButton_4">
                <property name="text">
-                <string>课程号</string>
+                <string>删除</string>
                </property>
               </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="ld_exam_tno2"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="ld_exam_cno"/>
              </item>
              <item row="4" column="0">
               <widget class="QLabel" name="label_4">
                <property name="text">
                 <string>监考人2教师号</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QComboBox" name="cbox_exam_collegename"/>
+             </item>
+             <item row="5" column="1">
+              <widget class="QComboBox" name="cbox_exam_clr"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>课程号</string>
                </property>
               </widget>
              </item>
@@ -543,39 +557,15 @@
                </property>
               </widget>
              </item>
-             <item row="8" column="1">
-              <widget class="QDateTimeEdit" name="dateTimeEdit"/>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="lineEdit"/>
-             </item>
-             <item row="9" column="0">
-              <widget class="QLabel" name="label_8">
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_6">
                <property name="text">
-                <string>结束时间</string>
+                <string>学院</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_11">
-               <property name="text">
-                <string>课程性质</string>
-               </property>
-              </widget>
-             </item>
-             <item row="11" column="0">
-              <widget class="QPushButton" name="pushButton_3">
-               <property name="text">
-                <string>修改</string>
-               </property>
-              </widget>
-             </item>
-             <item row="11" column="1">
-              <widget class="QPushButton" name="pushButton_4">
-               <property name="text">
-                <string>删除</string>
-               </property>
-              </widget>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="ld_exam_tno1"/>
              </item>
             </layout>
            </item>

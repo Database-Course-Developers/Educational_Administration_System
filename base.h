@@ -2,9 +2,6 @@
 #define BASE_H
 #include<QString>
 #include<QVector>
-#include<QDate>
-#include<QTableWidget>
-#include<QMessageBox>
 //基本类的定义
 class stu{
 public:
@@ -42,6 +39,5 @@ public:
     adm(QString ano,QString pwd):ano(ano),pwd(pwd){}
     adm(){}
 };
-QVector<QString> getyear();
 
 #endif // BASE_H

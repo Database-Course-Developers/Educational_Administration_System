@@ -16,3 +16,48 @@ bool connectDB() {
     }
     return true;
 }
+QVector<QString> getyear(){
+    QVector<QString> res;
+    QDate date(QDate::currentDate());
+    int year=date.year();
+    int month=date.month();
+    if(month<9){
+        year--;
+    }
+    int st=year-3;
+    for(int i=st;i<=year;i++){
+        for(int j=1;j<3;j++)
+            res.push_back(QString::asprintf("%d%d",i,j));
+    }
+    return res;
+
+}
+QVector<QString> getclassroom(){
+    QVector<QString> res;
+    QString sql="select clr from classroom";
+    QSqlQuery query;
+    if(query.exec(sql)){
+        while(query.next()){
+            res.push_back(query.value(0).toString());
+        }
+    }else{
+        QSqlError error=query.lastError().text();
+        qDebug()<<error;
+    }
+    return res;
+}
+QVector<QString> getcollegename(){
+    QVector<QString> res;
+    QString sql="select name from college";
+    QSqlQuery query;
+    if(query.exec(sql)){
+        while(query.next()){
+            res.push_back(query.value(0).toString());
+        }
+    }else{
+        QSqlError error=query.lastError().text();
+        qDebug()<<error;
+    }
+    return res;
+}
+
