@@ -50,13 +50,15 @@ void admin::initbox(){
     QDate date(QDate::currentDate());
     ui->dt_begin_time->setDate(date);
     ui->dt_end_time->setDate(date.addMonths(1));
+    ui->dt_examadd_begin->setDate(date);
+    ui->dt_examadd_end->setDate(date.addDays(1));
     ui->dt_begin_time->setCalendarPopup(true);
     ui->dt_end_time->setCalendarPopup(true);
     ui->dt_examadd_begin->setCalendarPopup(true);
     ui->dt_examadd_end->setCalendarPopup(true);
     //课务号选择框初始化
     QVector<QString> rcno=getOneItem("select real_course.rcno from real_course,course "
-                                      "where real_course.cno=course.cno and is_exam=1 "
+                                     "where real_course.cno=course.cno and is_exam=1 "
                                      "and real_course.rcno not in(select rcno from exam)");
     for(QString&s:rcno){
         ui->cbox_examadd_rcno->addItem(s);
@@ -152,7 +154,7 @@ void admin::on_btn_exam_query_clicked()
     ui->table_exam->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
     ui->table_exam->horizontalHeader()->setSectionResizeMode(7,QHeaderView::ResizeToContents);
     ui->table_exam->horizontalHeader()->setSectionResizeMode(8,QHeaderView::ResizeToContents);
-    ui->table_grade->blockSignals(false);
+    ui->table_exam->blockSignals(false);
 }
 QString admin::get_exam_addsql(){
     QString rcno=ui->cbox_examadd_rcno->currentText();
@@ -173,7 +175,100 @@ QString admin::get_exam_addsql(){
 
     return sql;
 }
+void admin::on_btn_exam_add_clicked()
+{
+    QString sql=get_exam_addsql();
+    if(sql.size()==0){
+        QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
+    }else{
+        QSqlQuery query;
+        if(query.exec(sql)){
+            ui->cbox_examadd_clr->setCurrentIndex(-1);
+            ui->cbox_examadd_rcno->setCurrentIndex(-1);
+            ui->cbox_examadd_tno1->setCurrentIndex(-1);
+            ui->cbox_examadd_tno2->setCurrentIndex(-1);
+            QMessageBox::information(nullptr,"添加成功","添加成功");
 
+        }else{
+
+            connectErrorMsg=query.lastError().text();
+            QMessageBox::information(nullptr,"数据库插入错误！","数据库插入错误，错误信息:"+connectErrorMsg);
+        }
+    }
+}
+
+void admin::on_btn_exam_delete_clicked()
+{
+    int row=ui->table_exam->currentRow();
+    if(row!=-1){
+        QPushButton *okbtn = new QPushButton(QString("确定"));
+        QPushButton *cancelbtn = new QPushButton(QString("取消"));
+        QMessageBox *mymsgbox = new QMessageBox;
+
+        mymsgbox->setIcon(QMessageBox::Warning);
+        mymsgbox->setWindowTitle(QString("提示"));
+        mymsgbox->setText(QString("确定删除？"));
+        mymsgbox->addButton(okbtn, QMessageBox::AcceptRole);
+        mymsgbox->addButton(cancelbtn, QMessageBox::RejectRole);
+        mymsgbox->show();
+
+        mymsgbox->exec();//阻塞等待用户输入
+        if (mymsgbox->clickedButton()==okbtn)//点击了OK按钮
+        {
+
+            QString deletesql="delete from exam where rcno='"
+                    +ui->table_exam->item(row,0)->text()+"'";
+            qDebug()<<deletesql;
+            QSqlQuery query;
+            if(query.exec(deletesql)){
+                ui->table_exam->removeRow(row);
+                QMessageBox::information(nullptr,"删除成功","删除成功");
+            }else{
+                connectErrorMsg=query.lastError().text();
+                QMessageBox::information(nullptr,"数据库删除错误！","数据库删除错误，错误信息:"+connectErrorMsg);
+            }
+        }
+
+
+    }else{
+        QMessageBox::information(nullptr,"未选中","未选中删除行,请选择一行进行删除");
+    }
+}
+void admin::on_btn_exam_clear_clicked()
+{
+    ui->ld_exam_cno->setText("");
+    ui->ld_exam_rcno->setText("");
+    ui->ld_exam_tno->setText("");
+    ui->ld_exam_tno1->setText("");
+    ui->ld_exam_tno2->setText("");
+
+}
+void admin::on_table_exam_itemChanged(QTableWidgetItem *item)
+{
+    ui->table_exam->blockSignals(true);
+    int row=item->row();
+    QString updatesql=QString::asprintf("update exam set teacher1='%s',teacher2='%s',clr='%s',begin_time='%s',end_time='%s'"
+                                        " where rcno='%s'",
+                                        ui->table_exam->item(row,3)->text().toStdString().c_str(),
+                                        ui->table_exam->item(row,4)->text().toStdString().c_str(),
+                                        ui->table_exam->item(row,5)->text().toStdString().c_str(),
+                                        ui->table_exam->item(row,7)->text().toStdString().c_str(),
+                                        ui->table_exam->item(row,8)->text().toStdString().c_str(),
+                                        ui->table_exam->item(row,0)->text().toStdString().c_str());
+
+
+    QSqlQuery query;
+    qDebug()<<updatesql;
+    if(query.exec(updatesql)){
+        QMessageBox::information(nullptr,"修改成功","修改成功");
+    }else{
+        item->setBackground(Qt::red);
+        connectErrorMsg=query.lastError().text();
+        QMessageBox::information(nullptr,"数据库修改错误！","数据库修改错误，错误信息:"+connectErrorMsg);
+
+    }
+    ui->table_exam->blockSignals(false);
+}
 
 
 //-------成绩 part--------林嘉欣
@@ -304,12 +399,10 @@ void admin::on_btn_grade_delete_clicked()
                 QMessageBox::information(nullptr,"删除成功","删除成功");
             }else{
                 connectErrorMsg=query.lastError().text();
-                QMessageBox::information(nullptr,"数据库修改错误！","数据库修改错误，错误信息:"+connectErrorMsg);
+                QMessageBox::information(nullptr,"数据库删除错误！","数据库删除错误，错误信息:"+connectErrorMsg);
             }
         }
-        else{
 
-        }
 
     }else{
         QMessageBox::information(nullptr,"未选中","未选中删除行,请选择一行进行删除");
@@ -349,24 +442,6 @@ void admin::on_bbtn_grade_add_clicked()
 
 
 
-void admin::on_btn_exam_add_clicked()
-{
-    QString sql=get_exam_addsql();
-    if(sql.size()==0){
-        QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
-    }else{
-        QSqlQuery query;
-        if(query.exec(sql)){
-            ui->cbox_examadd_clr->setCurrentIndex(-1);
-            ui->cbox_examadd_rcno->setCurrentIndex(-1);
-            ui->cbox_examadd_tno1->setCurrentIndex(-1);
-            ui->cbox_examadd_tno2->setCurrentIndex(-1);
-            QMessageBox::information(nullptr,"添加成功","添加成功");
 
-        }else{
 
-            connectErrorMsg=query.lastError().text();
-            QMessageBox::information(nullptr,"数据库插入错误！","数据库插入错误，错误信息:"+connectErrorMsg);
-        }
-    }
-}
+

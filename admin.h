@@ -40,6 +40,12 @@ private slots:
 
     void on_btn_exam_add_clicked();
 
+    void on_btn_exam_delete_clicked();
+
+    void on_btn_exam_clear_clicked();
+
+    void on_table_exam_itemChanged(QTableWidgetItem *item);
+
 private:
     Ui::admin *ui;
 
