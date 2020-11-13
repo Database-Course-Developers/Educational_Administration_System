@@ -446,7 +446,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,5">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_4" stretch="3,2">
+          <layout class="QVBoxLayout" name="verticalLayout_4" stretch="3,0,2">
            <item>
             <layout class="QGridLayout" name="gridLayout">
              <item row="5" column="0">
@@ -570,13 +570,86 @@
             </layout>
            </item>
            <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0">
-              <widget class="QPushButton" name="pushButton">
+             <item row="7" column="0">
+              <widget class="QPushButton" name="btn_exam_add">
                <property name="text">
-                <string>PushButton</string>
+                <string>添加</string>
                </property>
               </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="cbox_examadd_rcno"/>
+             </item>
+             <item row="2" column="1">
+              <widget class="QComboBox" name="cbox_examadd_tno2"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>课务号</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>监考人1</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QComboBox" name="cbox_examadd_clr"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>监考人2</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="cbox_examadd_tno1"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_22">
+               <property name="text">
+                <string>教室</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>开始时间</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_36">
+               <property name="text">
+                <string>结束时间</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QDateTimeEdit" name="dt_examadd_begin"/>
+             </item>
+             <item row="5" column="1">
+              <widget class="QDateTimeEdit" name="dt_examadd_end"/>
              </item>
             </layout>
            </item>
