@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMinimumSize(1, 1);
     this->setMaximumSize(950,480);
 
+
+
 }
 
 MainWindow::~MainWindow()

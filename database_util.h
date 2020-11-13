@@ -16,7 +16,7 @@ bool connectDB();
 QVector<QString> getyear();
 QVector<QString> getclassroom();
 QVector<QString> getcollegename();
-
+QVector<QString> getOneItem(QString sql);
 
 
 #endif // DATABAE_UTIL_H

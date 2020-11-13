@@ -61,3 +61,18 @@ QVector<QString> getcollegename(){
     return res;
 }
 
+QVector<QString> getOneItem(QString sql){
+    QVector<QString> res;
+    QSqlQuery query;
+    if(query.exec(sql)){
+        while(query.next()){
+            res.push_back(query.value(0).toString());
+        }
+    }else{
+        QSqlError error=query.lastError().text();
+        qDebug()<<error;
+    }
+    return res;
+}
+
+

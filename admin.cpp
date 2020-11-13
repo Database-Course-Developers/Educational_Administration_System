@@ -6,6 +6,7 @@ admin::admin(adm cur_admin,QWidget *parent) :
     ui(new Ui::admin)
 {
     ui->setupUi(this);
+    //屏幕最大化
     setWindowState(Qt::WindowMaximized);
     initbox();
 }
@@ -33,8 +34,10 @@ void admin::initbox(){
     QVector<QString> clr=getclassroom();
     for(QString& s:clr){
         ui->cbox_exam_clr->addItem(s);
+        ui->cbox_examadd_clr->addItem(s);
     }
     ui->cbox_exam_clr->setCurrentIndex(-1);
+    ui->cbox_examadd_clr->setCurrentIndex(-1);
 
     //初始化学院选择框
     QVector<QString> collegename=getcollegename();
@@ -49,6 +52,26 @@ void admin::initbox(){
     ui->dt_end_time->setDate(date.addMonths(1));
     ui->dt_begin_time->setCalendarPopup(true);
     ui->dt_end_time->setCalendarPopup(true);
+    ui->dt_examadd_begin->setCalendarPopup(true);
+    ui->dt_examadd_end->setCalendarPopup(true);
+    //课务号选择框初始化
+    QVector<QString> rcno=getOneItem("select real_course.rcno from real_course,course "
+                                      "where real_course.cno=course.cno and is_exam=1 "
+                                     "and real_course.rcno not in(select rcno from exam)");
+    for(QString&s:rcno){
+        ui->cbox_examadd_rcno->addItem(s);
+    }
+    ui->cbox_examadd_rcno->setCurrentIndex(-1);
+
+    //初始化老师选择框
+    QVector<QString> tno=getOneItem("select tno from teacher");
+    for(QString&s:tno){
+        ui->cbox_examadd_tno1->addItem(s);
+        ui->cbox_examadd_tno2->addItem(s);
+    }
+    ui->cbox_examadd_tno1->setCurrentIndex(-1);
+    ui->cbox_examadd_tno2->setCurrentIndex(-1);
+
 
 }
 //-------考务 part -------林嘉欣
@@ -131,7 +154,25 @@ void admin::on_btn_exam_query_clicked()
     ui->table_exam->horizontalHeader()->setSectionResizeMode(8,QHeaderView::ResizeToContents);
     ui->table_grade->blockSignals(false);
 }
+QString admin::get_exam_addsql(){
+    QString rcno=ui->cbox_examadd_rcno->currentText();
+    QString tno1=ui->cbox_examadd_tno1->currentText();
+    QString tno2=ui->cbox_examadd_tno2->currentText();
+    QString clr=ui->cbox_examadd_clr->currentText();
+    QString begintime=ui->dt_examadd_begin->dateTime().toString(timeformat);
+    QString endtime=ui->dt_examadd_end->dateTime().toString(timeformat);
+    if(rcno.size()==0||tno1.size()==0||tno2.size()==0||clr.size()==0
+            ||begintime.size()==0||endtime.size()==0){
+        return "";
+    }
+    QString sql=QString::asprintf("insert into  exam values('%s','%s','%s','%s','%s','%s')",
+                                  rcno.toStdString().c_str(),begintime.toStdString().c_str(),
+                                  endtime.toStdString().c_str(),tno1.toStdString().c_str(),
+                                  tno2.toStdString().c_str(),clr.toStdString().c_str());
 
+
+    return sql;
+}
 
 
 
@@ -307,3 +348,25 @@ void admin::on_bbtn_grade_add_clicked()
 }
 
 
+
+void admin::on_btn_exam_add_clicked()
+{
+    QString sql=get_exam_addsql();
+    if(sql.size()==0){
+        QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
+    }else{
+        QSqlQuery query;
+        if(query.exec(sql)){
+            ui->cbox_examadd_clr->setCurrentIndex(-1);
+            ui->cbox_examadd_rcno->setCurrentIndex(-1);
+            ui->cbox_examadd_tno1->setCurrentIndex(-1);
+            ui->cbox_examadd_tno2->setCurrentIndex(-1);
+            QMessageBox::information(nullptr,"添加成功","添加成功");
+
+        }else{
+
+            connectErrorMsg=query.lastError().text();
+            QMessageBox::information(nullptr,"数据库插入错误！","数据库插入错误，错误信息:"+connectErrorMsg);
+        }
+    }
+}

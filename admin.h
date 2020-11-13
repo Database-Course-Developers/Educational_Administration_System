@@ -17,6 +17,7 @@ public:
     QString get_grade_querysql();
     QString get_grade_addsql();
     QString get_exam_querysql();
+    QString get_exam_addsql();
     void initbox();
     ~admin();
     adm cur_admin;
@@ -36,6 +37,8 @@ private slots:
     void on_bbtn_grade_add_clicked();
 
     void on_btn_exam_query_clicked();
+
+    void on_btn_exam_add_clicked();
 
 private:
     Ui::admin *ui;

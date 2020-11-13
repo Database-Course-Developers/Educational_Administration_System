@@ -39,5 +39,5 @@ public:
     adm(QString ano,QString pwd):ano(ano),pwd(pwd){}
     adm(){}
 };
-
+extern QString timeformat;
 #endif // BASE_H
