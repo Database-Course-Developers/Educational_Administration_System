@@ -6,6 +6,7 @@ admin::admin(adm cur_admin,QWidget *parent) :
     ui(new Ui::admin)
 {
     ui->setupUi(this);
+    setWindowState(Qt::WindowMaximized);
     initbox();
 }
 
@@ -19,7 +20,7 @@ admin::~admin()
 
 //初始化选择框内的选项
 void admin::initbox(){
-    //初始化学期下拉框
+    //初始化学期选择框
     QVector<QString> year=getyear();
     for(QString& s:year){
         ui->cbox_grade_year->addItem(s);
@@ -28,53 +29,112 @@ void admin::initbox(){
     }
     ui->cbox_grade_year->setCurrentIndex(-1);
     ui->cbox_grade_year1->setCurrentIndex(-1);
+    //初始化教室选择框
     QVector<QString> clr=getclassroom();
     for(QString& s:clr){
         ui->cbox_exam_clr->addItem(s);
     }
     ui->cbox_exam_clr->setCurrentIndex(-1);
+
+    //初始化学院选择框
     QVector<QString> collegename=getcollegename();
     for(QString&s:collegename){
         ui->cbox_exam_collegename->addItem(s);
     }
     ui->cbox_exam_collegename->setCurrentIndex(-1);
+
+    //日期时间选择框初始化
     QDate date(QDate::currentDate());
     ui->dt_begin_time->setDate(date);
     ui->dt_end_time->setDate(date.addMonths(1));
+    ui->dt_begin_time->setCalendarPopup(true);
+    ui->dt_end_time->setCalendarPopup(true);
 
 }
 //-------考务 part -------林嘉欣
-QString admin::get_exxam_querysql(){
-//    QString sql="select * from exam_view ";
-//    QString condition="";
-//    QString rcno=ui->ld_exam_rcno->text();
-//    QString cno=ui->ld_exam_cno->text();
-//    QString tno=ui->ld_exam_tno->text();
-//    QString tno1=ui->ld_exam_tno1->text();
-//    QString tno2=ui->ld_exam_tno2->text();
-//    QString clr=ui->cbox_exam_clr->currentText();
-//    QString collegename=ui->cbox_exam_collegename->currentText();
-//    if(sno.size()){
-//        condition+=(QString("sno='"+sno+"' and " ));
-//    }
-//    if(cno.size()){
-//        condition+=(QString("cno='"+cno+"' and " ));
-//    }
-//    if(cname.size()){
-//        condition+=(QString("cname='"+cname+"' and " ));
-//    }
-//    if(sname.size()){
-//        condition+=(QString("sname='"+sname+"' and " ));
-//    }
-//    if(year.size()){
-//        condition+=(QString("year='"+year+"' and " ));
-//    }
+QString admin::get_exam_querysql(){
+    QString sql="select * from exam_view ";
+    QString condition="";
+    QString rcno=ui->ld_exam_rcno->text();
+    QString cno=ui->ld_exam_cno->text();
+    QString tno=ui->ld_exam_tno->text();
+    QString tno1=ui->ld_exam_tno1->text();
+    QString tno2=ui->ld_exam_tno2->text();
+    QString clr=ui->cbox_exam_clr->currentText();
+    QString collegename=ui->cbox_exam_collegename->currentText();
+    QString begin_time=ui->dt_begin_time->dateTime().toString("yyyy-MM-dd hh:mm:ss");
+    QString end_time=ui->dt_end_time->dateTime().toString("yyyy-MM-dd hh:mm:ss");
+    if(rcno.size()){
+        condition+=(QString("rcnno='"+rcno+"' and " ));
+    }
+    if(cno.size()){
+        condition+=(QString("cno='"+cno+"' and " ));
+    }
+    if(tno.size()){
+        condition+=(QString("tno='"+tno+"' and " ));
+    }
+    if(tno1.size()){
+        condition+=(QString("tno1='"+tno1+"' and " ));
+    }
+    if(tno2.size()){
+        condition+=(QString("tno2='"+tno2+"' and " ));
+    }
+    if(clr.size()){
+        condition+=(QString("clr='"+clr+"' and " ));
+    }
+    if(collegename.size()){
+        condition+=(QString("collegename='"+tno2+"' and " ));
+    }
+    if(begin_time.size()){
+        condition+=(QString("begin_time>='"+begin_time+"' and " ));
+    }
+    if(end_time.size()){
+        condition+=(QString("end_time<='"+end_time+"' and " ));
+    }
 
-//    if(condition.size()){
-//        sql=sql+"where "+ condition.left(condition.size()-4 );//-3去掉最后一个and
-//    }
-//    return sql;
+    if(condition.size()){
+        sql=sql+"where "+ condition.left(condition.size()-4 );//-4去掉最后一个and
+    }
+    return sql;
 }
+void admin::on_btn_exam_query_clicked()
+{
+    ui->table_exam->blockSignals(true);
+    QSqlQuery query;
+    QString sql=get_exam_querysql();
+    if(query.exec(sql)){
+        ui->table_exam->clearContents();
+        ui->table_exam->setRowCount(0);
+        while(query.next()){
+            QTableWidgetItem* item[9];
+            int rowcount=ui->table_exam->rowCount();
+            ui->table_exam->insertRow(rowcount);
+            for(int i=0;i<9;i++){
+                if(i==7||i==8)
+                    item[i]=new QTableWidgetItem(query.value(i).toDateTime().toString("yyyy-MM-dd hh:mm::ss"));
+                else
+                    item[i]=new QTableWidgetItem(query.value(i).toString());
+                if(i<3||i==6){
+                    item[i]->setFlags(item[i]->flags()&(~Qt::ItemIsEditable));
+                }
+                ui->table_exam->setItem(rowcount,i,item[i]);
+
+            }
+        }
+    }else{
+        connectErrorMsg=query.lastError().text();
+        QMessageBox::information(nullptr,"数据库查找错误！","数据库查找错误，错误信息:"+connectErrorMsg);
+    }
+    ui->table_exam->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->table_exam->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
+    ui->table_exam->horizontalHeader()->setSectionResizeMode(7,QHeaderView::ResizeToContents);
+    ui->table_exam->horizontalHeader()->setSectionResizeMode(8,QHeaderView::ResizeToContents);
+    ui->table_grade->blockSignals(false);
+}
+
+
+
+
 //-------成绩 part--------林嘉欣
 //根据输入框获取查询成绩sql语句
 QString admin::get_grade_querysql(){
@@ -245,3 +305,5 @@ void admin::on_bbtn_grade_add_clicked()
         }
     }
 }
+
+
