@@ -1,21 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>teacher</class>
  <widget class="QWidget" name="teacher">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>600</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>100</width>
+     <height>350</height>
+    </rect>
+   </property>
+   <property name="spacing">
+    <number>20</number>
+   </property>
+   <property name="gridSize">
+    <size>
+     <width>0</width>
+     <height>55</height>
+    </size>
+   </property>
+   <property name="currentRow">
+    <number>-1</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>个人信息</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>课表信息</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>学生信息</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>考试信息</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>教室信息</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>成绩信息</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>80</y>
+     <width>450</width>
+     <height>370</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="pg_personal">
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>20</y>
+       <width>481</width>
+       <height>351</height>
+      </rect>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>64</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>教师编号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>性别</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>民族</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>年龄</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>职务</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>联系方式</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>身份证号</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pg_lesson"/>
+   <widget class="QWidget" name="pg_student">
+    <widget class="QTableWidget" name="course">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>450</width>
+       <height>501</height>
+      </rect>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>110</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>姓名</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>学号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>新建列</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>性别</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QPushButton" name="search_1">
+     <property name="geometry">
+      <rect>
+       <x>610</x>
+       <y>10</y>
+       <width>61</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>431</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4,1,4">
+      <item>
+       <widget class="QLabel" name="label1">
+        <property name="text">
+         <string>专业</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="major"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label2">
+        <property name="text">
+         <string>课程</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_2"/>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pg_exam">
+    <widget class="QTableWidget" name="tableWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>70</y>
+       <width>450</width>
+       <height>501</height>
+      </rect>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>64</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>姓名</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>学号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>性别</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>班级</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>考试科目</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>考试时间</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>参加考试情况</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QPushButton" name="search_2">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>10</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>30</y>
+       <width>391</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="3,1,3">
+      <item>
+       <widget class="QComboBox" name="comboBox">
+        <item>
+         <property name="text">
+          <string>科目</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>班级</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>所有学生</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_3">
+        <item>
+         <property name="text">
+          <string>姓名</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>学号</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>性别</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>班级</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pg_classroom"/>
+   <widget class="QWidget" name="pg_score"/>
+  </widget>
+  <widget class="QLabel" name="title">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>20</y>
+     <width>441</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Mongolian Baiti</family>
+     <pointsize>22</pointsize>
+    </font>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string>教务管理系统—教师端</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>
