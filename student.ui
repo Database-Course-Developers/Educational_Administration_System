@@ -598,7 +598,37 @@
         <widget class="QWidget" name="widget" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QComboBox" name="cBGradeTime"/>
+           <widget class="QWidget" name="widget_8" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_15">
+             <item>
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>学年</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="cBGradeYear"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>学期</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="cBGradeTerm"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pBSeGraByTime">
+               <property name="text">
+                <string>查询</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer">
@@ -614,7 +644,11 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit"/>
+           <widget class="QLineEdit" name="lineEdit">
+            <property name="placeholderText">
+             <string>请输入具体课程名</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QToolButton" name="toolButton">
@@ -634,7 +668,38 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="tableWidget"/>
+        <widget class="QTableWidget" name="tWGrade">
+         <column>
+          <property name="text">
+           <string>课程号</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>课程名</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>学分</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>成绩</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>课程性质</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>通过与否</string>
+          </property>
+         </column>
+        </widget>
        </item>
        <item>
         <widget class="QWidget" name="widget_3" native="true">
@@ -653,7 +718,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pBGradeBack">
             <property name="text">
              <string>返回</string>
             </property>
