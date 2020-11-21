@@ -1,4 +1,4 @@
-#ifndef STUDENT_H
+﻿#ifndef STUDENT_H
 #define STUDENT_H
 
 #include <QWidget>
@@ -16,6 +16,9 @@ public:
     explicit student(stu cur_student,QWidget *parent = nullptr);
     ~student();
     stu cur_student;
+    void initbox();
+    void gradePage();
+
 signals:
     void logout();
 private:
