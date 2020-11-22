@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>4</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QGridLayout" name="gridLayout">
@@ -679,7 +679,7 @@
           <item>
            <widget class="QLabel" name="labelGradePoint">
             <property name="text">
-             <string>TextLabel</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -699,7 +699,7 @@
           <item>
            <widget class="QLabel" name="labelGradeRank">
             <property name="text">
-             <string>TextLabel</string>
+             <string/>
             </property>
            </widget>
           </item>
