@@ -19,6 +19,7 @@ public:
     void initbox();
     void gradePage();
     void setGradeTable(QString);
+    void calGrade();
     void timeTablePage();
     void examPage();
 

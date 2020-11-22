@@ -20,6 +20,11 @@ void student::initbox()
 {
     ui->studenPages->setCurrentIndex(0);
 
+    // 子页面的初始化
+    gradePage();
+    timeTablePage();
+    examPage();
+
     // 连接6个按钮和对应子页面
     connect(ui->pBStuInfo, &QPushButton::clicked,
          [=]()
@@ -39,25 +44,29 @@ void student::initbox()
     connect(ui->pBStuGrade, &QPushButton::clicked,
          [=]()
     {
-        gradePage();
+        ui->studenPages->setCurrentIndex(4);
+        ui->tWGrade->clearContents();
+        ui->tWGrade->setRowCount(0);
     });
     connect(ui->pBStuTimetable, &QPushButton::clicked,
          [=]()
     {
-        timeTablePage();
+        ui->studenPages->setCurrentIndex(5);
+
     });
     connect(ui->pBStuExam, &QPushButton::clicked,
          [=]()
     {
-        examPage();
+        ui->studenPages->setCurrentIndex(6);
     });
+
 }
 
 // 成绩信息子页面 钟子涵
 void student::gradePage()
 {
     ui->tWGrade->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->studenPages->setCurrentIndex(4);
+
     // 成绩信息子页面返回按钮
     connect(ui->pBGradeBack, &QPushButton::clicked,
          [=]()
@@ -97,6 +106,9 @@ void student::gradePage()
 
         setGradeTable(sqlStr);
     });
+
+    // 获得学生百分制绩点和排名
+    calGrade();
 }
 
 void student::setGradeTable(QString sqlStr)
@@ -135,14 +147,51 @@ void student::setGradeTable(QString sqlStr)
     }
 }
 
+void student::calGrade()
+{
+    QSqlQuery *sqlQuery = new QSqlQuery;
+
+    // 根据学生已参与的所有考试，获得当前总学分（这里为了省事把未通过的学分也算上了。。）
+    QString sqlStr0 = "select sum(credits) from grade g, course c where sno = '" + cur_student.sno +
+           "' and g.cno = c.cno";
+    sqlQuery->prepare(sqlStr0);
+    QString totalCredits = "";
+    sqlQuery->prepare(sqlStr0);
+    if(sqlQuery->exec())
+    {
+        if(sqlQuery->next())
+            totalCredits = sqlQuery->value(0).toString();
+    }
+
+    // 根据学生学号，获得学生所在年级和专业，按百分制绩点计算公式，获得所有属于该年级和该专业的学生百分制绩点和排名。
+    QString yearMajor = cur_student.sno.mid(0, 7);
+
+    QString sqlStr = "select A.sno, A.graPoint, @rank:=@rank+1 ran from (select sno, sum(credits * grade) / " + totalCredits + " graPoint from grade g, course c where sno like '%" + yearMajor +
+        "%' and g.cno = c.cno group by sno order by graPoint desc) A, (SELECT @rank:=0) B";
+    sqlQuery->prepare(sqlStr);
+
+    // 设置当前学生的百分制绩点和排名。
+    if(sqlQuery->exec())
+    {
+        while(sqlQuery->next())
+        {
+            if(sqlQuery->value(0).toString() == cur_student.sno)
+            {
+                ui->labelGradePoint->setText(sqlQuery->value(1).toString().mid(0, 4));
+                ui->labelGradeRank->setText(sqlQuery->value(2).toString());
+                break;
+            }
+        }
+
+    }
+}
+
 // 课表信息子界面 钟子涵
 void student::timeTablePage()
 {
     QString mySno = cur_student.sno;
     ui->tWTimeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tWTimeTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-    ui->studenPages->setCurrentIndex(5);
 
     connect(ui->pBTimeTableBack, &QPushButton::clicked, [=]()
     {
@@ -218,7 +267,6 @@ void student::timeTablePage()
 // 考试信息子页面 钟子涵
 void student::examPage()
 {
-    ui->studenPages->setCurrentIndex(6);
     ui->tWStuExam->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tWStuExam->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -265,7 +313,7 @@ void student::examPage()
        }
     }
 }
-// 2017EEA1000
+//
 
 
 
