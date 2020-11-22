@@ -18,6 +18,8 @@ public:
     stu cur_student;
     void initbox();
     void gradePage();
+    void setGradeTable(QString);
+    void timeTablePage();
 
 signals:
     void logout();

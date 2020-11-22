@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QGridLayout" name="gridLayout">
@@ -644,14 +644,14 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit">
+           <widget class="QLineEdit" name="lESeaGraByName">
             <property name="placeholderText">
-             <string>请输入具体课程名</string>
+             <string>请输入课程名</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton">
+           <widget class="QPushButton" name="pBSeaGrade">
             <property name="text">
              <string>搜索</string>
             </property>
@@ -669,6 +669,9 @@
        </item>
        <item>
         <widget class="QTableWidget" name="tWGrade">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
          <column>
           <property name="text">
            <string>课程号</string>
@@ -787,7 +790,66 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="tableWidget_2"/>
+        <widget class="QTableWidget" name="tWTimeTable">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <row>
+          <property name="text">
+           <string>一、二节</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>三、四节</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>五、六节</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>七、八节</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>九、十节</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>一</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>二</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>三</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>四</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>五</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>日</string>
+          </property>
+         </column>
+        </widget>
        </item>
        <item>
         <widget class="QWidget" name="widget_5" native="true">
@@ -806,7 +868,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pBTimeTableBack">
             <property name="text">
              <string>返回</string>
             </property>
