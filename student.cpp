@@ -60,6 +60,13 @@ void student::initbox()
         ui->studenPages->setCurrentIndex(6);
     });
 
+    // 返回登陆界面
+    connect(ui->pBStuBack, &QPushButton::clicked, [=]()
+    {
+        emit logout();
+        this->close();
+    });
+
 }
 
 // 成绩信息子页面 钟子涵
@@ -168,6 +175,9 @@ void student::calGrade()
 
     QString sqlStr = "select A.sno, A.graPoint, @rank:=@rank+1 ran from (select sno, sum(credits * grade) / " + totalCredits + " graPoint from grade g, course c where sno like '%" + yearMajor +
         "%' and g.cno = c.cno group by sno order by graPoint desc) A, (SELECT @rank:=0) B";
+  //  QString sqlStr = "select A.graPoint, count(A.sno) from (select sno, sum(credits * grade) / " + totalCredits + " graPoint from grade g, course c where sno like '%" + yearMajor +
+   //             "%' and g.cno = c.cno group by sno) A where A.graPoint > (select B.graPoint from A B where B.sno = '" + cur_student.sno + "')";
+
     sqlQuery->prepare(sqlStr);
 
     // 设置当前学生的百分制绩点和排名。
