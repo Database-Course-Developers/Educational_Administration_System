@@ -244,12 +244,10 @@ void student::timeTablePage()
            }
 
            info << v3;
-           qDebug() << "info:" << info ;
            QString in = info.join("\n");
 
            // daytime，获得每周上课时间，将课程具体信息插入到表格对应位置
            QString daytime = sqlQuery->value(column).toString();
-           qDebug() << "daytime:" << daytime;
            for(int i = 0; i < daytime.length(); i++)
            {
                if(daytime[i] == '1')
@@ -290,7 +288,6 @@ void student::examPage()
     QString sqlStr = "select e.rcno, name, tname, e.clr, begin_time, end_time from exam e, real_course r, teacher t, course c "
                      "where e.rcno like '%" + myClass + "%' and e.rcno = r.rcno and r.tno = t.tno and r.cno = c.cno";
     sqlQuery->prepare(sqlStr);
-    qDebug() << sqlStr;
     if( sqlQuery->exec() )
     {
        ui->tWStuExam->setRowCount(0);
@@ -301,7 +298,6 @@ void student::examPage()
            ui->tWStuExam->insertRow(rowCount);
            for(int i = 0; i < 4; i++)
            {
-               qDebug() << sqlQuery->value(i);
                ui->tWStuExam->setItem(rowCount, i, new QTableWidgetItem(sqlQuery->value(i).toString()));
            }
            QString examTime = "";
