@@ -977,6 +977,9 @@
        </item>
        <item>
         <widget class="QTableWidget" name="tWStuExam">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
          <column>
           <property name="text">
            <string>课务号</string>
