@@ -49,11 +49,11 @@ void student::initbox()
     connect(ui->pBStuExam, &QPushButton::clicked,
          [=]()
     {
-        ui->studenPages->setCurrentIndex(6);
+        examPage();
     });
 }
 
-// 成绩信息子页面 2017CSA1000
+// 成绩信息子页面 钟子涵
 void student::gradePage()
 {
     ui->tWGrade->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -135,7 +135,7 @@ void student::setGradeTable(QString sqlStr)
     }
 }
 
-// 课表信息子界面 2017CSA1000
+// 课表信息子界面 钟子涵
 void student::timeTablePage()
 {
     QString mySno = cur_student.sno;
@@ -143,7 +143,6 @@ void student::timeTablePage()
     ui->tWTimeTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     ui->studenPages->setCurrentIndex(5);
-    ui->tWTimeTable->clearContents();
 
     connect(ui->pBTimeTableBack, &QPushButton::clicked, [=]()
     {
@@ -165,7 +164,7 @@ void student::timeTablePage()
     }
 
     // 根据学生所在班级，利用模糊匹配，得到该学生所在班级本学期开设的课程
-    QString sqlStr = "select c.name, tname, clr, credits, bin(required+0), bin(is_exam+0), co.name, hour, bin(weektime+0), bin(daytime+0) "
+    QString sqlStr = "select rcno, c.name, tname, clr, credits, bin(required+0), bin(is_exam+0), co.name, hour, bin(weektime+0), bin(daytime+0) "
                      "from real_course r, course c, teacher t, college co "
                      "where rcno like '%" + myClass + "%' and r.cno = c.cno and r.tno = t.tno and c.clg = co.clg";
     sqlQuery->prepare( sqlStr );
@@ -182,8 +181,8 @@ void student::timeTablePage()
            QString v1 = "课程性质：";
            QString v2 = "有无考试：";
            QString v3 = "上课周：";
-           info << "课程名称：" + sqlQuery->value(column++).toString() << "授课老师：" + sqlQuery->value(column++).toString()
-                << "课室号：" + sqlQuery->value(column++).toString() << "学分：" + sqlQuery->value(column++).toString()
+           info << "课务号：" + sqlQuery->value(column++).toString() << "课程名称：" + sqlQuery->value(column++).toString() << "授课老师：" + sqlQuery->value(column++).toString()
+                << "课室：" + sqlQuery->value(column++).toString() << "学分：" + sqlQuery->value(column++).toString()
                 << v1 + (sqlQuery->value(column++).toString() == "1" ? "必修" : "选修")
                 << v2 + (sqlQuery->value(column++).toString() == "1" ? "有" : "无")
                 << "开课学院：" + sqlQuery->value(column++).toString() << "总学时：" + sqlQuery->value(column++).toString();
@@ -208,12 +207,65 @@ void student::timeTablePage()
                {
                    QTextEdit *edit = new QTextEdit();
                    edit->setText(in);
+                   edit->setReadOnly(true);
                    ui->tWTimeTable->setCellWidget( i % 5 , i / 5 , edit);
                }
            }
        }
     }
 }
+
+// 考试信息子页面 钟子涵
+void student::examPage()
+{
+    ui->studenPages->setCurrentIndex(6);
+    ui->tWStuExam->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tWStuExam->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    connect(ui->pBStuExamBack, &QPushButton::clicked, [=](){
+        ui->studenPages->setCurrentIndex(0);
+    });
+    // 先获取该学生所在班级
+    QString sqlStr0 = "select CLS from student where sno = '" + cur_student.sno + "'";
+    QSqlQuery *sqlQuery = new QSqlQuery;
+    sqlQuery->prepare(sqlStr0);
+
+    QString myClass = "";
+    if(sqlQuery->exec())
+    {
+        if(sqlQuery->next()) // 要有此句
+        {
+            myClass = sqlQuery->value(0).toString();
+        }
+    }
+
+    QString sqlStr = "select e.rcno, name, tname, e.clr, begin_time, end_time from exam e, real_course r, teacher t, course c "
+                     "where e.rcno like '%" + myClass + "%' and e.rcno = r.rcno and r.tno = t.tno and r.cno = c.cno";
+    sqlQuery->prepare(sqlStr);
+    qDebug() << sqlStr;
+    if( sqlQuery->exec() )
+    {
+       ui->tWStuExam->setRowCount(0);
+       //读取查询到的记录
+       while( sqlQuery->next() )
+       {
+           int rowCount = ui->tWStuExam->rowCount();
+           ui->tWStuExam->insertRow(rowCount);
+           for(int i = 0; i < 4; i++)
+           {
+               qDebug() << sqlQuery->value(i);
+               ui->tWStuExam->setItem(rowCount, i, new QTableWidgetItem(sqlQuery->value(i).toString()));
+           }
+           QString examTime = "";
+           QString beginTime = sqlQuery->value(4).toString();
+           examTime += beginTime.section(QRegExp("[.T]"), 0, 0) + " " + beginTime.section(QRegExp("[.T]"), 1, 1);
+           QString endTime = sqlQuery->value(5).toString();
+           examTime += "\n~" + endTime.section(QRegExp("[.T]"), 0, 0) + " " +endTime.section(QRegExp("[.T]"), 1, 1);
+           ui->tWStuExam->setItem(rowCount, 4, new QTableWidgetItem(examTime));
+       }
+    }
+}
+// 2017EEA1000
 
 
 

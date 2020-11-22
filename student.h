@@ -20,6 +20,7 @@ public:
     void gradePage();
     void setGradeTable(QString);
     void timeTablePage();
+    void examPage();
 
 signals:
     void logout();

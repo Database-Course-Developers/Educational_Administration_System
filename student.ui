@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>5</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QGridLayout" name="gridLayout">
@@ -937,7 +937,33 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="tableWidget_3"/>
+        <widget class="QTableWidget" name="tWStuExam">
+         <column>
+          <property name="text">
+           <string>课务号</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>课程名</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>授课老师</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>考试地点</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>考试时间</string>
+          </property>
+         </column>
+        </widget>
        </item>
        <item>
         <widget class="QWidget" name="widget_7" native="true">
@@ -956,7 +982,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="pBStuExamBack">
             <property name="text">
              <string>返回</string>
             </property>
