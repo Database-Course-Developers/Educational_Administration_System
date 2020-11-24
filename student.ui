@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>893</width>
+    <width>800</width>
     <height>503</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -179,96 +179,135 @@
         </layout>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_12">
-           <property name="text">
-            <string>年级</string>
-           </property>
-          </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_23">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="stu_name"/>
+           </item>
+           <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="label_8">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>专业</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="stu_home"/>
+           </item>
+           <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="label_10">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>籍贯</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="stu_major"/>
+           </item>
+           <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="label_9">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>姓名</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
-         <item row="3" column="3" alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="label_13">
-           <property name="text">
-            <string>班级</string>
-           </property>
-          </widget>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="stu_no"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="lineEdit_6"/>
+           </item>
+           <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="stu_birth">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>出生年月</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="label_7">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>学号</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="stu_grade">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>年级</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="lineEdit_7"/>
+           </item>
+          </layout>
          </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>性别</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3" alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>学号</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_3"/>
-         </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_2"/>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="lineEdit_4"/>
-         </item>
-         <item row="2" column="4" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_7"/>
-         </item>
-         <item row="3" column="1" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_9"/>
-         </item>
-         <item row="2" column="3" alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>专业</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="4" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_10"/>
-         </item>
-         <item row="1" column="5">
-          <widget class="QLineEdit" name="lineEdit_5"/>
-         </item>
-         <item row="0" column="4" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_8"/>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>籍贯</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_6"/>
-         </item>
-         <item row="1" column="4" alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>出生年月</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>学院</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>姓名</string>
-           </property>
-          </widget>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="stu_college">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>学院</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+            <widget class="QLabel" name="stu_sex">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>性别 </string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="stu_class">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>班级</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="lineEdit_3"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="lineEdit_8"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="lineEdit_9"/>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
