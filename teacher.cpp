@@ -53,19 +53,19 @@ void teacher::on_comboBox_3_currentIndexChanged(int index)
 }
 
 
-void teacher::on_search_3_clicked(bool checked)
-{
-    QString major= ui->major_2->currentText();
-    QString course=ui->course_2->currentText();
+//void teacher::on_search_3_clicked(bool checked)
+//{
+//    QString major= ui->major_2->currentText();
+//    QString course=ui->course_2->currentText();
 
-}
+//}
 
 
-void teacher::on_comboBox_3_currentIndexChanged(int index)
-{
-    if(ui->comboBox_3->currentIndex()==2)
-        ui->lineedit_info->setVisible(false);
-}
+//void teacher::on_comboBox_3_currentIndexChanged(int index)
+//{
+//    if(ui->comboBox_3->currentIndex()==2)
+//        ui->lineedit_info->setVisible(false);
+//}
 
 // 初始化个人信息界面
 void teacher::initial_personal_info(){

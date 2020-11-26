@@ -5,7 +5,6 @@
 #include<QListWidgetItem>
 #include<base.h>
 #include<database_util.h>
-#include<QString>
 namespace Ui {
 class teacher;
 }
@@ -30,20 +29,16 @@ signals:
 
 private slots:
     void on_listWidget_itemClicked(QListWidgetItem *item);
-
-<<<<<<< HEAD
     void on_college_currentIndexChanged(int index);
-=======
     void on_search_3_clicked(bool checked);
 
 
     void on_comboBox_3_currentIndexChanged(int index);
->>>>>>> e26cf07d40d2edb5235b0f472d8cd8e87d92abf5
 
-    void on_search_3_clicked(bool checked);
+    //void on_search_3_clicked(bool checked);
 
 
-    void on_comboBox_3_currentIndexChanged(int index);
+    //void on_comboBox_3_currentIndexChanged(int index);
 
 private:
     Ui::teacher *ui;
