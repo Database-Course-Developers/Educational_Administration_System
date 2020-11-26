@@ -8,14 +8,13 @@ teacher::teacher(tea cur_teacher,QWidget *parent) :
     ui->setupUi(this);
 
     initial_personal_info();
-//    initial_course();
+    initial_course();
 //    警告：Using QCharRef with an index pointing outside the valid range of a QString.
 //    The corresponding behavior is deprecated, and will be changed in a future version of Qt.
     initial_student_info();
     //屏幕最大化
     setWindowState(Qt::WindowMaximized);
     ui->stackedWidget->setCurrentIndex(0);
-    //initbox();
 
 }
 
@@ -28,12 +27,12 @@ teacher::~teacher()
 void teacher::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     int crr_row=ui->listWidget->currentRow();
-    if(crr_row==0)ui->stackedWidget->setCurrentIndex(1);
-    else if(crr_row==1)ui->stackedWidget->setCurrentIndex(2);
-    else if(crr_row==2)ui->stackedWidget->setCurrentIndex(3);
-    else if(crr_row==3)ui->stackedWidget->setCurrentIndex(4);
-    else if(crr_row==4)ui->stackedWidget->setCurrentIndex(5);
-    else ui->stackedWidget->setCurrentIndex(6);
+    if(crr_row==0)ui->stackedWidget->setCurrentIndex(0);
+    else if(crr_row==1)ui->stackedWidget->setCurrentIndex(1);
+    else if(crr_row==2)ui->stackedWidget->setCurrentIndex(2);
+    else if(crr_row==3)ui->stackedWidget->setCurrentIndex(3);
+    else if(crr_row==4)ui->stackedWidget->setCurrentIndex(4);
+    else ui->stackedWidget->setCurrentIndex(5);
 }
 
 
@@ -85,7 +84,6 @@ void teacher::initial_personal_info(){
 }
 
 QString teacher::print_weektime(QString weektime){// 开课时间-eg.1-12周,14-15周
-//    qDebug()<<"weektime="<<weektime;
     QString weektime_output;
     int start,end;
     bool flag=false;
