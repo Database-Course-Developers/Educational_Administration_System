@@ -69,14 +69,35 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>80</y>
-     <width>450</width>
-     <height>400</height>
+     <y>89</y>
+     <width>461</width>
+     <height>401</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>4</number>
    </property>
+   <widget class="QWidget" name="pg_welcome">
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>150</y>
+       <width>201</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>华光粗黑_CNKI</family>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>欢迎来到教师端</string>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="pg_personal">
     <widget class="QTableWidget" name="personal_table">
      <property name="geometry">
@@ -206,13 +227,13 @@
       </property>
      </column>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>30</y>
        <width>431</width>
-       <height>24</height>
+       <height>36</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,3,1,3,1,1">
@@ -311,86 +332,103 @@
       </property>
      </column>
     </widget>
+    <widget class="QComboBox" name="comboBox_3">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>10</y>
+       <width>111</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>姓名查询</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>学号查询</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>所有学生</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="lineedit_info">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>40</y>
+       <width>161</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
     <widget class="QPushButton" name="search_2">
      <property name="geometry">
       <rect>
-       <x>570</x>
+       <x>370</x>
        <y>10</y>
-       <width>51</width>
+       <width>41</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>查询</string>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QComboBox" name="comboBox_2">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>391</width>
-       <height>31</height>
+       <x>130</x>
+       <y>10</y>
+       <width>101</width>
+       <height>24</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="3,1,3">
-      <item>
-       <widget class="QComboBox" name="comboBox">
-        <item>
-         <property name="text">
-          <string>科目</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>班级</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>所有学生</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBox_3">
-        <item>
-         <property name="text">
-          <string>姓名</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>学号</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>性别</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>班级</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
+     <item>
+      <property name="text">
+       <string>班级</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>科目</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>101</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>科目</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>班级</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>所有学生</string>
+      </property>
+     </item>
     </widget>
    </widget>
    <widget class="QWidget" name="pg_classroom">
@@ -398,7 +436,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>20</y>
+       <y>40</y>
        <width>450</width>
        <height>350</height>
       </rect>
@@ -408,7 +446,7 @@
      </attribute>
      <column>
       <property name="text">
-       <string>教师号</string>
+       <string>教室号</string>
       </property>
      </column>
      <column>
@@ -421,6 +459,49 @@
        <string>使用情况</string>
       </property>
      </column>
+    </widget>
+    <widget class="QComboBox" name="comboBox_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>99</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>按日期</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>按课时</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBox_5">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>10</y>
+       <width>99</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="search_4">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>3</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="pg_score">
@@ -462,13 +543,13 @@
       </property>
      </column>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>20</y>
-       <width>441</width>
-       <height>51</height>
+       <width>470</width>
+       <height>80</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -480,7 +561,7 @@
         <item>
          <widget class="QLabel" name="label1_2">
           <property name="text">
-           <string>专业</string>
+           <string>班级</string>
           </property>
          </widget>
         </item>

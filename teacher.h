@@ -5,6 +5,7 @@
 #include<QListWidgetItem>
 #include<base.h>
 #include<database_util.h>
+#include<QString>
 namespace Ui {
 class teacher;
 }
@@ -23,6 +24,11 @@ private slots:
 
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
+
+    void on_search_3_clicked(bool checked);
+
+
+    void on_comboBox_3_currentIndexChanged(int index);
 
 private:
     Ui::teacher *ui;
