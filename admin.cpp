@@ -1,4 +1,4 @@
-#include "admin.h"
+﻿#include "admin.h"
 #include "ui_admin.h"
 
 admin::admin(adm cur_admin,QWidget *parent) :
@@ -445,3 +445,165 @@ void admin::on_bbtn_grade_add_clicked()
 
 
 
+//----------教师管理part----------胡婷婷
+
+//根据输入框获取查询教师信息sql语句
+QString admin::get_tea_querysql(){
+    QString sql="select * from teacher ";
+    QString condition="";
+    QString birth_condition="";
+    QString tno=ui->ld_tea_no->text();
+    QString tname=ui->ld_tea_name->text();
+    QString sex=ui->cbox_tea_sex->currentText();
+    QString birth_y=ui->cbox_tea_birth_y->currentText();
+    QString birth_m=ui->cbox_tea_birth_m->currentText();
+    QString birth_d=ui->cbox_tea_birth_d->currentText();
+    QString pos=ui->cbox_tea_pos->currentText();
+    QString tel=ui->ld_tea_tel->text();
+    QString clg=ui->ld_tea_clg->text();
+    if(tno.size()){
+        condition+=QString("TNO='"+tno+"' and ");
+    }
+    if(tname.size()){
+        condition+=QString("tname='"+tname+"' and ");
+    }
+    if(sex.size()){
+        condition+=QString("sex='"+sex+"' and ");
+    }
+    //----生日-------
+    if(birth_y.size()){
+        birth_condition+=QString(birth_y+"%");
+    }
+    if(birth_m.size()){
+        birth_condition+=QString("%-"+birth_m+"-%");
+    }
+    if(birth_d.size()){
+        birth_condition+=QString("%"+birth_d);
+    }
+    if(birth_condition.size()){
+        condition+="birth like '"+birth_condition+"' and ";
+    }
+    //---------------
+    if(pos.size()){
+        condition+=QString("position='"+pos+"' and ");
+    }
+    if(tel.size()){
+        condition+=QString("tel='"+tel+"' and ");
+    }
+    if(clg.size()){
+        condition+=QString("CLG='"+clg+"' and ");
+    }
+    if(condition.size()){
+        sql=sql+"where "+condition.left(condition.size()-4);//去掉最后一个and和空格
+    }
+
+    return sql;
+}
+
+//教师信息查询按钮
+void admin::on_btn_tea_query_clicked()
+{
+    ui->table_tea->blockSignals(true);
+    QSqlQuery query;
+    QString sql=get_tea_querysql();
+    if(query.exec(sql)){
+        ui->table_tea->clearContents();
+        ui->table_tea->setRowCount(0);
+        while(query.next()){
+            //执行完query.exec()后query是指向结果集外的
+            //第一次执行query.next()使query指向结果集的第一条记录
+            //接下来的query.next()使query指向下一条记录
+            QTableWidgetItem* item[7];
+            int rowCount=ui->table_tea->rowCount();
+            ui->table_tea->insertRow(rowCount);
+            for(int i=0;i<7;i++){
+                item[i]=new QTableWidgetItem(query.value(i).toString());
+                item[i]->setFlags((Qt::ItemFlags)0);//单元格设为灰色不可编辑
+                ui->table_tea->setItem(rowCount,i,item[i]);
+            }
+        }
+    }
+    else{
+        //数据库查找错误
+    }
+    ui->table_tea->blockSignals(false);
+
+}
+
+
+//----------学生管理part----------胡婷婷
+//根据输入框获取查询学生信息sql语句
+QString admin::get_stu_querysql(){
+    QString sql="select * from student ";
+    QString condition="";
+    QString birth_condition="";
+    QString sno=ui->ld_stu_no->text();
+    QString sname=ui->ld_stu_name->text();
+    QString sex=ui->cbox_stu_sex->currentText();
+    QString hometown=ui->ld_stu_hometown->text();
+    QString birth_y=ui->cbox_stu_birth_y->currentText();
+    QString birth_m=ui->cbox_stu_birth_m->currentText();
+    QString birth_d=ui->cbox_stu_birth_d->currentText();
+    QString cls=ui->ld_stu_cls->text();
+    if(sno.size()){
+        condition+=QString("sno='"+sno+"' and ");
+    }
+    if(sname.size()){
+        condition+=QString("sname='"+sname+"' and ");
+    }
+    if(sex.size()){
+        condition+=QString("sex='"+sex+"' and ");
+    }
+    if(hometown.size()){
+        condition+=QString("hometown='"+hometown+"' and ");
+    }
+    //----生日-------
+    if(birth_y.size()){
+        birth_condition+=QString(birth_y+"%");
+    }
+    if(birth_m.size()){
+        birth_condition+=QString("%-"+birth_m+"-%");
+    }
+    if(birth_d.size()){
+        birth_condition+=QString("%"+birth_d);
+    }
+    if(birth_condition.size()){
+        condition+="birth like '"+birth_condition+"' and ";
+    }
+    //---------------
+    if(cls.size()){
+        condition+=QString("CLS='"+cls+"' and ");
+    }
+    if(condition.size()){
+        sql=sql+"where "+condition.left(condition.size()-4);//去掉最后一个and和空格
+    }
+
+    return sql;
+}
+
+
+//学生信息查询按钮
+void admin::on_btn_stu_query_clicked()
+{
+    ui->table_stu->blockSignals(true);
+    QSqlQuery query;
+    QString sql=get_stu_querysql();
+    if(query.exec(sql)){
+        ui->table_tea->clearContents();
+        ui->table_tea->setRowCount(0);
+        while(query.next()){
+            QTableWidgetItem* item[6];
+            int rowCount=ui->table_stu->rowCount();
+            ui->table_stu->insertRow(rowCount);
+            for(int i=0;i<6;i++){
+                item[i]=new QTableWidgetItem(query.value(i).toString());
+                item[i]->setFlags((Qt::ItemFlags)0);//单元格设为灰色不可编辑
+                ui->table_stu->setItem(rowCount,i,item[i]);
+            }
+        }
+    }
+    else{
+        //数据库查找错误
+    }
+    ui->table_stu->blockSignals(false);
+}

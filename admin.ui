@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>426</height>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_tea">
       <attribute name="title">
@@ -37,6 +37,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="ld_tea_no"/>
+            </item>
             <item row="2" column="0">
              <widget class="QLabel" name="label_26">
               <property name="text">
@@ -51,51 +54,51 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QComboBox" name="comboBox_6">
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
             <item row="6" column="1">
-             <widget class="QComboBox" name="comboBox_9">
+             <widget class="QComboBox" name="cbox_tea_pos">
               <property name="editable">
                <bool>true</bool>
               </property>
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QComboBox" name="comboBox_8">
+             <widget class="QComboBox" name="cbox_tea_birth_d">
               <property name="editable">
                <bool>true</bool>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="lineEdit_13"/>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="lineEdit_15"/>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_27">
-              <property name="text">
-               <string>生日</string>
-              </property>
-             </widget>
-            </item>
             <item row="4" column="1">
-             <widget class="QComboBox" name="comboBox_7">
+             <widget class="QComboBox" name="cbox_tea_birth_m">
               <property name="editable">
                <bool>true</bool>
               </property>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QComboBox" name="comboBox_5">
+             <widget class="QComboBox" name="cbox_tea_sex">
               <property name="editable">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLineEdit" name="ld_tea_clg"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="cbox_tea_birth_y">
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="ld_tea_name"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_27">
+              <property name="text">
+               <string>生日</string>
               </property>
              </widget>
             </item>
@@ -113,9 +116,6 @@
               </property>
              </widget>
             </item>
-            <item row="7" column="1">
-             <widget class="QLineEdit" name="lineEdit_16"/>
-            </item>
             <item row="7" column="0">
              <widget class="QLabel" name="label_29">
               <property name="text">
@@ -123,21 +123,24 @@
               </property>
              </widget>
             </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="label_37">
+              <property name="text">
+               <string>手机</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QLineEdit" name="ld_tea_tel"/>
+            </item>
            </layout>
           </item>
           <item>
            <layout class="QGridLayout" name="gridLayout_6">
             <item row="0" column="0">
-             <widget class="QPushButton" name="pushButton_16">
+             <widget class="QPushButton" name="btn_tea_query">
               <property name="text">
                <string>查询</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="pushButton_17">
-              <property name="text">
-               <string>修改</string>
               </property>
              </widget>
             </item>
@@ -155,6 +158,13 @@
               </property>
              </widget>
             </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="pushButton_17">
+              <property name="text">
+               <string>修改</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
@@ -162,15 +172,10 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
-           <widget class="QTableWidget" name="tableWidget_3">
+           <widget class="QTableWidget" name="table_tea">
             <column>
              <property name="text">
               <string>教师号</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>新建列</string>
              </property>
             </column>
             <column>
@@ -190,7 +195,17 @@
             </column>
             <column>
              <property name="text">
+              <string>职位</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
               <string>学院号</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>手机</string>
              </property>
             </column>
             <column>
@@ -201,35 +216,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <widget class="QPushButton" name="pushButton_20">
-              <property name="text">
-               <string>上一页</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_21">
-              <property name="text">
-               <string>下一页</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <layout class="QHBoxLayout" name="horizontalLayout_6"/>
           </item>
          </layout>
         </item>
@@ -262,7 +249,7 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QComboBox" name="comboBox_10"/>
+             <widget class="QComboBox" name="cbox_stu_sex"/>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_31">
@@ -272,7 +259,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="lineEdit_18"/>
+             <widget class="QLineEdit" name="ld_stu_name"/>
             </item>
             <item row="0" column="0">
              <widget class="QLabel" name="label_30">
@@ -282,10 +269,10 @@
              </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QLineEdit" name="lineEdit_19"/>
+             <widget class="QLineEdit" name="ld_stu_hometown"/>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="lineEdit_17"/>
+             <widget class="QLineEdit" name="ld_stu_no"/>
             </item>
             <item row="6" column="0">
              <widget class="QLabel" name="label_34">
@@ -295,7 +282,7 @@
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QComboBox" name="comboBox_12"/>
+             <widget class="QComboBox" name="cbox_stu_birth_m"/>
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="label_33">
@@ -305,13 +292,13 @@
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QComboBox" name="comboBox_13"/>
+             <widget class="QComboBox" name="cbox_stu_birth_d"/>
             </item>
             <item row="3" column="1">
-             <widget class="QComboBox" name="comboBox_11"/>
+             <widget class="QComboBox" name="cbox_stu_birth_y"/>
             </item>
             <item row="7" column="1">
-             <widget class="QLineEdit" name="lineEdit_20"/>
+             <widget class="QLineEdit" name="ld_stu_cls"/>
             </item>
             <item row="7" column="0">
              <widget class="QLabel" name="label_35">
@@ -325,7 +312,7 @@
           <item>
            <layout class="QGridLayout" name="gridLayout_8">
             <item row="0" column="0">
-             <widget class="QPushButton" name="pushButton_22">
+             <widget class="QPushButton" name="btn_stu_query">
               <property name="text">
                <string>查询</string>
               </property>
@@ -359,12 +346,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_10">
           <item>
-           <widget class="QTableWidget" name="tableWidget_4">
-            <column>
-             <property name="text">
-              <string>新建列</string>
-             </property>
-            </column>
+           <widget class="QTableWidget" name="table_stu">
             <column>
              <property name="text">
               <string>学号</string>
@@ -382,6 +364,11 @@
             </column>
             <column>
              <property name="text">
+              <string>籍贯</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
               <string>生日</string>
              </property>
             </column>
@@ -393,35 +380,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
-            <item>
-             <widget class="QPushButton" name="pushButton_26">
-              <property name="text">
-               <string>上一页</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_27">
-              <property name="text">
-               <string>下一页</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <layout class="QHBoxLayout" name="horizontalLayout_8"/>
           </item>
          </layout>
         </item>

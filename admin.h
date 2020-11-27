@@ -1,4 +1,4 @@
-#ifndef ADMIN_H
+﻿#ifndef ADMIN_H
 #define ADMIN_H
 
 #include <QWidget>
@@ -18,6 +18,8 @@ public:
     QString get_grade_addsql();
     QString get_exam_querysql();
     QString get_exam_addsql();
+    QString get_tea_querysql();
+    QString get_stu_querysql();
     void initbox();
     ~admin();
     adm cur_admin;
@@ -45,6 +47,10 @@ private slots:
     void on_btn_exam_clear_clicked();
 
     void on_table_exam_itemChanged(QTableWidgetItem *item);
+
+    void on_btn_stu_query_clicked();
+
+    void on_btn_tea_query_clicked();
 
 private:
     Ui::admin *ui;
