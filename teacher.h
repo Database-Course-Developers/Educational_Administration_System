@@ -24,12 +24,17 @@ public:
     QStringList print_daytime(QString);
     void initial_student_info();
 
+
 signals:
     void logout();
 
 private slots:
     void on_listWidget_itemClicked(QListWidgetItem *item);
-    void on_college_currentIndexChanged(int index);
+    void on_colleges_currentIndexChanged(const QString &arg1);
+    void on_majors_currentIndexChanged(const QString &arg1);
+    void on_classes_currentIndexChanged(const QString &arg1);
+
+
     void on_search_3_clicked(bool checked);
 
 
@@ -40,12 +45,16 @@ private slots:
 
     //void on_comboBox_3_currentIndexChanged(int index);
 
+
+
+
+
+    void on_search_student_clicked();
+
 private:
     Ui::teacher *ui;
     QString clg_name;
-    QStringList college_no, college_name;//college.append("全部");
-    QStringList major_no, major_name;//major.append("全部");
-    QStringList course_no, course_name;//course.append("全部");
+    QStringList college_name, major_name, class_name, course_name;
 };
 
 #endif // TEACHER_H
