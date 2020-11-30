@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -137,218 +137,176 @@
       </layout>
      </widget>
      <widget class="QWidget" name="stuInfo">
-      <layout class="QVBoxLayout" name="verticalLayout_13">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_14">
-           <property name="styleSheet">
-            <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
-           </property>
-           <property name="text">
-            <string>学生个人信息</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_23">
-         <item>
-          <layout class="QGridLayout" name="gridLayout_7">
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="stu_name"/>
-           </item>
-           <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_8">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>专业</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="stu_home"/>
-           </item>
-           <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_10">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>籍贯</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="stu_major"/>
-           </item>
-           <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_9">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>姓名</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="stu_no"/>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit_6"/>
-           </item>
-           <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="stu_birth">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>出生年月</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_7">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>学号</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="stu_grade">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>年级</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEdit_7"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QGridLayout" name="gridLayout_5">
-           <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="stu_college">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>学院</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-            <widget class="QLabel" name="stu_sex">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>性别 </string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="stu_class">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>班级</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit_3"/>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit_8"/>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEdit_9"/>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="stuInfo_back">
-           <property name="text">
-            <string>返回</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>410</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>返回</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>110</y>
+         <width>681</width>
+         <height>261</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_23">
+        <item>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QLabel" name="label_10">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>籍贯</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="stu_major"/>
+          </item>
+          <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QLabel" name="label_9">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>姓名</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QLabel" name="label_8">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>专业</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="stu_home"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="stu_name"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="stu_no"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_6"/>
+          </item>
+          <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QLabel" name="stu_birth">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>出生年月</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QLabel" name="label_7">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>学号</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QLabel" name="stu_grade">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>年级</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEdit_7"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QLabel" name="stu_college">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>学院</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+           <widget class="QLabel" name="stu_sex">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>性别 </string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QLabel" name="stu_class">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+            </property>
+            <property name="text">
+             <string>班级</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_3"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_8"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEdit_9"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>30</y>
+         <width>258</width>
+         <height>49</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 26pt &quot;AcadEref&quot;;</string>
+       </property>
+       <property name="text">
+        <string>学生个人信息</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="stuChooselesson">
       <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -370,7 +328,7 @@
          <item>
           <widget class="QLabel" name="label_15">
            <property name="styleSheet">
-            <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
+            <string notr="true">font: 26pt &quot;AcadEref&quot;;</string>
            </property>
            <property name="text">
             <string>学生选课</string>
@@ -396,13 +354,20 @@
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
           <widget class="QLabel" name="label_16">
+           <property name="styleSheet">
+            <string notr="true">font: 14pt &quot;AcadEref&quot;;</string>
+           </property>
            <property name="text">
             <string>学期：</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit"/>
+          <widget class="QLineEdit" name="lineEdit">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
          <item>
           <spacer name="horizontalSpacer_8">
@@ -483,178 +448,171 @@
       </layout>
      </widget>
      <widget class="QWidget" name="stuPlan">
-      <layout class="QVBoxLayout" name="verticalLayout_11">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <item>
-          <spacer name="horizontalSpacer_10">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_18">
-           <property name="styleSheet">
-            <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
-           </property>
-           <property name="text">
-            <string>培养计划</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_9">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <widget class="QLineEdit" name="lineEdit_11"/>
-         </item>
-         <item alignment="Qt::AlignLeft">
-          <widget class="QPushButton" name="stuPlan_search">
-           <property name="text">
-            <string>查找</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_11">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="stuPlan_back">
-           <property name="text">
-            <string>返回</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_20">
-           <property name="text">
-            <string>必修</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <spacer name="horizontalSpacer_12">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>选修</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_19">
-           <property name="text">
-            <string>未修学分</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>已修学分</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_12"/>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="lineEdit_13"/>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="lineEdit_14"/>
-         </item>
-         <item row="2" column="2">
-          <widget class="QLineEdit" name="lineEdit_15"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="tableWidget_4">
-         <column>
+      <widget class="QTableWidget" name="tableWidget_4">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>150</y>
+         <width>751</width>
+         <height>291</height>
+        </rect>
+       </property>
+       <column>
+        <property name="text">
+         <string>课程号</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>课程名</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>学时</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>学分</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>课程性质</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>学期</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>状态</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QLabel" name="label_18">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>0</y>
+         <width>211</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 26pt &quot;AcadEref&quot;;</string>
+       </property>
+       <property name="text">
+        <string>培养计划</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>340</x>
+         <y>450</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>返回</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_2">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>80</y>
+         <width>201</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="geometry">
+        <rect>
+         <x>670</x>
+         <y>80</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>查找</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>60</y>
+         <width>391</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_22">
           <property name="text">
-           <string>课程号</string>
+           <string>已修学分</string>
           </property>
-         </column>
-         <column>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_20">
           <property name="text">
-           <string>课程名</string>
+           <string>必修</string>
           </property>
-         </column>
-         <column>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEdit_12"/>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="lineEdit_15"/>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="lineEdit_13"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_21">
           <property name="text">
-           <string>学时</string>
+           <string>选修</string>
           </property>
-         </column>
-         <column>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_19">
           <property name="text">
-           <string>学分</string>
+           <string>未修学分</string>
           </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>课程性质</string>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEdit_14"/>
+        </item>
+        <item row="0" column="0">
+         <spacer name="horizontalSpacer_12">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>学期</string>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
           </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>状态</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-      </layout>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
      </widget>
      <widget class="QWidget" name="stuGrade">
       <layout class="QVBoxLayout" name="verticalLayout_2">
