@@ -23,6 +23,8 @@ public:
     void timeTablePage();
     void examPage();
 
+    void initial_personal_info();
+
 signals:
     void logout();
 private:
