@@ -322,4 +322,13 @@ void student::examPage()
 //
 
 
+//初始化学生个人信息界面
+//作者：李家欣
+// 初始化个人信息界面
+void student::initial_personal_info(){
+    QString sql="select Name from college where CLG='"+cur_student.sno+"'";
+
+}
+
+
 
