@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_tea">
       <attribute name="title">
@@ -1048,13 +1048,6 @@
            </item>
            <item>
             <layout class="QGridLayout" name="gridLayout_8">
-             <item row="0" column="1">
-              <widget class="QPushButton" name="pushButton_23">
-               <property name="text">
-                <string>修改</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="btn_stu_query">
                <property name="text">
@@ -1063,16 +1056,9 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QPushButton" name="pushButton_25">
+              <widget class="QPushButton" name="btn_stu_delete">
                <property name="text">
                 <string>删除</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="pushButton_24">
-               <property name="text">
-                <string>增加</string>
                </property>
               </widget>
              </item>
@@ -1088,6 +1074,20 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="btn_stu_add">
+               <property name="text">
+                <string>添加</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QPushButton" name="btn_stu_reset">
+               <property name="text">
+                <string>重置</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -1632,7 +1632,6 @@
   <tabstop>ld_tea_clg</tabstop>
   <tabstop>ld_tea_tel</tabstop>
   <tabstop>btn_tea_query</tabstop>
-  <tabstop>tabWidget</tabstop>
   <tabstop>btn_tea_add</tabstop>
   <tabstop>btn_tea_delete</tabstop>
   <tabstop>table_tea</tabstop>
@@ -1645,9 +1644,7 @@
   <tabstop>cbox_stu_birth_y</tabstop>
   <tabstop>ld_stu_cls</tabstop>
   <tabstop>btn_stu_query</tabstop>
-  <tabstop>pushButton_23</tabstop>
-  <tabstop>pushButton_24</tabstop>
-  <tabstop>pushButton_25</tabstop>
+  <tabstop>btn_stu_delete</tabstop>
   <tabstop>table_stu</tabstop>
   <tabstop>btn_exam_clear</tabstop>
   <tabstop>pushButton_3</tabstop>

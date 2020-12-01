@@ -541,7 +541,7 @@ void admin::on_btn_tea_query_clicked()
         }
     }
     else{
-        connectErrorMsg=query.lastError().text();
+        connectErrorMsg=query.lastError().text();       
         QMessageBox::information(nullptr,"数据库查找错误！","数据库查找错误，错误信息:"+connectErrorMsg);
     }
     ui->table_tea->blockSignals(false);
@@ -567,7 +567,7 @@ void admin::on_table_tea_itemChanged(QTableWidgetItem *item)
     ui->table_tea->blockSignals(true);
 
     int row=item->row();
-    QString column_name=get_column_name(item->column());
+    QString column_name=get_tea_column_name(item->column());
     QString updatesql="update teacher set "+column_name+
             "='"+item->text()+"' where TNO='"+ui->table_tea->item(row,0)->text()+"'";
 
@@ -617,7 +617,11 @@ void admin::on_btn_tea_add_clicked()
         }
         else{
             connectErrorMsg=query.lastError().text();
-            QMessageBox::information(nullptr,"数据库插入错误","数据库插入错误，错误信息："+connectErrorMsg);
+            //if(connectErrorMsg.contains("PRIMARY",Qt::CaseSensitive)){
+            //    qDebug()<<"输入的教师号已存在";
+            //}
+            qDebug()<<connectErrorMsg;
+            //QMessageBox::information(nullptr,"数据库插入错误","数据库插入错误，错误信息："+connectErrorMsg);
         }
     }
 }
