@@ -26,7 +26,7 @@ void student::initbox()
     examPage();
     stuInfoPage();
     stuPlanPage();
-    stuChooselessonPage();
+
 
     // 连接6个按钮和对应子页面
     connect(ui->pBStuInfo, &QPushButton::clicked,
@@ -38,6 +38,7 @@ void student::initbox()
          [=]()
     {
         ui->studenPages->setCurrentIndex(2);
+        stuChooselessonPage();
     });
     connect(ui->pBStuPlan, &QPushButton::clicked,
          [=]()
@@ -337,10 +338,12 @@ void student::stuInfoPage(){
     connect(ui->pBstuInfoBack, &QPushButton::clicked, [=](){
         ui->studenPages->setCurrentIndex(0);
     });
-    QString sql="select s.sno,s.sname,s.sex,s.hometown,s.birth,c.name,c.year,m.name,co.name from student s, _class c,major m,college co where s.CLS = c.CLS and c.MJR=m.MJR and m.CLG=co.CLG and s.sno='"+cur_student.sno+"'";
+    QString sql="select s.sno,s.sname,s.sex,s.hometown,s.birth,c.name,c.year,m.name,co.name "
+                "from student s, _class c,major m,college co "
+                "where s.CLS = c.CLS and c.MJR=m.MJR and m.CLG=co.CLG and s.sno='"+cur_student.sno+"'";
     QSqlQuery query;
     query.exec(sql);
-    query.next();//该学生可以登录因此该学生的信息一定存在
+    query.next();//该学生可以登录因此该学生的信息一定存在，所以不设置失败查询
     ui->stu_no->setText(query.value(0).toString());
     ui->stu_name->setText(query.value(1).toString());
     ui->stu_sex->setText(query.value(2).toString());
@@ -354,9 +357,49 @@ void student::stuInfoPage(){
 
 //初始化培养计划界面
 void student::stuPlanPage(){
+    ui->stuPlanTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->stuPlanTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     connect(ui->pBstuPlanBack, &QPushButton::clicked, [=](){
         ui->studenPages->setCurrentIndex(0);
     });
+}
+//根据数据库的内容获取授课时间
+QString student::get_time(QString daytime,QString weektime){
+    QString day="";
+    QString time;
+    bool flag=false;
+    int start=0;
+    int end=0;
+    for(int i=0; i<weektime.length();i++){
+        if(weektime[i]=="1") {
+            if(flag) end++;
+            else {
+                start=i;
+                end=i;
+                flag=true;
+            }
+        }
+        if((weektime[i]=="0"&&flag)||(weektime[i]=="1"&&i==weektime.length()-1)){
+            day = day + (QString::number(start+1))+"-"+(QString::number(end+1))+"周"+" ";
+            flag= false;
+        }
+    }
+    day = day + "/";
+    for(int i=0; i<daytime.length();i++){
+        if(daytime[i]=="1"){
+            int t = i%5;
+            switch (t) {
+            case 0: time = "(1-2节)";break;
+            case 1: time = "(3-4节)";break;
+            case 2: time = "(5-6节)";break;
+            case 3: time = "(7-8节)";break;
+            case 4: time = "(9-11节)";break;
+            }
+         day = day +"周"+(QString::number(int(i/5+1)))+time+" ";
+        }
+    }
+
+    return day;
 }
 
 //初始化学生选课界面
@@ -366,6 +409,65 @@ void student::stuChooselessonPage(){
     connect(ui->pBstuChooselessonBack, &QPushButton::clicked, [=](){
         ui->studenPages->setCurrentIndex(0);
     });
+    QDate date(QDate::currentDate());
+    int year=date.year();
+    int month=date.month();
+    int time = 1;
+    if(month<9){
+        year--;
+        time--;
+    }
+    /************************选课时间限定*****************************/
+    /********        为了方便演示，暂时删除限定           **************/
+   /* if(month!=9||month!=3){
+        QMessageBox message(QMessageBox::Question,"提示", "当前非选课时间");
+        QPushButton *ok = new QPushButton("确定");
+        message.addButton(ok,QMessageBox::AcceptRole);
+        connect(ok, &QPushButton::clicked, [=](){
+            ui->studenPages->setCurrentIndex(0);
+        });
+        message.exec();
+    }
+    else{
+
+    }*/
+    ui->ChooseLesson_time_label->setText(QString::number(year) + "第" + QString::number(time) + "学期");
+
+    QSqlQuery query;
+
+    //排课表是按照班级为单位的，因此先确定学生的班级，再根据班级查找课程安排进行选课
+    QString sql_cla="select cls from student where sno='"+cur_student.sno+"'";
+    query.exec(sql_cla);
+    query.next();
+    QString cla = query.value(0).toString();
+
+    QString sql = "select r.rcno, c.name, hour,credits,required,t.tname,r.clr,bin(r.daytime+0), bin(r.weektime+0)"
+                  " from course c, real_course r,teacher t "
+                  "where c.cno=r.cno and required='0' and t.tno=r.tno and rcno like '%" + cla + "%'";
+
+    query.exec(sql);
+    ui->chooseLessonTable->clearContents();
+    ui->chooseLessonTable->setRowCount(0);
+    if(query.next())  qDebug()<<"失败";
+    else {
+        qDebug()<<"sad";
+    }
+    while(query.next()){
+        QTableWidgetItem* item[8];
+        int rowCount=ui->chooseLessonTable->rowCount();
+        ui->chooseLessonTable->insertRow(rowCount);
+       for(int i=0; i<7;i++){
+            if(i==4) item[i]=new QTableWidgetItem("选修");
+            else{
+                item[i]=new QTableWidgetItem(query.value(i).toString());
+            }
+            ui->chooseLessonTable->setItem(rowCount,i,item[i]);
+          }
+
+       item[7]=new QTableWidgetItem(get_time(query.value(7).toString(),query.value(8).toString()));
+       ui->chooseLessonTable->setItem(rowCount,7,item[7]);
+
+    }
 }
 
 
