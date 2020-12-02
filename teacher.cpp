@@ -1,4 +1,4 @@
-#include "teacher.h"
+﻿#include "teacher.h"
 #include "ui_teacher.h"
 #include<QDebug>
 teacher::teacher(tea cur_teacher,QWidget *parent) :
