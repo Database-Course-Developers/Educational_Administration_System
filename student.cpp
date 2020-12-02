@@ -385,7 +385,10 @@ QString student::get_time(QString daytime,QString weektime){
     bool flag=false;
     int start=0;
     int end=0;
-    for(int i=20-weektime.length(); i<20;i++){
+    for(int i=20-weektime.length(); i>0;i--)
+        daytime='0'+daytime;
+
+    for(int i=0; i<weektime.length();i++){
         if(weektime[i]=="1") {
             if(flag) end++;
             else {
@@ -401,7 +404,9 @@ QString student::get_time(QString daytime,QString weektime){
     }
     day = day + "/";
     //获得每天的上课时间
-    for(int i=35-daytime.length(); i<35;i++){
+    for(int j=35-daytime.length();j>0;j--)
+        daytime='0'+daytime;
+    for(int i=0; i<daytime.length();i++){
         if(daytime[i]=="1"){
             int t = i%5;
             switch (t) {
@@ -457,7 +462,7 @@ void student::stuChooselessonPage(){
     query.next();
     QString cla = query.value(0).toString();
 
-    QString sql = "select r.rcno, c.name, hour,credits,required,t.tname,r.clr,bin(r.daytime+0), bin(r.weektime+0)"
+    QString sql = "select r.rcno, c.name, hour,credits,required,t.tname,r.clr,bin(r.daytime+0), bin(r.weektime+0),r.cno"
                   " from course c, real_course r,teacher t "
                   "where c.cno=r.cno and required='0' and t.tno=r.tno and rcno like '%" + cla + "%'";
 
@@ -465,20 +470,28 @@ void student::stuChooselessonPage(){
     ui->chooseLessonTable->clearContents();
     ui->chooseLessonTable->setRowCount(0);
     while(query.next()){
-        QTableWidgetItem* item[8];
+        QTableWidgetItem* item[10];
         int rowCount=ui->chooseLessonTable->rowCount();
-        qDebug()<<rowCount;
         ui->chooseLessonTable->insertRow(rowCount);
-       for(int i=0; i<7;i++){
+        for(int i=0; i<7;i++){
             if(i==4) item[i]=new QTableWidgetItem("选修");
             else{
                 item[i]=new QTableWidgetItem(query.value(i).toString());
             }
             ui->chooseLessonTable->setItem(rowCount,i,item[i]);
           }
-       item[7]=new QTableWidgetItem(get_time(query.value(7).toString(),query.value(8).toString()));
-       ui->chooseLessonTable->setItem(rowCount,7,item[7]);
+        item[7]=new QTableWidgetItem(get_time(query.value(7).toString(),query.value(8).toString()));
+        ui->chooseLessonTable->setItem(rowCount,7,item[7]);
 
+       //判断这门课的状态
+       QSqlQuery query1;
+       QString con=query.value(9).toString();
+       QString sql_statu="select * frome grade where sno='"+cur_student.sno+"' and cno='"+con+"'";
+       query1.exec(sql_statu);
+       if(query1.size()) item[8] = new QTableWidgetItem("已选");
+       else item[8] = new QTableWidgetItem("未选");
+       ui->chooseLessonTable->setItem(rowCount,8,item[8]);
+       //动态放置按钮用来进行选课和退选
     }
 }
 
