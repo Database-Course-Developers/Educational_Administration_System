@@ -1622,6 +1622,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
   <tabstop>ld_tea_no</tabstop>
   <tabstop>ld_tea_name</tabstop>
   <tabstop>cbox_tea_sex</tabstop>
@@ -1633,23 +1634,22 @@
   <tabstop>ld_tea_tel</tabstop>
   <tabstop>btn_tea_query</tabstop>
   <tabstop>btn_tea_add</tabstop>
+  <tabstop>btn_tea_reset</tabstop>
   <tabstop>btn_tea_delete</tabstop>
   <tabstop>table_tea</tabstop>
-  <tabstop>cbox_stu_sex</tabstop>
-  <tabstop>ld_stu_name</tabstop>
-  <tabstop>ld_stu_hometown</tabstop>
   <tabstop>ld_stu_no</tabstop>
+  <tabstop>ld_stu_name</tabstop>
+  <tabstop>cbox_stu_sex</tabstop>
+  <tabstop>cbox_stu_birth_y</tabstop>
   <tabstop>cbox_stu_birth_m</tabstop>
   <tabstop>cbox_stu_birth_d</tabstop>
-  <tabstop>cbox_stu_birth_y</tabstop>
+  <tabstop>ld_stu_hometown</tabstop>
   <tabstop>ld_stu_cls</tabstop>
   <tabstop>btn_stu_query</tabstop>
+  <tabstop>btn_stu_add</tabstop>
+  <tabstop>btn_stu_reset</tabstop>
   <tabstop>btn_stu_delete</tabstop>
   <tabstop>table_stu</tabstop>
-  <tabstop>btn_exam_clear</tabstop>
-  <tabstop>pushButton_3</tabstop>
-  <tabstop>btn_exam_query</tabstop>
-  <tabstop>ld_exam_rcno</tabstop>
   <tabstop>ld_exam_tno</tabstop>
   <tabstop>dt_end_time</tabstop>
   <tabstop>dt_begin_time</tabstop>
@@ -1681,7 +1681,10 @@
   <tabstop>bbtn_grade_add</tabstop>
   <tabstop>cbox_grade_year1</tabstop>
   <tabstop>table_grade</tabstop>
-  <tabstop>btn_tea_reset</tabstop>
+  <tabstop>btn_exam_query</tabstop>
+  <tabstop>ld_exam_rcno</tabstop>
+  <tabstop>btn_exam_clear</tabstop>
+  <tabstop>pushButton_3</tabstop>
  </tabstops>
  <resources/>
  <connections/>

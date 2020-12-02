@@ -22,6 +22,9 @@
         <property name="text">
          <string>欢迎使用教务管理系统！</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item>
