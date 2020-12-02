@@ -23,6 +23,7 @@ public:
     QString print_weektime(QString);
     QStringList print_daytime(QString);
     void initial_student_info();
+    QString fill_zero(QString, int);
 
 
 signals:
