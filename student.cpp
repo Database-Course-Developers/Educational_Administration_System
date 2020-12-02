@@ -252,7 +252,13 @@ void student::timeTablePage()
 
            // weektime，获得上课周
            QString weektime = sqlQuery->value(column++).toString();
-
+           if(weektime.length() != 20)
+           {
+               for(int i = 20 - weektime.length(); i > 0; i--)
+               {
+                   weektime = "0" + weektime;
+               }
+           }
            for(int i = 0; i < weektime.length(); i++)
            {
                if(weektime[i] == '1') v3 += QString::number(i + 1) + " " ;
@@ -263,6 +269,13 @@ void student::timeTablePage()
 
            // daytime，获得每周上课时间，将课程具体信息插入到表格对应位置
            QString daytime = sqlQuery->value(column).toString();
+           if(daytime.length() != 35)
+           {
+               for(int i = 35 - daytime.length(); i > 0; i--)
+               {
+                   daytime = "0" + daytime;
+               }
+           }
            for(int i = 0; i < daytime.length(); i++)
            {
                if(daytime[i] == '1')
