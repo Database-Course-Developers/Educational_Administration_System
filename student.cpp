@@ -263,7 +263,6 @@ void student::timeTablePage()
 
            // daytime，获得每周上课时间，将课程具体信息插入到表格对应位置
            QString daytime = sqlQuery->value(column).toString();
-           qDebug()<<daytime;
            for(int i = 0; i < daytime.length(); i++)
            {
                if(daytime[i] == '1')
@@ -369,10 +368,11 @@ void student::stuPlanPage(){
 QString student::get_time(QString daytime,QString weektime){
     QString day="";
     QString time;
+    //获得上课周
     bool flag=false;
     int start=0;
     int end=0;
-    for(int i=0; i<weektime.length();i++){
+    for(int i=20-weektime.length(); i<20;i++){
         if(weektime[i]=="1") {
             if(flag) end++;
             else {
@@ -387,7 +387,8 @@ QString student::get_time(QString daytime,QString weektime){
         }
     }
     day = day + "/";
-    for(int i=0; i<daytime.length();i++){
+    //获得每天的上课时间
+    for(int i=35-daytime.length(); i<35;i++){
         if(daytime[i]=="1"){
             int t = i%5;
             switch (t) {
@@ -462,8 +463,6 @@ void student::stuChooselessonPage(){
             }
             ui->chooseLessonTable->setItem(rowCount,i,item[i]);
           }
-
-       qDebug()<<query.value(7).toString();
        item[7]=new QTableWidgetItem(get_time(query.value(7).toString(),query.value(8).toString()));
        ui->chooseLessonTable->setItem(rowCount,7,item[7]);
 
