@@ -23,7 +23,9 @@ public:
     void timeTablePage();
     void examPage();
 
-    void initial_personal_info();
+    void stuInfoPage();
+    void stuChooselessonPage();
+    void stuPlanPage();
 
 signals:
     void logout();
