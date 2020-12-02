@@ -24,6 +24,9 @@ void student::initbox()
     gradePage();
     timeTablePage();
     examPage();
+    stuInfoPage();
+    stuPlanPage();
+    stuChooselessonPage();
 
     // 连接6个按钮和对应子页面
     connect(ui->pBStuInfo, &QPushButton::clicked,
@@ -322,12 +325,47 @@ void student::examPage()
 //
 
 
-//初始化学生个人信息界面
-//作者：李家欣
-// 初始化个人信息界面
-void student::initial_personal_info(){
-    QString sql="select Name from college where CLG='"+cur_student.sno+"'";
 
+/******************作者：李家欣************************/
+/***************学号：201830580469********************/
+/****************************************************/
+// 初始化个人信息界面
+void student::stuInfoPage(){
+    ui->tWTimeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tWTimeTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    connect(ui->pBstuInfoBack, &QPushButton::clicked, [=](){
+        ui->studenPages->setCurrentIndex(0);
+    });
+    QString sql="select s.sno,s.sname,s.sex,s.hometown,s.birth,c.name,c.year,m.name,co.name from student s, _class c,major m,college co where s.CLS = c.CLS and c.MJR=m.MJR and m.CLG=co.CLG and s.sno='"+cur_student.sno+"'";
+    QSqlQuery query;
+    query.exec(sql);
+    query.next();//该学生可以登录因此该学生的信息一定存在
+    ui->stu_no->setText(query.value(0).toString());
+    ui->stu_name->setText(query.value(1).toString());
+    ui->stu_sex->setText(query.value(2).toString());
+    ui->stu_home->setText(query.value(3).toString());
+    ui->stu_birth->setText(query.value(4).toString());
+    ui->stu_class->setText(query.value(5).toString());
+    ui->stu_grade->setText(query.value(6).toString());
+    ui->stu_major->setText(query.value(7).toString());
+    ui->stu_department->setText(query.value(8).toString());
+}
+
+//初始化培养计划界面
+void student::stuPlanPage(){
+    connect(ui->pBstuPlanBack, &QPushButton::clicked, [=](){
+        ui->studenPages->setCurrentIndex(0);
+    });
+}
+
+//初始化学生选课界面
+void student::stuChooselessonPage(){
+    ui->chooseLessonTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->chooseLessonTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    connect(ui->pBstuChooselessonBack, &QPushButton::clicked, [=](){
+        ui->studenPages->setCurrentIndex(0);
+    });
 }
 
 
