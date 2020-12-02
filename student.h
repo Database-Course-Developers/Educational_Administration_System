@@ -31,6 +31,7 @@ signals:
     void logout();
 private:
     Ui::student *ui;
+    QString get_time(QString,QString);
 };
 
 #endif // STUDENT_H
