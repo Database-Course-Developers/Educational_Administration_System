@@ -252,7 +252,6 @@ void student::timeTablePage()
 
            // weektime，获得上课周
            QString weektime = sqlQuery->value(column++).toString();
-<<<<<<< HEAD
            if(weektime.length()!=20)
            {
                for(int i = 20 - weektime.length(); i > 0;i--)
@@ -260,9 +259,7 @@ void student::timeTablePage()
                    weektime = "0" + weektime;
                }
            }
-=======
 
->>>>>>> c81ea7cf5c311491b9b44c8a7c432121ac37db7b
            for(int i = 0; i < weektime.length(); i++)
            {
                if(weektime[i] == '1') v3 += QString::number(i + 1) + " " ;
@@ -273,7 +270,7 @@ void student::timeTablePage()
 
            // daytime，获得每周上课时间，将课程具体信息插入到表格对应位置
            QString daytime = sqlQuery->value(column).toString();
-<<<<<<< HEAD
+
            if(daytime.length()!=35)
            {
                for(int i = 35 - daytime.length(); i > 0;i--)
@@ -281,9 +278,7 @@ void student::timeTablePage()
                    daytime = "0" + daytime;
                }
            }
-=======
-           qDebug()<<daytime;
->>>>>>> c81ea7cf5c311491b9b44c8a7c432121ac37db7b
+
            for(int i = 0; i < daytime.length(); i++)
            {
                if(daytime[i] == '1')
