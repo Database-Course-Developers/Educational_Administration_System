@@ -491,7 +491,9 @@ void student::stuChooselessonPage(){
        if(query1.size()) item[8] = new QTableWidgetItem("已选");
        else item[8] = new QTableWidgetItem("未选");
        ui->chooseLessonTable->setItem(rowCount,8,item[8]);
+
        //动态放置按钮用来进行选课和退选
+
     }
 }
 
