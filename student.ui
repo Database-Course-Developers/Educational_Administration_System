@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>student</class>
  <widget class="QWidget" name="student">
@@ -137,7 +137,6 @@
       </layout>
      </widget>
      <widget class="QWidget" name="stuInfoPage">
-<<<<<<< Updated upstream
       <widget class="QWidget" name="widget_11" native="true">
        <property name="geometry">
         <rect>
