@@ -4,6 +4,7 @@
 #include <QWidget>
 #include<base.h>
 #include<database_util.h>
+
 namespace Ui {
 class student;
 }
@@ -29,9 +30,11 @@ public:
 
 signals:
     void logout();
+
 private:
     Ui::student *ui;
     QString get_time(QString,QString);
+    void OnBtnClicked(QPushButton *pBtn);
 };
 
 #endif // STUDENT_H
