@@ -2,9 +2,12 @@
 #define TEACHER_H
 #include<QApplication>
 #include <QWidget>
+#include<QComboBox>
 #include<QListWidgetItem>
 #include<base.h>
 #include<database_util.h>
+#include<QTableWidgetItem>
+#include<QTableWidget>
 namespace Ui {
 class teacher;
 }
@@ -23,22 +26,40 @@ public:
     QString print_weektime(QString);
     QStringList print_daytime(QString);
     void initial_student_info();
+    void initial_class(QComboBox*,int);
+
 
 signals:
     void logout();
 
 private slots:
-    void on_listWidget_itemClicked(QListWidgetItem *item);
-    void on_college_currentIndexChanged(int index);
-    void on_search_3_clicked(bool checked);
+    void on_listWidget_itemClicked();
+
+    void on_major_2_currentIndexChanged();
+
+    void on_search_3_clicked();
+
+    void grade_search_function(int,int,int,int);
+
+    void on_butt_asc_clicked();
+
+    void on_butt_desc_clicked();
+
+    void on_butt_avg_clicked();
 
 
-    void on_comboBox_3_currentIndexChanged(int index);
+    void on_butt_level_clicked();
 
-    //void on_search_3_clicked(bool checked);
+    void on_search_5_clicked();
 
 
-    //void on_comboBox_3_currentIndexChanged(int index);
+    void on_butt_return_clicked();
+
+    void on_search_2_clicked();
+
+
+
+    void on_major_3_currentIndexChanged();
 
 private:
     Ui::teacher *ui;
