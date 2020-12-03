@@ -396,6 +396,7 @@ void student::stuPlanPage(){
         QString sql="select c.cno,c.name,hour,credits,required,year "
                     "from develop_plan d,course c where d.cno=c.cno and MJR='"+myMJR+"' and c.name like '%"+cname+"%'";
         set_stuPlanTable(sql);
+        ui->stuPlan_search_line->clear();
     });
 }
 
