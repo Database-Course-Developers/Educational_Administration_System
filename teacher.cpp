@@ -560,8 +560,6 @@ void teacher::on_search_2_clicked()
     QVector<QString> clsname_lst;
     ui->exam_table->clear();
     ui->exam_table->setRowCount(0);
-    QVector<QString> tno1_lst;
-    QVector<QString> tno2_lst;
     ui->exam_table->setHorizontalHeaderLabels(QStringList()<<"科目"<<"学院"<<"班级"<<"考试开始时间"<<"考试结束时间"<<"考试地点"<<"监考员1"<<"监考员2");
     QString crsname=ui->course_1->currentText();
     QString clsname=ui->major_3->currentText();
@@ -576,41 +574,17 @@ void teacher::on_search_2_clicked()
     query.exec(sql);
     while(query.next())
     {
-       QString fulldate0=query.value(2).toString();
-       QString fulldate1=query.value(3).toString();
        int curr=ui->exam_table->rowCount();
        ui->exam_table->insertRow(curr);
         ui->exam_table->setItem(curr,0,new QTableWidgetItem(query.value(0).toString()));
        ui->exam_table->setItem(curr,1,new QTableWidgetItem(query.value(1).toString()));
        ui->exam_table->setItem(curr,2,new QTableWidgetItem(clsname));
-       ui->exam_table->setItem(curr,3,new QTableWidgetItem(fulldate0.split('T')[0]+"   "+fulldate0.split('T')[1].split('.')[0]));
-       ui->exam_table->setItem(curr,4,new QTableWidgetItem(fulldate1.split('T')[0]+"   "+fulldate1.split('T')[1].split('.')[0]));
+       ui->exam_table->setItem(curr,3,new QTableWidgetItem(query.value(2).toString()));
+       ui->exam_table->setItem(curr,4,new QTableWidgetItem(query.value(3).toString()));
        ui->exam_table->setItem(curr,5,new QTableWidgetItem(query.value(4).toString()));
-       tno1_lst.append( query.value(5).toString());
-       tno2_lst.append( query.value(6).toString());
+       ui->exam_table->setItem(curr,6,new QTableWidgetItem(query.value(5).toString()));
+       ui->exam_table->setItem(curr,7,new QTableWidgetItem(query.value(6).toString()));
 
-    }
-    int curr=0;
-    for (int i=0;i<tno1_lst.length();i++)
-    {
-        sql="SELECT tname FROM teacher WHERE tno='"+tno1_lst[i]+"'";
-        query.exec(sql);
-        while(query.next())
-        {
-            ui->exam_table->setItem(curr,6,new QTableWidgetItem(query.value(0).toString()));
-        }
-        curr++;
-    }
-    curr=0;
-    for (int i=0;i<tno2_lst.length();i++)
-    {
-        sql="SELECT tname FROM teacher WHERE tno='"+tno2_lst[i]+"'";
-        query.exec(sql);
-        while(query.next())
-        {
-            ui->exam_table->setItem(curr,7,new QTableWidgetItem(query.value(0).toString()));
-        }
-        curr++;
     }
     ui->exam_table->show();
 }
