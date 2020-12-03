@@ -74,7 +74,18 @@ void admin::initbox(){
     ui->cbox_examadd_tno1->setCurrentIndex(-1);
     ui->cbox_examadd_tno2->setCurrentIndex(-1);
 
+    //----教师管理部分----
+    ui->cbox_tea_sex->setCurrentIndex(-1);
+    ui->cbox_tea_birth_y->setCurrentIndex(-1);
+    ui->cbox_tea_birth_m->setCurrentIndex(-1);
+    ui->cbox_tea_birth_d->setCurrentIndex(-1);
+    ui->cbox_tea_pos->setCurrentIndex(-1);
 
+    //----学生管理部分----
+    ui->cbox_stu_sex->setCurrentIndex(-1);
+    ui->cbox_stu_birth_y->setCurrentIndex(-1);
+    ui->cbox_stu_birth_m->setCurrentIndex(-1);
+    ui->cbox_stu_birth_d->setCurrentIndex(-1);
 }
 //-------考务 part -------林嘉欣
 QString admin::get_exam_querysql(){
@@ -447,6 +458,7 @@ void admin::on_bbtn_grade_add_clicked()
 
 //----------教师管理part----------胡婷婷
 
+//------查询------
 //根据输入框获取查询教师信息sql语句
 QString admin::get_tea_querysql(){
     QString sql="select * from teacher ";
@@ -507,31 +519,206 @@ void admin::on_btn_tea_query_clicked()
     QSqlQuery query;
     QString sql=get_tea_querysql();
     if(query.exec(sql)){
-        ui->table_tea->clearContents();
-        ui->table_tea->setRowCount(0);
-        while(query.next()){
-            //执行完query.exec()后query是指向结果集外的
-            //第一次执行query.next()使query指向结果集的第一条记录
-            //接下来的query.next()使query指向下一条记录
-            QTableWidgetItem* item[7];
-            int rowCount=ui->table_tea->rowCount();
-            ui->table_tea->insertRow(rowCount);
-            for(int i=0;i<7;i++){
-                item[i]=new QTableWidgetItem(query.value(i).toString());
-                item[i]->setFlags((Qt::ItemFlags)0);//单元格设为灰色不可编辑
-                ui->table_tea->setItem(rowCount,i,item[i]);
+        if(query.size()){
+            ui->table_tea->clearContents();
+            ui->table_tea->setRowCount(0);
+            while(query.next()){
+                //执行完query.exec()后query是指向结果集外的
+                //第一次执行query.next()使query指向结果集的第一条记录
+                //接下来的query.next()使query指向下一条记录
+                QTableWidgetItem* item[7];
+                int rowCount=ui->table_tea->rowCount();
+                ui->table_tea->insertRow(rowCount);
+                int i,j;
+                for(i=0;i<7;i++){
+                    if(i<3) j=i;
+                    else j=i+1; //第四项在数据库中是登录密码，不予显示
+                    item[i]=new QTableWidgetItem(query.value(j).toString());
+                    if(i==0){
+                        item[i]->setFlags(item[i]->flags()&(~Qt::ItemIsEditable));//设置第一列教师号为不可编辑
+                    }
+                    ui->table_tea->setItem(rowCount,i,item[i]);
+                }
             }
+        }
+        else{
+            QMessageBox::information(nullptr,"查询结果","查询结果为空！");
         }
     }
     else{
-        //数据库查找错误
+        connectErrorMsg=query.lastError().text();       
+        QMessageBox::information(nullptr,"数据库查找错误！","数据库查找错误，错误信息:"+connectErrorMsg);
     }
     ui->table_tea->blockSignals(false);
 
 }
 
 
+//------修改------
+//根据item所在列获取对应的列名
+QString admin::get_tea_column_name(int n){
+    if(n==0) return QString("TNO");
+    if(n==1) return QString("tname");
+    if(n==2) return QString("sex");
+    if(n==3) return QString("birth");
+    if(n==4) return QString("position");
+    if(n==5) return QString("tel");
+    if(n==6) return QString("CLG");
+}
+
+//在表格中修改内容
+void admin::on_table_tea_itemChanged(QTableWidgetItem *item)
+{
+    ui->table_tea->blockSignals(true);
+
+    int row=item->row();
+    QString column_name=get_tea_column_name(item->column());
+    QString updatesql="update teacher set "+column_name+
+            "='"+item->text()+"' where TNO='"+ui->table_tea->item(row,0)->text()+"'";
+
+    QSqlQuery query;
+    if(query.exec(updatesql)){
+        QMessageBox::information(nullptr,"修改成功","修改成功！");
+    }
+    //输出非法信息提示
+    else{
+        connectErrorMsg=query.lastError().text();
+        if(connectErrorMsg.contains("constraint 'teacher_chk_1'",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的性别是非法信息，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("Incorrect date value",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的生日信息是非法日期，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("foreign key constraint",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的学院号不存在，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("constraint 'teacher_check_tel'",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的手机号须为11位数，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("constraint 'teacher_check_pos'",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的教师职位不存在，请重新输入！");
+        }
+        else{
+            QMessageBox::information(nullptr,"修改错误","修改错误！错误信息："+connectErrorMsg);
+        }
+    }
+
+    ui->table_tea->blockSignals(false);
+}
+
+
+//------添加------
+void admin::on_btn_tea_add_clicked()
+{
+    QString tno=ui->ld_tea_no->text();
+    QString tname=ui->ld_tea_name->text();
+    QString sex=ui->cbox_tea_sex->currentText();
+    QString birth_y=ui->cbox_tea_birth_y->currentText();
+    QString birth_m=ui->cbox_tea_birth_m->currentText();
+    QString birth_d=ui->cbox_tea_birth_d->currentText();
+    QString pos=ui->cbox_tea_pos->currentText();
+    QString tel=ui->ld_tea_tel->text();
+    QString clg=ui->ld_tea_clg->text();
+    if(tno.size()==0||tname.size()==0||sex.size()==0||birth_y.size()==0||birth_m.size()==0||
+            birth_d.size()==0||pos.size()==0||tel.size()==0||clg.size()==0){
+        QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
+    }
+    else{
+        QString sql="insert into teacher value ('"+tno+"','"+tname+"','"+sex+"','123456','"+birth_y+"-"+
+                birth_m+"-"+birth_d+"','"+pos+"','"+tel+"','"+clg+"')";
+        QSqlQuery query;
+        if(query.exec(sql)){
+            ui->ld_tea_no->setText(""); //清空输入框
+            ui->ld_tea_name->setText("");
+            ui->cbox_tea_sex->setCurrentIndex(-1);
+            ui->cbox_tea_birth_y->setCurrentIndex(-1);
+            ui->cbox_tea_birth_m->setCurrentIndex(-1);
+            ui->cbox_tea_birth_d->setCurrentIndex(-1);
+            ui->cbox_tea_pos->setCurrentIndex(-1);
+            ui->ld_tea_tel->setText("");
+            ui->ld_tea_clg->setText("");
+            QMessageBox::information(nullptr,"添加成功","添加成功！");
+        }
+        //输出非法信息提示
+        else{
+            connectErrorMsg=query.lastError().text();
+            if(connectErrorMsg.contains("PRIMARY",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的教师号已存在，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("too long for column 'TNO'",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的教师号太长，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("Incorrect date value",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的生日信息是非法日期，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("foreign key constraint",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的学院号不存在，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("constraint 'teacher_check_tel'",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的手机号须为11位数，请重新输入！");
+            }
+            else{
+                QMessageBox::information(nullptr,"数据库插入错误","数据库插入错误，错误信息："+connectErrorMsg);
+            }
+        }
+    }
+}
+
+//------删除----
+void admin::on_btn_tea_delete_clicked()
+{
+    int row=ui->table_tea->currentRow();
+    if(row!=-1){
+        QPushButton *okbtn = new QPushButton(QString("确定"));
+        QPushButton *cancelbtn = new QPushButton(QString("取消"));
+        QMessageBox *confirmbox = new QMessageBox;
+
+        confirmbox->setIcon(QMessageBox::Warning);
+        confirmbox->setWindowTitle("提示");
+        confirmbox->setText("确认删除？");
+        confirmbox->addButton(okbtn,QMessageBox::AcceptRole);
+        confirmbox->addButton(cancelbtn,QMessageBox::RejectRole);
+        confirmbox->show();
+
+        confirmbox->exec();//使函数“暂停”，等待用户点击按钮
+
+        if(confirmbox->clickedButton()==okbtn){//点击确认按钮
+            QString sql="delete from teacher where TNO='"+ui->table_tea->item(row,0)->text()+"';";
+            QSqlQuery query;
+            if(query.exec(sql)){
+                ui->table_tea->removeRow(row);
+                QMessageBox::information(nullptr,"删除成功","删除成功！");
+            }
+            else{
+                connectErrorMsg=query.lastError().text();
+                QMessageBox::information(nullptr,"数据库删除错误","数据库删除错误，错误信息"+connectErrorMsg);
+            }
+        }
+    }
+    else{
+        QMessageBox::information(nullptr,"未选中","未选中删除行，请选择一行进行删除");
+    }
+}
+
+
+//------重置输入框------
+void admin::on_btn_tea_reset_clicked()
+{
+    ui->ld_tea_no->setText("");
+    ui->ld_tea_name->setText("");
+    ui->cbox_tea_sex->setCurrentIndex(-1);
+    ui->cbox_tea_birth_y->setCurrentIndex(-1);
+    ui->cbox_tea_birth_m->setCurrentIndex(-1);
+    ui->cbox_tea_birth_d->setCurrentIndex(-1);
+    ui->cbox_tea_pos->setCurrentIndex(-1);
+    ui->ld_tea_tel->setText("");
+    ui->ld_tea_clg->setText("");
+}
+
+
 //----------学生管理part----------胡婷婷
+
+//------查询------
 //根据输入框获取查询学生信息sql语句
 QString admin::get_stu_querysql(){
     QString sql="select * from student ";
@@ -589,21 +776,174 @@ void admin::on_btn_stu_query_clicked()
     QSqlQuery query;
     QString sql=get_stu_querysql();
     if(query.exec(sql)){
-        ui->table_tea->clearContents();
-        ui->table_tea->setRowCount(0);
-        while(query.next()){
-            QTableWidgetItem* item[6];
-            int rowCount=ui->table_stu->rowCount();
-            ui->table_stu->insertRow(rowCount);
-            for(int i=0;i<6;i++){
-                item[i]=new QTableWidgetItem(query.value(i).toString());
-                item[i]->setFlags((Qt::ItemFlags)0);//单元格设为灰色不可编辑
-                ui->table_stu->setItem(rowCount,i,item[i]);
+        if(query.size()){
+            ui->table_stu->clearContents();
+            ui->table_stu->setRowCount(0);
+            while(query.next()){
+                QTableWidgetItem* item[6];
+                int rowCount=ui->table_stu->rowCount();
+                ui->table_stu->insertRow(rowCount);
+                for(int i=0;i<6;i++){
+                    item[i]=new QTableWidgetItem(query.value(i).toString());
+                    if(i==0){
+                        item[i]->setFlags(item[i]->flags()&(~Qt::ItemIsEditable));//设置第一列学号为不可编辑
+                    }
+                    ui->table_stu->setItem(rowCount,i,item[i]);
+                }
+            }
+        }
+        else{
+            QMessageBox::information(nullptr,"查询结果","查询结果为空！");
+        }
+    }
+    else{
+        connectErrorMsg=query.lastError().text();
+        QMessageBox::information(nullptr,"数据库查找错误！","数据库查找错误，错误信息:"+connectErrorMsg);
+    }
+    ui->table_stu->blockSignals(false);
+}
+
+
+//------修改------
+QString admin::get_stu_column_name(int n){
+    if(n==0) return QString("sno");
+    if(n==1) return QString("sname");
+    if(n==2) return QString("sex");
+    if(n==3) return QString("hometown");
+    if(n==4) return QString("birth");
+    if(n==5) return QString("CLS");
+}
+
+//在表格中修改内容
+void admin::on_table_stu_itemChanged(QTableWidgetItem *item)
+{
+    ui->table_stu->blockSignals(true);
+
+    int row=item->row();
+    QString column_name=get_stu_column_name(item->column());
+    QString updatesql="update student set "+column_name+
+            "='"+item->text()+"' where sno='"+ui->table_stu->item(row,0)->text()+"'";
+
+    QSqlQuery query;
+    if(query.exec(updatesql)){
+        QMessageBox::information(nullptr,"修改成功","修改成功！");
+    }
+    else{
+        connectErrorMsg=query.lastError().text();
+        if(connectErrorMsg.contains("constraint 'student_chk_1'",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的性别是非法信息，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("Incorrect date value",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的生日信息是非法日期，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("foreign key constraint",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的班级号不存在，请重新输入！");
+        }
+        else{
+            QMessageBox::information(nullptr,"修改错误","修改错误！错误信息："+connectErrorMsg);
+        }
+    }
+
+    ui->table_stu->blockSignals(false);
+}
+
+//------添加------
+void admin::on_btn_stu_add_clicked()
+{
+    QString sno=ui->ld_stu_no->text();
+    QString sname=ui->ld_stu_name->text();
+    QString sex=ui->cbox_stu_sex->currentText();
+    QString hometown=ui->ld_stu_hometown->text();
+    QString birth_y=ui->cbox_stu_birth_y->currentText();
+    QString birth_m=ui->cbox_stu_birth_m->currentText();
+    QString birth_d=ui->cbox_stu_birth_d->currentText();
+    QString cls=ui->ld_stu_cls->text();
+    if(sno.size()==0||sname.size()==0||sex.size()==0||birth_y.size()==0||birth_m.size()==0||
+            birth_d.size()==0||hometown.size()==0||cls.size()==0){
+        QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
+    }
+    else{
+        QString sql="insert into student value ('"+sno+"','"+sname+"','"+sex+"','"+
+                hometown+"','"+birth_y+"-"+birth_m+"-"+birth_d+"','"+cls+"','123456')";
+        QSqlQuery query;
+        if(query.exec(sql)){
+            ui->ld_stu_no->setText(""); //清空输入框
+            ui->ld_stu_name->setText("");
+            ui->cbox_stu_sex->setCurrentIndex(-1);
+            ui->ld_stu_hometown->setText("");
+            ui->cbox_stu_birth_y->setCurrentIndex(-1);
+            ui->cbox_stu_birth_m->setCurrentIndex(-1);
+            ui->cbox_stu_birth_d->setCurrentIndex(-1);
+            ui->ld_stu_cls->setText("");
+            QMessageBox::information(nullptr,"添加成功","添加成功！");
+        }
+        else{
+            connectErrorMsg=query.lastError().text();
+            if(connectErrorMsg.contains("PRIMARY",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的学号已存在，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("too long for column 'TNO'",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的学号太长，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("Incorrect date value",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的生日信息是非法日期，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("foreign key constraint",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的班级号不存在，请重新输入！");
+            }
+            else{
+                QMessageBox::information(nullptr,"数据库插入错误","数据库插入错误，错误信息："+connectErrorMsg);
+            }
+        }
+    }
+}
+
+
+//------删除------
+void admin::on_btn_stu_delete_clicked()
+{
+    int row=ui->table_stu->currentRow();
+    if(row!=-1){
+        QPushButton *okbtn = new QPushButton(QString("确定"));
+        QPushButton *cancelbtn = new QPushButton(QString("取消"));
+        QMessageBox *confirmbox = new QMessageBox;
+
+        confirmbox->setIcon(QMessageBox::Warning);
+        confirmbox->setWindowTitle("提示");
+        confirmbox->setText("确认删除？");
+        confirmbox->addButton(okbtn,QMessageBox::AcceptRole);
+        confirmbox->addButton(cancelbtn,QMessageBox::RejectRole);
+        confirmbox->show();
+
+        confirmbox->exec();//使函数“暂停”，等待用户点击按钮
+
+        if(confirmbox->clickedButton()==okbtn){//点击确认按钮
+            QString sql="delete from student where sno='"+ui->table_stu->item(row,0)->text()+"';";
+            QSqlQuery query;
+            if(query.exec(sql)){
+                ui->table_stu->removeRow(row);
+                QMessageBox::information(nullptr,"删除成功","删除成功！");
+            }
+            else{
+                connectErrorMsg=query.lastError().text();
+                QMessageBox::information(nullptr,"数据库删除错误","数据库删除错误，错误信息"+connectErrorMsg);
             }
         }
     }
     else{
-        //数据库查找错误
+        QMessageBox::information(nullptr,"未选中","未选中删除行，请选择一行进行删除");
     }
-    ui->table_stu->blockSignals(false);
+}
+
+//------重置输入框------
+void admin::on_btn_stu_reset_clicked()
+{
+    ui->ld_stu_no->setText("");
+    ui->ld_stu_name->setText("");
+    ui->cbox_stu_sex->setCurrentIndex(-1);
+    ui->ld_stu_hometown->setText("");
+    ui->cbox_stu_birth_y->setCurrentIndex(-1);
+    ui->cbox_stu_birth_m->setCurrentIndex(-1);
+    ui->cbox_stu_birth_d->setCurrentIndex(-1);
+    ui->ld_stu_cls->setText("");
 }

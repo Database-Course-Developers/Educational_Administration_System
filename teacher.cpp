@@ -10,13 +10,10 @@ teacher::teacher(tea cur_teacher,QWidget *parent) :
 
     initial_personal_info();
     initial_course();
-//    警告：Using QCharRef with an index pointing outside the valid range of a QString.
-//    The corresponding behavior is deprecated, and will be changed in a future version of Qt.
     initial_student_info();
     //屏幕最大化
     setWindowState(Qt::WindowMaximized);
     ui->stackedWidget->setCurrentIndex(0);
-
 }
 
 teacher::~teacher()
@@ -74,7 +71,7 @@ QString teacher::print_weektime(QString weektime){// 开课时间-eg.1-12周,14-
             flag = true;
         }
         else if(weektime[i] == "0" and flag == true){// 连续开课的最后一周
-            end = i+1;
+            end = i;
             flag = false;
             if(first == true){
                 weektime_output +=QString::number(start)+'-'+QString::number(end)+"周";
@@ -112,17 +109,29 @@ QStringList teacher::print_daytime(QString daytime){// 上课时间-eg.(1-2节)
     return daytime_output;
 }
 
+QString teacher::fill_zero(QString in,int len){
+    QString tmp;
+    for(int k=0; in.length()+k<len; k++){
+        tmp[k]='0';
+    }
+    return tmp+in;
+}
+
 // 初始化课程表
 void teacher::initial_course(){
     QString sql="select rcno, bin(daytime+0), bin(weektime+0), CLR, course.name, credits, "
                 "bin(required+0), bin(is_exam+0), hour from real_course, course "
-                "where tno='"+cur_teacher.tno+"' and real_course.cno = course.cno";
+                "where tno='"+cur_teacher.tno+"' and real_course.cno = course.CNO";
     query.exec(sql);
     QString cour_info;
+
+
     while(query.next()){
         // 0-课务号 1-每周上课时间 2-开课周 3-课室号 4-课程名 5-学分 6-是否必修 7-是否考试 8-学时
         QString daytime=query.value(1).toString();// 上课时间-eg.(1-2节)
         QString weektime=query.value(2).toString();// 开课时间-eg.1-12周
+        daytime = fill_zero(daytime,35);
+        weektime = fill_zero(weektime,20);
 
         for(int i=0; i<print_daytime(daytime).length()/3; i++){
             cour_info=query.value(4).toString()+'\n'+print_daytime(daytime)[3*i]+print_weektime(weektime)
@@ -134,92 +143,73 @@ void teacher::initial_course(){
             //把cour_info写进课程表中 周：print_daytime(daytime)[3*i+1] 节：print_daytime(daytime)[3*i+2]
             ui->lesson_table->setItem(print_daytime(daytime)[3*i+2].toInt()-1,
                     print_daytime(daytime)[3*i+1].toInt()-1, new QTableWidgetItem(cour_info));
-
-            //qDebug()<<"\ninfo:\n"<<cour_info;
         }
     }
 }
 
+
 // 初始化学生信息界面
 void teacher::initial_student_info(){
-    // 筛选出老师教授的学院 专业 课程
-    QString sql="select substring(rcno, 11, 2) clg_no, (select name from college where CLG = clg_no), "
-                "substring(rcno, 7, 8) major_no, concat(substring(rcno, 9, 2),'级',(select name from major where MJR = substring(rcno, 11, 3)),substring(rcno, 14, 1),'班'), "
-                "real_course.cno, course.name from real_course, college, course "
-                "where tno='"+cur_teacher.tno+"' and real_course.cno = course.cno";
+    QString sql;
+
+    // 删除上次创建的视图
+    sql="drop view cur_teacher_course";
+    query.exec(sql);
+    sql="drop view cur_teacher_course_with_name";
+    query.exec(sql);
+
+    // 从rcno筛选出子串创建视图cur_teacher_course
+    sql="create view cur_teacher_course(CLG, MJR, CLS, cno) as "
+        "select substring(rcno, 11, 2), substring(rcno, 11, 3) CLS, substring(rcno, 7, 8), cno "
+        "from real_course "
+        "where tno='"+cur_teacher.tno+"'";
+    query.exec(sql);
+
+    // 创建包含学院、专业、班级、课程编号和对应名字的视图cur_teacher_course_with_name
+    sql="create view cur_teacher_course_with_name(clg_no, clg_name, mjr_no, mjr_name, cls_no, cls_name, cour_no, cour_name) as "
+        "select cur_teacher_course.CLG, college.name, cur_teacher_course.MJR, major.name, cur_teacher_course.CLS, _class.name, cur_teacher_course.cno, course.name "
+        "from cur_teacher_course, college, major, _class, course "
+        "where college.CLG = cur_teacher_course.CLG and major.MJR = cur_teacher_course.MJR and _class.CLS = cur_teacher_course.CLS and course.CNO = cur_teacher_course.cno";
+    query.exec(sql);
+
+    // 创建_name QStringList写入QCombox
+    college_name.append("全部");
+
+    sql="select clg_name, mjr_name, cls_name, cour_name from cur_teacher_course_with_name";
     query.exec(sql);
     while(query.next()){
-        qDebug()<<"new:\n"<<query.value(0).toString()<<'\t'<<query.value(1).toString()<<'\t'
-                <<query.value(2).toString()<<'\t'<<query.value(3).toString()<<'\t'
-                <<query.value(4).toString()<<'\t'<<query.value(5).toString()<<'\n';
+        college_name.append(query.value(0).toString());
     }
 
-
-
-
-    QString cour_info;
-    //QStringList college;
-    college_no.append("-1");college_name.append("全部");
-    //QStringList major;
-    major_no.append("-1");major_name.append("全部");
-    //QStringList course;
-    course_no.append("-1");course_name.append("全部");
-    while(query.next()){
-        cour_info=query.value(0).toString();
-        college_no.append(cour_info.mid(10,2));
-        major_no.append(cour_info.mid(6,8));
-        course_no.append(cour_info.mid(15,5));
-    }
-    college_no.removeDuplicates();
-    major_no.removeDuplicates();
-    course_no.removeDuplicates();
-
-//    // college 编号->名字
-//    for(int i=1; i<college_no.length(); i++){
-//        sql="select name from college where CLG='"+college_no[i]+"'";
-//        query.exec(sql);
-//        if(query.next()){
-//            college_name.append(query.value(0).toString());
-//            qDebug()<<college_name[i]<<'\t';
-//        }
-//    }
-//    // major 编号->名字
-//    for(int i=1; i<major_no.length(); i++){
-//        sql="select name from major where MJR='"+(major_no[i].mid(4,3))+"'";
-//        query.exec(sql);
-//        if(query.next()){
-//            major_name.append(major_name[i].mid(2,2)+"级"+query.value(0).toString()+major_name[i].mid(7,1)+"班");
-//            qDebug()<<major_name[i]<<'\t';
-//        }
-//    }
-//    // course从编号->名字
-//    for(int i=1; i<college_no.length(); i++){
-//        sql="select name from course where cno='"+course_no[i]+"'";
-//        query.exec(sql);
-//        if(query.next()){
-//            course_name.append(query.value(0).toString());
-//            qDebug()<<course_name[i]<<'\t';
-//        }
-//    }
-
-//    ui->college->addItems(college_name);
-//    ui->major->addItems(major_name);
-//    ui->course->addItems(course_name);
-
+    // 去除重复值
+    college_name.removeDuplicates();
+    ui->colleges->addItems(college_name);
 }
-/*
-void teacher::on_college_currentIndexChanged(int index)
+
+void teacher::on_colleges_currentIndexChanged(const QString &arg1)
 {
-    qDebug()<<college_no[index];
+    QString sql;
+    major_name.clear();
+    major_name.append("全部");
 
-//    QString sql="select rcno from real_course where tno='"+cur_teacher.tno+"' and rcno like %"
-//            +college_name[index]+"%";
-//    query.exec(sql);
-//    while(query.next()){
+    if(arg1 == "全部"){
+        sql="select distinct mjr_name from cur_teacher_course_with_name where clg_name = '"+college_name[1]+"'";
+        for(int i=2;i<college_name.length(); i++){
+            sql+=" or clg_name = '"+college_name[i]+"'";
+        }
+    }
+    else{
+        sql="select distinct mjr_name from cur_teacher_course_with_name where clg_name = '"+arg1+"'";
+    }
 
-//    }
+    query.exec(sql);
+    while(query.next()){
+        major_name.append(query.value(0).toString());
+    }
+    ui->majors->clear();
+    ui->majors->addItems(major_name);
 }
-*/
+
 //------------------------------------------------------------------成绩信息----梁靖欣------------------------------------------------------
 //初始化该老师的班级
 void teacher::initial_class(QComboBox*a,int option){
@@ -285,7 +275,60 @@ void teacher::on_major_2_currentIndexChanged()
         }
 
 }
+void teacher::on_majors_currentIndexChanged(const QString &arg1)
+{
+    if(arg1 == ""){
+        return;
+    }
 
+    QString sql;
+    class_name.clear();
+    class_name.append("全部");
+    if(arg1 == "全部"){
+        sql="select distinct cls_name from cur_teacher_course_with_name where mjr_name = '"+major_name[1]+"'";
+        for(int i=2;i<major_name.length(); i++){
+            sql+=" or mjr_name = '"+major_name[i]+"'";
+        }
+    }
+    else{
+        sql="select distinct cls_name from cur_teacher_course_with_name where mjr_name = '"+arg1+"'";
+    }
+
+    query.exec(sql);
+    while(query.next()){
+        class_name.append(query.value(0).toString());
+    }
+    ui->classes->clear();
+    ui->classes->addItems(class_name);
+}
+
+void teacher::on_classes_currentIndexChanged(const QString &arg1)
+{
+    if(arg1 == ""){
+        return;
+    }
+
+    QString sql;
+    course_name.clear();
+    course_name.append("全部");
+    if(arg1 == "全部"){
+        sql="select distinct cour_name from cur_teacher_course_with_name where cls_name = '"+class_name[1]+"'";
+        for(int i=2;i<class_name.length(); i++){
+            sql+=" or cls_name = '"+class_name[i]+"'";
+        }
+    }
+    else{
+        sql="select distinct cour_name from cur_teacher_course_with_name where cls_name = '"+arg1+"'";
+    }
+
+    query.exec(sql);
+    while(query.next()){
+        course_name.append(query.value(0).toString());
+    }
+    course_name.removeDuplicates();
+    ui->courses->clear();
+    ui->courses->addItems(course_name);
+}
 
 //成绩信息查询
 void teacher::grade_search_function(int desc,int asc,int avg,int level)
