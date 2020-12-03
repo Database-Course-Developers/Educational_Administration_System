@@ -13,7 +13,6 @@ teacher::teacher(tea cur_teacher,QWidget *parent) :
     //屏幕最大化
     setWindowState(Qt::WindowMaximized);
     ui->stackedWidget->setCurrentIndex(0);
-
 }
 
 teacher::~teacher()
@@ -92,7 +91,7 @@ QString teacher::print_weektime(QString weektime){// 开课时间-eg.1-12周,14-
             flag = true;
         }
         else if(weektime[i] == "0" and flag == true){// 连续开课的最后一周
-            end = i+1;
+            end = i;
             flag = false;
             if(first == true){
                 weektime_output +=QString::number(start)+'-'+QString::number(end)+"周";
@@ -130,6 +129,13 @@ QStringList teacher::print_daytime(QString daytime){// 上课时间-eg.(1-2节)
     return daytime_output;
 }
 
+QString teacher::fill_zero(QString in,int len){
+    QString tmp;
+    for(int k=0; in.length()+k<len; k++){
+        tmp[k]='0';
+    }
+    return tmp+in;
+}
 
 // 初始化课程表
 void teacher::initial_course(){
@@ -141,11 +147,11 @@ void teacher::initial_course(){
 
 
     while(query.next()){
-//        qDebug()<<"\t\tquery.value(1).toString()="<<query.value(1).toChar();
-
         // 0-课务号 1-每周上课时间 2-开课周 3-课室号 4-课程名 5-学分 6-是否必修 7-是否考试 8-学时
         QString daytime=query.value(1).toString();// 上课时间-eg.(1-2节)
         QString weektime=query.value(2).toString();// 开课时间-eg.1-12周
+        daytime = fill_zero(daytime,35);
+        weektime = fill_zero(weektime,20);
 
         for(int i=0; i<print_daytime(daytime).length()/3; i++){
             cour_info=query.value(4).toString()+'\n'+print_daytime(daytime)[3*i]+print_weektime(weektime)
