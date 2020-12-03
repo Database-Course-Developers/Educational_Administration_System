@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -214,9 +214,6 @@
            <item row="1" column="2">
             <widget class="QLineEdit" name="stu_home"/>
            </item>
-           <item row="0" column="2">
-            <widget class="QLineEdit" name="stu_name"/>
-           </item>
            <item row="1" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
             <widget class="QLabel" name="label_10">
              <property name="styleSheet">
@@ -230,6 +227,9 @@
            <item row="2" column="2">
             <widget class="QLineEdit" name="stu_major"/>
            </item>
+           <item row="0" column="2">
+            <widget class="QLineEdit" name="stu_name"/>
+           </item>
           </layout>
          </item>
          <item>
@@ -241,11 +241,21 @@
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="stu_no"/>
-           </item>
            <item row="1" column="1">
             <widget class="QLineEdit" name="stu_birth"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="stu_grade"/>
+           </item>
+           <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="label_6">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>年级</string>
+             </property>
+            </widget>
            </item>
            <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
             <widget class="QLabel" name="label_7">
@@ -267,18 +277,8 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="stu_grade"/>
-           </item>
-           <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_6">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>年级</string>
-             </property>
-            </widget>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="stu_no"/>
            </item>
           </layout>
          </item>
@@ -291,18 +291,8 @@
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout_5">
-           <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_11">
-             <property name="styleSheet">
-              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
-             </property>
-             <property name="text">
-              <string>性别 </string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="stu_department"/>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="stu_class"/>
            </item>
            <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
             <widget class="QLabel" name="label_12">
@@ -311,6 +301,16 @@
              </property>
              <property name="text">
               <string>学院</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+            <widget class="QLabel" name="label_11">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+             </property>
+             <property name="text">
+              <string>性别 </string>
              </property>
             </widget>
            </item>
@@ -324,11 +324,11 @@
              </property>
             </widget>
            </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="stu_department"/>
+           </item>
            <item row="0" column="1">
             <widget class="QLineEdit" name="stu_sex"/>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="stu_class"/>
            </item>
           </layout>
          </item>
@@ -401,6 +401,9 @@
          <width>841</width>
          <height>351</height>
         </rect>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <column>
         <property name="text">
@@ -606,10 +609,10 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEdit_12"/>
+         <widget class="QLineEdit" name="lE_pass_1"/>
         </item>
         <item row="2" column="2">
-         <widget class="QLineEdit" name="lineEdit_15"/>
+         <widget class="QLineEdit" name="lE_nopass_0"/>
         </item>
         <item row="0" column="2">
          <widget class="QLabel" name="label_19">
@@ -619,10 +622,10 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="lineEdit_14"/>
+         <widget class="QLineEdit" name="lE_pass_0"/>
         </item>
         <item row="1" column="2">
-         <widget class="QLineEdit" name="lineEdit_13"/>
+         <widget class="QLineEdit" name="lE_nopass_1"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_20">
@@ -691,6 +694,12 @@
        <layout class="QFormLayout" name="formLayout">
         <item row="0" column="0" colspan="2">
          <widget class="QTableWidget" name="stuPlanTable">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
           <column>
            <property name="text">
             <string>课程号</string>
