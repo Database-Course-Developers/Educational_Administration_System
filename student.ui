@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -434,12 +434,12 @@
        </column>
        <column>
         <property name="text">
-         <string>授课时间</string>
+         <string>授课地点</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>授课地点</string>
+         <string>授课时间</string>
         </property>
        </column>
        <column>
@@ -546,51 +546,6 @@
       </widget>
      </widget>
      <widget class="QWidget" name="stuPlanPage">
-      <widget class="QTableWidget" name="stuPlanTable">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>160</y>
-         <width>771</width>
-         <height>291</height>
-        </rect>
-       </property>
-       <column>
-        <property name="text">
-         <string>课程号</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>课程名</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>学时</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>学分</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>课程性质</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>学期</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>状态</string>
-        </property>
-       </column>
-      </widget>
       <widget class="QLabel" name="label_18">
        <property name="geometry">
         <rect>
@@ -610,8 +565,8 @@
       <widget class="QPushButton" name="pBstuPlanBack">
        <property name="geometry">
         <rect>
-         <x>560</x>
-         <y>110</y>
+         <x>30</x>
+         <y>430</y>
          <width>93</width>
          <height>28</height>
         </rect>
@@ -623,8 +578,8 @@
       <widget class="QPushButton" name="pushButton_3">
        <property name="geometry">
         <rect>
-         <x>680</x>
-         <y>110</y>
+         <x>110</x>
+         <y>100</y>
          <width>93</width>
          <height>28</height>
         </rect>
@@ -636,10 +591,10 @@
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>60</y>
-         <width>441</width>
-         <height>81</height>
+         <x>10</x>
+         <y>160</y>
+         <width>191</width>
+         <height>97</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
@@ -650,28 +605,11 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_20">
-          <property name="text">
-           <string>必修</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
          <widget class="QLineEdit" name="lineEdit_12"/>
         </item>
         <item row="2" column="2">
          <widget class="QLineEdit" name="lineEdit_15"/>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="lineEdit_13"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_21">
-          <property name="text">
-           <string>选修</string>
-          </property>
-         </widget>
         </item>
         <item row="0" column="2">
          <widget class="QLabel" name="label_19">
@@ -682,6 +620,23 @@
         </item>
         <item row="2" column="1">
          <widget class="QLineEdit" name="lineEdit_14"/>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="lineEdit_13"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_20">
+          <property name="text">
+           <string>必修</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_21">
+          <property name="text">
+           <string>选修</string>
+          </property>
+         </widget>
         </item>
         <item row="0" column="0">
          <spacer name="horizontalSpacer_12">
@@ -701,15 +656,79 @@
       <widget class="QLineEdit" name="stuPlan_search_line">
        <property name="geometry">
         <rect>
-         <x>550</x>
+         <x>10</x>
          <y>60</y>
-         <width>221</width>
+         <width>191</width>
          <height>31</height>
         </rect>
        </property>
        <property name="placeholderText">
         <string>请输入课程名</string>
        </property>
+      </widget>
+      <widget class="Line" name="line_7">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>60</y>
+         <width>20</width>
+         <height>411</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+      <widget class="QWidget" name="widget_17" native="true">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>50</y>
+         <width>681</width>
+         <height>421</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0" colspan="2">
+         <widget class="QTableWidget" name="stuPlanTable">
+          <column>
+           <property name="text">
+            <string>课程号</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>课程名</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>学时</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>学分</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>课程性质</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>学期</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>状态</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
      <widget class="QWidget" name="stuGrade">
