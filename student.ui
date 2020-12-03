@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -575,7 +575,7 @@
         <string>返回</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="pb_stuPlan_search_by_cname">
        <property name="geometry">
         <rect>
          <x>110</x>
