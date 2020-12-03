@@ -21,13 +21,18 @@ void student::initbox()
 {
     ui->studenPages->setCurrentIndex(0);
 
+    //记录学生的班级号
+    myclass = cur_student.sno.mid(0,8);
+    //记录选课的情况
+    flag=0;//0代表选课情况没有更改，1代表发生了更改
+
     // 子页面的初始化
     gradePage();
     timeTablePage();
     examPage();
     stuInfoPage();
     stuPlanPage();
-
+    stuChooselessonPage();
 
     // 连接6个按钮和对应子页面
     connect(ui->pBStuInfo, &QPushButton::clicked,
@@ -38,8 +43,7 @@ void student::initbox()
     connect(ui->pBStuCho, &QPushButton::clicked,
          [=]()
     {
-        ui->studenPages->setCurrentIndex(2);
-        stuChooselessonPage();
+        ui->studenPages->setCurrentIndex(2);        
     });
     connect(ui->pBStuPlan, &QPushButton::clicked,
          [=]()
@@ -372,12 +376,73 @@ void student::stuInfoPage(){
 
 //初始化培养计划界面
 void student::stuPlanPage(){
+
+    //创建视图(将该学生的选课信息输出到视图中)
+    QString create_view = "create view student_grade as "
+                          "select sno,cno,grade from grade where sno='"+cur_student.sno+"'";
+    QSqlQuery create;
+    create.exec(create_view);
+
     ui->stuPlanTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     connect(ui->pBstuPlanBack, &QPushButton::clicked, [=](){
         ui->studenPages->setCurrentIndex(0);
     });
     //初始化
+    QString myMJR=cur_student.sno.mid(4,3);
+    QString sql="select c.cno,c.name,hour,credits,required,year "
+                "from develop_plan d,course c where d.cno=c.cno and MJR='"+myMJR+"'";
+    set_stuPlanTable(sql);
 
+    //按课程名查找培养计划中某一课程的具体情况
+
+    connect(ui->pb_stuPlan_search_by_cname, &QPushButton::clicked, [=](){
+        QString cname=ui->stuPlan_search_line->text();
+        qDebug()<<cname;
+        QString sql="select c.cno,c.name,hour,credits,required,year "
+                    "from develop_plan d,course c where d.cno=c.cno and MJR='"+myMJR+"' and c.name like '%"+cname+"%'";
+        set_stuPlanTable(sql);
+    });
+}
+
+void student::set_stuPlanTable(QString sql){
+    QSqlQuery query;
+    if(query.exec(sql)){
+        ui->stuPlanTable->clearContents();
+        ui->stuPlanTable->setRowCount(0);
+        while(query.next()){
+            int rowCount=ui->stuPlanTable->rowCount();
+            ui->stuPlanTable->insertRow(rowCount);
+            for(int i=0; i<4;i++){
+                ui->stuPlanTable->setItem(rowCount,i,new QTableWidgetItem(query.value(i).toString()));
+              }
+            ui->stuPlanTable->setItem(rowCount,4,new QTableWidgetItem(query.value(4).toString()==1?"必修":"选修"));
+            int term=query.value(5).toInt();
+            term=(term%10)+(term/10-1)*2;
+            ui->stuPlanTable->setItem(rowCount,5,new QTableWidgetItem("第"+QString::number(term)+"学期"));
+
+            //判断课程的修读状态
+            QString judge = "select * from student_grade where cno = '"+query.value(0).toString()+"'";
+            QSqlQuery sql;
+            sql.exec(judge);
+            QString status;
+            if(sql.size()){
+                sql.next();
+                if(sql.isNull(2)) {status = "正在修读"; }
+                else if(sql.value(2).toInt()>=60){
+                    status = "已通过";
+                }
+                else status="未通过";
+            }
+            else {
+                status = "未修";
+            }
+            ui->stuPlanTable->setItem(rowCount,6,new QTableWidgetItem(status));
+        }
+    }
+    else{
+        connectErrorMsg=query.lastError().text();
+        QMessageBox::information(nullptr,"数据库查询错误！","数据库查询错误，错误信息:"+connectErrorMsg);
+    }
 }
 
 
@@ -463,14 +528,9 @@ void student::stuChooselessonPage(){
     QSqlQuery query;
 
     //排课表是按照班级为单位的，因此先确定学生的班级，再根据班级查找课程安排进行选课
-    QString sql_cla="select cls from student where sno='"+cur_student.sno+"'";
-    query.exec(sql_cla);
-    query.next();
-    QString cla = query.value(0).toString();
-
     QString sql = "select r.rcno, c.name, hour,credits,required,t.tname,r.clr,bin(r.daytime+0), bin(r.weektime+0)"
                   " from course c, real_course r,teacher t "
-                  "where c.cno=r.cno and required='0' and t.tno=r.tno and rcno like '%" + cla + "%'";
+                  "where c.cno=r.cno and required='0' and t.tno=r.tno and rcno like '%" + myclass + "%'";
 
     query.exec(sql);
     ui->chooseLessonTable->clearContents();
@@ -518,6 +578,7 @@ void student::stuChooselessonPage(){
 
 //选课和退课按钮的相关事件
 void student::OnBtnClicked(QPushButton *pBtn){
+    flag = 1;//选课情况发生更改，即grade表发生变化
     QModelIndex idx=ui->chooseLessonTable->indexAt(QPoint(pBtn->frameGeometry().x(),pBtn->frameGeometry().y()));
     int p=idx.row();
     QString cno = ui->chooseLessonTable->item(p,0)->text().mid(15);
@@ -536,7 +597,6 @@ void student::OnBtnClicked(QPushButton *pBtn){
     }
     else {
         QString term=ui->ChooseLesson_time_label->text().mid(0,4)+ui->ChooseLesson_time_label->text().mid(6,1);
-        qDebug()<<term;
         QString insertsql = "insert into grade(sno,cno,year) values('"+cur_student.sno+"','"+cno+"','"+term+"')";
         if(query.exec(insertsql)){
             pBtn->setText("退课");
