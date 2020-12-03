@@ -43,6 +43,7 @@ void teacher::on_listWidget_itemClicked()
 }
 }
 
+//---------------------个人信息----董妙君------------------------
 // 初始化个人信息界面
 void teacher::initial_personal_info(){
     QString sql="select Name from college where CLG='"+cur_teacher.CLG+"'";
@@ -60,6 +61,8 @@ void teacher::initial_personal_info(){
     ui->ledit_clg->setText(clg_name);
 }
 
+
+//---------------------课程查询----董妙君------------------------
 QString teacher::print_weektime(QString weektime){// 开课时间-eg.1-12周,14-15周
     QString weektime_output;
     int start,end;
@@ -147,7 +150,7 @@ void teacher::initial_course(){
     }
 }
 
-
+//---------------------学生查询----董妙君------------------------
 // 初始化学生信息界面
 void teacher::initial_student_info(){
     QString sql;
@@ -209,6 +212,114 @@ void teacher::on_colleges_currentIndexChanged(const QString &arg1)
     ui->majors->clear();
     ui->majors->addItems(major_name);
 }
+
+void teacher::on_majors_currentIndexChanged(const QString &arg1)
+{
+    if(arg1 == ""){
+        return;
+    }
+
+    QString sql;
+    class_name.clear();
+    class_name.append("全部");
+    if(arg1 == "全部"){
+        sql="select distinct cls_name from cur_teacher_course_with_name where mjr_name = '"+major_name[1]+"'";
+        for(int i=2;i<major_name.length(); i++){
+            sql+=" or mjr_name = '"+major_name[i]+"'";
+        }
+    }
+    else{
+        sql="select distinct cls_name from cur_teacher_course_with_name where mjr_name = '"+arg1+"'";
+    }
+
+    query.exec(sql);
+    while(query.next()){
+        class_name.append(query.value(0).toString());
+    }
+    ui->classes->clear();
+    ui->classes->addItems(class_name);
+}
+
+void teacher::on_classes_currentIndexChanged(const QString &arg1)
+{
+    if(arg1 == ""){
+        return;
+    }
+
+    QString sql;
+    course_name.clear();
+    course_name.append("全部");
+    if(arg1 == "全部"){
+        sql="select distinct cour_name from cur_teacher_course_with_name where cls_name = '"+class_name[1]+"'";
+        for(int i=2;i<class_name.length(); i++){
+            sql+=" or cls_name = '"+class_name[i]+"'";
+        }
+    }
+    else{
+        sql="select distinct cour_name from cur_teacher_course_with_name where cls_name = '"+arg1+"'";
+    }
+
+    query.exec(sql);
+    while(query.next()){
+        course_name.append(query.value(0).toString());
+    }
+    course_name.removeDuplicates();
+    ui->courses->clear();
+    ui->courses->addItems(course_name);
+}
+
+void teacher::on_search_student_clicked()
+{
+    ui->student_table->setRowCount(0);
+
+    // 班级->课程->专业->学院
+    QString sql;
+    QString clg_info=ui->colleges->currentText();
+    QString mjr_info=ui->majors->currentText();
+    QString cls_info=ui->classes->currentText();
+    QString cour_info=ui->courses->currentText();
+    int row=0;
+
+    if(cls_info != "全部"){
+        sql = "select sno, sname, sex, hometown, birth, cls_name from student, cur_teacher_course_with_name "
+              "where student.CLS = cur_teacher_course_with_name.cls_no and CLS in ("
+              "select distinct cls_no from cur_teacher_course_with_name "
+              "where cls_name = '"+cls_info+"')";
+    }
+    else if(cour_info != "全部"){
+        sql = "select sno, sname, sex, hometown, birth, cls_name from student, cur_teacher_course_with_name "
+              "where student.CLS = cur_teacher_course_with_name.cls_no and CLS in ("
+              "select distinct cls_no from cur_teacher_course_with_name "
+              "where cour_name = '"+cour_info+"')";
+    }
+    else if(mjr_info != "全部"){
+        sql = "select sno, sname, sex, hometown, birth, cls_name from student, cur_teacher_course_with_name "
+              "where student.CLS = cur_teacher_course_with_name.cls_no and CLS in ("
+              "select distinct cls_no from cur_teacher_course_with_name "
+              "where mjr_name = '"+mjr_info+"')";
+    }
+    else if(clg_info != "全部"){
+        sql = "select sno, sname, sex, hometown, birth, cls_name from student, cur_teacher_course_with_name "
+              "where student.CLS = cur_teacher_course_with_name.cls_no and CLS in ("
+              "select distinct cls_no from cur_teacher_course_with_name "
+              "where clg_name = '"+clg_info+"')";
+    }
+    else{
+        sql = "select sno, sname, sex, hometown, birth, cls_name from student, cur_teacher_course_with_name "
+              "where student.CLS = cur_teacher_course_with_name.cls_no and CLS in ("
+              "select distinct cls_no from cur_teacher_course_with_name)";
+    }
+
+    query.exec(sql);
+    while(query.next()){
+        ui->student_table->insertRow(row);
+        for(int i=0; i<6; i++){
+            ui->student_table->setItem(row, i, new QTableWidgetItem(query.value(i).toString()));
+        }
+        row++;
+    }
+}
+
 
 //------------------------------------------------------------------成绩信息----梁靖欣------------------------------------------------------
 //初始化该老师的班级
@@ -274,60 +385,6 @@ void teacher::on_major_2_currentIndexChanged()
             ui->course_2->addItem(query.value(0).toString());
         }
 
-}
-void teacher::on_majors_currentIndexChanged(const QString &arg1)
-{
-    if(arg1 == ""){
-        return;
-    }
-
-    QString sql;
-    class_name.clear();
-    class_name.append("全部");
-    if(arg1 == "全部"){
-        sql="select distinct cls_name from cur_teacher_course_with_name where mjr_name = '"+major_name[1]+"'";
-        for(int i=2;i<major_name.length(); i++){
-            sql+=" or mjr_name = '"+major_name[i]+"'";
-        }
-    }
-    else{
-        sql="select distinct cls_name from cur_teacher_course_with_name where mjr_name = '"+arg1+"'";
-    }
-
-    query.exec(sql);
-    while(query.next()){
-        class_name.append(query.value(0).toString());
-    }
-    ui->classes->clear();
-    ui->classes->addItems(class_name);
-}
-
-void teacher::on_classes_currentIndexChanged(const QString &arg1)
-{
-    if(arg1 == ""){
-        return;
-    }
-
-    QString sql;
-    course_name.clear();
-    course_name.append("全部");
-    if(arg1 == "全部"){
-        sql="select distinct cour_name from cur_teacher_course_with_name where cls_name = '"+class_name[1]+"'";
-        for(int i=2;i<class_name.length(); i++){
-            sql+=" or cls_name = '"+class_name[i]+"'";
-        }
-    }
-    else{
-        sql="select distinct cour_name from cur_teacher_course_with_name where cls_name = '"+arg1+"'";
-    }
-
-    query.exec(sql);
-    while(query.next()){
-        course_name.append(query.value(0).toString());
-    }
-    course_name.removeDuplicates();
-    ui->courses->clear();
-    ui->courses->addItems(course_name);
 }
 
 //成绩信息查询
@@ -531,5 +588,3 @@ void teacher::on_search_2_clicked()
     }
     ui->exam_table->show();
 }
-
-

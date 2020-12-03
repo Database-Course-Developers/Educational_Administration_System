@@ -35,37 +35,22 @@ signals:
 
 private slots:
     void on_listWidget_itemClicked();
-
     void on_major_2_currentIndexChanged();
-
     void on_search_3_clicked();
-
     void grade_search_function(int,int,int,int);
-
     void on_butt_asc_clicked();
-
     void on_butt_desc_clicked();
-
     void on_butt_avg_clicked();
-
-
     void on_butt_level_clicked();
-
     void on_search_5_clicked();
-
     void on_colleges_currentIndexChanged(const QString &arg1);
     void on_majors_currentIndexChanged(const QString &arg1);
     void on_classes_currentIndexChanged(const QString &arg1);
-
-
-
     void on_butt_return_clicked();
-
     void on_search_2_clicked();
-
-
-
     void on_major_3_currentIndexChanged();
+
+    void on_search_student_clicked();
 
 private:
     Ui::teacher *ui;
