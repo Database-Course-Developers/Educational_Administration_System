@@ -18,6 +18,7 @@ public:
     ~student();
     stu cur_student;
     QString myclass;
+    QString myMJR;
     int flag;
     void initbox();
     void gradePage();
@@ -37,7 +38,10 @@ private:
     Ui::student *ui;
     QString get_time(QString,QString);
     void set_stuPlanTable(QString);
+    void get_credits();
+    void init_stuPlanTable();
     void OnBtnClicked(QPushButton *pBtn);
+    void create_view();
 };
 
 #endif // STUDENT_H
