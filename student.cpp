@@ -111,7 +111,7 @@ void student::gradePage()
         QString myTime = ui->cBGradeYear->currentText() + ui->cBGradeTerm->currentText();
 
         QString sqlStr = "select sg.cno, name, credits, grade, bin(required+0) from student_grade sg, course c where "
-                         "year = '" + myTime + "' and sg.cno = c.cno and grade is not null";
+                         "year = '" + myTime + "' and sg.cno = c.cno";
 
         setGradeTable(sqlStr);
     });
@@ -150,6 +150,7 @@ void student::setGradeTable(QString sqlStr)
        }
        while( sqlQuery->next() )
        {
+           if(sqlQuery->isNull(3)) continue; // 如果成绩为NULL，则表示该门课还未考试，跳过
            int rowcount = ui->tWGrade->rowCount();
            ui->tWGrade->insertRow(rowcount);
 
