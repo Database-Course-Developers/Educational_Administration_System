@@ -31,7 +31,7 @@ void student::initbox()
 
     // 子页面的初始化
     gradePage();
-    timeTablePage();
+    timeTablePageInit();
     examPage();
     stuInfoPage();
     stuPlanPage();
@@ -213,11 +213,6 @@ void student::calGrade()
 // 课表信息子界面 钟子涵
 void student::timeTablePageInit()
 {
-
-}
-
-void student::timeTablePage()
-{
     ui->tWTimeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tWTimeTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -225,6 +220,12 @@ void student::timeTablePage()
     {
         ui->studenPages->setCurrentIndex(0);
     });
+    timeTablePage();
+}
+
+void student::timeTablePage()
+{
+    ui->tWTimeTable->clearContents();
 
     // 获得当前学年
     QString sqlStr0 = "select year from term";
