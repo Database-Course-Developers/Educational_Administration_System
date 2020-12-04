@@ -32,7 +32,7 @@ void student::initbox()
     // 子页面的初始化
     gradePage();
     timeTablePageInit();
-    examPage();
+    examPageInit();
     stuInfoPage();
     stuPlanPage();
 
@@ -72,6 +72,7 @@ void student::initbox()
          [=]()
     {
         ui->studenPages->setCurrentIndex(6);
+        if(flag == 1) examPage();
     });
 
     // 返回登陆界面
@@ -162,7 +163,7 @@ void student::setGradeTable(QString sqlStr)
            if (sqlQuery->value(4).toString() == "1") ui->tWGrade->setItem( rowcount, 4, new QTableWidgetItem("必修"));
            else ui->tWGrade->setItem( rowcount, 4, new QTableWidgetItem("选修"));
            // 是否通过考试
-           if(sqlQuery->value(3).toString() >= "60") ui->tWGrade->setItem( rowcount, 5, new QTableWidgetItem("是"));
+           if(sqlQuery->value(3).toInt() >= 60) ui->tWGrade->setItem( rowcount, 5, new QTableWidgetItem("是"));
            else ui->tWGrade->setItem( rowcount, 5, new QTableWidgetItem("否"));
        }
     }
@@ -263,7 +264,8 @@ void student::timeTablePage()
 */
     QString sqlStr = "select rcno, c.name, tname, clr, credits, bin(required+0), bin(is_exam+0), co.name, hour, bin(weektime+0), bin(daytime+0) "
                      "from real_course r, course c, teacher t, college co, student_grade sg "
-                     "where sg.year = '" + curYear + "' and sg.cno = r.cno and r.cno = c.cno and r.tno = t.tno and c.clg = co.clg";
+                     "where rcno like '%" + myclass + "%' and sg.year = '" + curYear +
+            "' and sg.cno = r.cno and r.cno = c.cno and r.tno = t.tno and c.clg = co.clg";
     sqlQuery->prepare(sqlStr);
     if( sqlQuery->exec() )
     {
@@ -324,7 +326,7 @@ void student::timeTablePage()
 }
 
 // 考试信息子页面 钟子涵
-void student::examPage()
+void student::examPageInit()
 {
     ui->tWStuExam->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tWStuExam->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -332,22 +334,29 @@ void student::examPage()
     connect(ui->pBStuExamBack, &QPushButton::clicked, [=](){
         ui->studenPages->setCurrentIndex(0);
     });
-    // 先获取该学生所在班级
-    QString sqlStr0 = "select CLS from student where sno = '" + cur_student.sno + "'";
+
+    examPage();
+}
+void student::examPage()
+{
+    ui->tWStuExam->clearContents();
+    // 获得当前学年
+    QString sqlStr0 = "select year from term";
     QSqlQuery *sqlQuery = new QSqlQuery;
     sqlQuery->prepare(sqlStr0);
-
-    QString myClass = "";
+    QString curYear;
     if(sqlQuery->exec())
     {
         if(sqlQuery->next()) // 要有此句
         {
-            myClass = sqlQuery->value(0).toString();
+            curYear = sqlQuery->value(0).toString();
         }
     }
 
-    QString sqlStr = "select e.rcno, name, tname, e.clr, begin_time, end_time from exam e, real_course r, teacher t, course c "
-                     "where e.rcno like '%" + myClass + "%' and e.rcno = r.rcno and r.tno = t.tno and r.cno = c.cno";
+    QString sqlStr = "select e.rcno, name, tname, e.clr, begin_time, end_time "
+                     "from exam e, real_course r, teacher t, course c, student_grade sg "
+                     "where sg.year = '" + curYear + "' and r.rcno like '%" + myclass + "%' and r.cno = sg.cno "
+                     "and r.rcno = e.rcno and r.tno = t.tno and r.cno = c.cno";
     sqlQuery->prepare(sqlStr);
     if( sqlQuery->exec() )
     {
@@ -370,9 +379,6 @@ void student::examPage()
        }
     }
 }
-//
-
-
 
 /******************作者：李家欣************************/
 /***************学号：201830580469********************/

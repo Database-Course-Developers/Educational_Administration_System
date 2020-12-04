@@ -27,7 +27,7 @@ public:
     void timeTablePageInit();
     void timeTablePage();
     void examPage();
-
+    void examPageInit();
     void stuInfoPage();
     void stuChooselessonPage();
     void stuPlanPage();
