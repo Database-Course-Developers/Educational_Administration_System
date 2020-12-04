@@ -24,6 +24,7 @@ public:
     void gradePage();
     void setGradeTable(QString);
     void calGrade();
+    void timeTablePageInit();
     void timeTablePage();
     void examPage();
 

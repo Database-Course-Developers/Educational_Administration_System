@@ -66,7 +66,7 @@ void student::initbox()
          [=]()
     {
         ui->studenPages->setCurrentIndex(5);
-
+        if(flag == 1) timeTablePage();
     });
     connect(ui->pBStuExam, &QPushButton::clicked,
          [=]()
@@ -211,9 +211,13 @@ void student::calGrade()
 }
 
 // 课表信息子界面 钟子涵
+void student::timeTablePageInit()
+{
+
+}
+
 void student::timeTablePage()
 {
-    QString mySno = cur_student.sno;
     ui->tWTimeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tWTimeTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -222,6 +226,19 @@ void student::timeTablePage()
         ui->studenPages->setCurrentIndex(0);
     });
 
+    // 获得当前学年
+    QString sqlStr0 = "select year from term";
+    QSqlQuery *sqlQuery = new QSqlQuery;
+    sqlQuery->prepare(sqlStr0);
+    QString curYear;
+    if(sqlQuery->exec())
+    {
+        if(sqlQuery->next()) // 要有此句
+        {
+            curYear = sqlQuery->value(0).toString();
+        }
+    }
+        /*
     // 先获取该学生所在班级
     QString sqlStr0 = "select CLS from student where sno = '" + mySno + "'";
     QSqlQuery *sqlQuery = new QSqlQuery;
@@ -236,12 +253,17 @@ void student::timeTablePage()
         }
     }
 
+
     // 根据学生所在班级，利用模糊匹配，得到该学生所在班级本学期开设的课程
     QString sqlStr = "select rcno, c.name, tname, clr, credits, bin(required+0), bin(is_exam+0), co.name, hour, bin(weektime+0), bin(daytime+0) "
                      "from real_course r, course c, teacher t, college co "
                      "where rcno like '%" + myClass + "%' and r.cno = c.cno and r.tno = t.tno and c.clg = co.clg";
     sqlQuery->prepare( sqlStr );
-
+*/
+    QString sqlStr = "select rcno, c.name, tname, clr, credits, bin(required+0), bin(is_exam+0), co.name, hour, bin(weektime+0), bin(daytime+0) "
+                     "from real_course r, course c, teacher t, college co, student_grade sg "
+                     "where sg.year = '" + curYear + "' and sg.cno = r.cno and r.cno = c.cno and r.tno = t.tno and c.clg = co.clg";
+    sqlQuery->prepare(sqlStr);
     if( sqlQuery->exec() )
     {
        //读取查询到的记录
