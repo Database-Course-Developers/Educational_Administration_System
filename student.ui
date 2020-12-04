@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -29,6 +29,15 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 20pt</string>
+         </property>
          <property name="text">
           <string>返回</string>
          </property>
@@ -39,6 +48,16 @@
          <layout class="QGridLayout" name="gridLayout">
           <item row="1" column="1">
            <widget class="QPushButton" name="pBStuGrade">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt 
+</string>
+            </property>
             <property name="text">
              <string>成绩信息</string>
             </property>
@@ -46,6 +65,15 @@
           </item>
           <item row="1" column="5">
            <widget class="QPushButton" name="pBStuExam">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt</string>
+            </property>
             <property name="text">
              <string>考试信息</string>
             </property>
@@ -53,6 +81,15 @@
           </item>
           <item row="1" column="3">
            <widget class="QPushButton" name="pBStuTimetable">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt</string>
+            </property>
             <property name="text">
              <string>课表查询</string>
             </property>
@@ -73,6 +110,15 @@
           </item>
           <item row="0" column="3">
            <widget class="QPushButton" name="pBStuCho">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt</string>
+            </property>
             <property name="text">
              <string>学生选课</string>
             </property>
@@ -93,6 +139,27 @@
           </item>
           <item row="0" column="1">
            <widget class="QPushButton" name="pBStuInfo">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>300</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt</string>
+            </property>
             <property name="text">
              <string>个人信息</string>
             </property>
@@ -100,6 +167,15 @@
           </item>
           <item row="0" column="5">
            <widget class="QPushButton" name="pBStuPlan">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt</string>
+            </property>
             <property name="text">
              <string>培养计划</string>
             </property>
@@ -238,7 +314,11 @@
                   </widget>
                  </item>
                  <item row="1" column="2">
-                  <widget class="QLineEdit" name="stu_home"/>
+                  <widget class="QLineEdit" name="stu_home">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                  <item row="1" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_10">
@@ -251,10 +331,18 @@
                   </widget>
                  </item>
                  <item row="2" column="2">
-                  <widget class="QLineEdit" name="stu_major"/>
+                  <widget class="QLineEdit" name="stu_major">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                  <item row="0" column="2">
-                  <widget class="QLineEdit" name="stu_name"/>
+                  <widget class="QLineEdit" name="stu_name">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -268,10 +356,18 @@
                <item>
                 <layout class="QGridLayout" name="gridLayout_2">
                  <item row="1" column="1">
-                  <widget class="QLineEdit" name="stu_birth"/>
+                  <widget class="QLineEdit" name="stu_birth">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                  <item row="2" column="1">
-                  <widget class="QLineEdit" name="stu_grade"/>
+                  <widget class="QLineEdit" name="stu_grade">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                  <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_6">
@@ -304,7 +400,11 @@
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QLineEdit" name="stu_no"/>
+                  <widget class="QLineEdit" name="stu_no">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -318,7 +418,11 @@
                <item>
                 <layout class="QGridLayout" name="gridLayout_5">
                  <item row="2" column="1">
-                  <widget class="QLineEdit" name="stu_class"/>
+                  <widget class="QLineEdit" name="stu_class">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                  <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_12">
@@ -351,10 +455,18 @@
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QLineEdit" name="stu_department"/>
+                  <widget class="QLineEdit" name="stu_department">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QLineEdit" name="stu_sex"/>
+                  <widget class="QLineEdit" name="stu_sex">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -656,10 +768,18 @@
              <item>
               <layout class="QGridLayout" name="gridLayout_3">
                <item row="1" column="2">
-                <widget class="QLineEdit" name="lE_nopass_1"/>
+                <widget class="QLineEdit" name="lE_nopass_1">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QLineEdit" name="lE_pass_0"/>
+                <widget class="QLineEdit" name="lE_pass_0">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
                <item row="0" column="2">
                 <widget class="QLabel" name="label_19">
@@ -669,7 +789,11 @@
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lE_pass_1"/>
+                <widget class="QLineEdit" name="lE_pass_1">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="label_22">
@@ -693,7 +817,11 @@
                 </widget>
                </item>
                <item row="2" column="2">
-                <widget class="QLineEdit" name="lE_nopass_0"/>
+                <widget class="QLineEdit" name="lE_nopass_0">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -855,7 +983,7 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="styleSheet">
-             <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
+             <string notr="true">font: 26pt &quot;AcadEref&quot;;</string>
             </property>
             <property name="text">
              <string>成绩信息</string>
@@ -1089,7 +1217,7 @@
           <item>
            <widget class="QLabel" name="label_3">
             <property name="styleSheet">
-             <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
+             <string notr="true">font: 26pt &quot;AcadEref&quot;;</string>
             </property>
             <property name="text">
              <string>课表</string>
@@ -1236,7 +1364,7 @@
           <item>
            <widget class="QLabel" name="label_4">
             <property name="styleSheet">
-             <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
+             <string notr="true">font: 26pt &quot;AcadEref&quot;;</string>
             </property>
             <property name="text">
              <string>考试信息</string>
