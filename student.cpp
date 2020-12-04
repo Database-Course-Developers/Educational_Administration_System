@@ -35,7 +35,6 @@ void student::initbox()
     examPage();
     stuInfoPage();
     stuPlanPage();
-    stuChooselessonPage();
 
     // 连接6个按钮和对应子页面
     connect(ui->pBStuInfo, &QPushButton::clicked,
@@ -46,13 +45,14 @@ void student::initbox()
     connect(ui->pBStuCho, &QPushButton::clicked,
          [=]()
     {
-        ui->studenPages->setCurrentIndex(2);        
+        ui->studenPages->setCurrentIndex(2);
+        stuChooselessonPage();
     });
     connect(ui->pBStuPlan, &QPushButton::clicked,
          [=]()
     {
         ui->studenPages->setCurrentIndex(3);
-        if(flag) init_stuPlanTable();
+        init_stuPlanTable();
 
     });
     connect(ui->pBStuGrade, &QPushButton::clicked,
@@ -514,7 +514,7 @@ QString student::get_time(QString daytime,QString weektime){
 //初始化学生选课界面
 void student::stuChooselessonPage(){
     ui->chooseLessonTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
+    ui->chooseLessonTable->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     connect(ui->pBstuChooselessonBack, &QPushButton::clicked, [=](){
         ui->studenPages->setCurrentIndex(0);
     });
@@ -554,44 +554,54 @@ void student::stuChooselessonPage(){
     query.exec(sql);
     ui->chooseLessonTable->clearContents();
     ui->chooseLessonTable->setRowCount(0);
+    if(query.size()){
+        while(query.next()){
+            QTableWidgetItem* item[10];
+            int rowCount=ui->chooseLessonTable->rowCount();
+            ui->chooseLessonTable->insertRow(rowCount);
+            for(int i=0; i<7;i++){
+                if(i==4) item[i]=new QTableWidgetItem("选修");
+                else{
+                    item[i]=new QTableWidgetItem(query.value(i).toString());
+                }
+                ui->chooseLessonTable->setItem(rowCount,i,item[i]);
+              }
+            item[7]=new QTableWidgetItem(get_time(query.value(7).toString(),query.value(8).toString()));
+            ui->chooseLessonTable->setItem(rowCount,7,item[7]);
 
-    while(query.next()){
-        QTableWidgetItem* item[10];
-        int rowCount=ui->chooseLessonTable->rowCount();
-        ui->chooseLessonTable->insertRow(rowCount);
-        for(int i=0; i<7;i++){
-            if(i==4) item[i]=new QTableWidgetItem("选修");
-            else{
-                item[i]=new QTableWidgetItem(query.value(i).toString());
-            }
-            ui->chooseLessonTable->setItem(rowCount,i,item[i]);
-          }
-        item[7]=new QTableWidgetItem(get_time(query.value(7).toString(),query.value(8).toString()));
-        ui->chooseLessonTable->setItem(rowCount,7,item[7]);
+           //判断这门课的状态
+           QSqlQuery query1;
+           QString cno = ui->chooseLessonTable->item(rowCount,0)->text().mid(15);
+           QString sql_statu="select * from student_grade where sno='"+cur_student.sno+"' and cno='"+cno+"'";
+           query1.exec(sql_statu);
 
-       //判断这门课的状态
-       QSqlQuery query1;
-       QString cno = ui->chooseLessonTable->item(rowCount,0)->text().mid(15);
-       QString sql_statu="select * from student_grade where sno='"+cur_student.sno+"' and cno='"+cno+"'";
-       query1.exec(sql_statu);
+           //动态放置按钮用来进行选课和退选
+           QPushButton *pBtn=new QPushButton();
 
-       //动态放置按钮用来进行选课和退选
-       QPushButton *pBtn=new QPushButton();
+           if(query1.size()>0) {
+               item[8] = new QTableWidgetItem("已选");
+               pBtn->setText(QString("退课"));
+           }
+           else {
+               item[8] = new QTableWidgetItem("未选");
+               pBtn->setText(QString("选课"));
+           }
+           connect(pBtn, &QPushButton::clicked, [=](){
+               OnBtnClicked(pBtn);
+           });
 
-       if(query1.size()>0) {
-           item[8] = new QTableWidgetItem("已选");
-           pBtn->setText(QString("退课"));
-       }
-       else {
-           item[8] = new QTableWidgetItem("未选");
-           pBtn->setText(QString("选课"));
-       }
-       connect(pBtn, &QPushButton::clicked, [=](){
-           OnBtnClicked(pBtn);
-       });
-
-       ui->chooseLessonTable->setItem(rowCount,8,item[8]);      
-       ui->chooseLessonTable->setCellWidget(rowCount,9,pBtn);
+           ui->chooseLessonTable->setItem(rowCount,8,item[8]);
+           ui->chooseLessonTable->setCellWidget(rowCount,9,pBtn);
+        }
+    }
+    else {
+        QMessageBox message(QMessageBox::Question,"提示", "当前无可选课程，若有疑问请与教务员联系");
+        QPushButton *ok = new QPushButton("返回主界面");
+        message.addButton(ok,QMessageBox::AcceptRole);
+        connect(ok, &QPushButton::clicked, [=](){
+            ui->studenPages->setCurrentIndex(0);
+        });
+        message.exec();
     }
 }
 
