@@ -103,8 +103,6 @@ void student::gradePage()
     ui->cBGradeTerm->addItem(QString::number(1));
     ui->cBGradeTerm->addItem(QString::number(2));
 
-    QString mySno = cur_student.sno;
-
     // 按学生学号、学年、学期查询成绩
     connect(ui->pBSeGraByTime, &QPushButton::clicked, [=]()
     {
@@ -112,8 +110,8 @@ void student::gradePage()
 
         QString myTime = ui->cBGradeYear->currentText() + ui->cBGradeTerm->currentText();
 
-        QString sqlStr = "select g.cno, name, credits, grade, bin(required+0) from grade g, course c where sno = '" + mySno
-                + "' and year = '" + myTime + "' and g.cno = c.cno ";
+        QString sqlStr = "select sg.cno, name, credits, grade, bin(required+0) from student_grade sg, course c where "
+                         "year = '" + myTime + "' and sg.cno = c.cno and grade is not null";
 
         setGradeTable(sqlStr);
     });
@@ -123,8 +121,8 @@ void student::gradePage()
         QString myLesson = ui->lESeaGraByName->text();
         ui->lESeaGraByName->clear();
 
-        QString sqlStr = "select g.cno, name, credits, grade, bin(required+0) from grade g, course c where name like '%"
-                + myLesson + "%' and c.cno = g.cno and sno = '"+ mySno + "'";
+        QString sqlStr = "select sg.cno, name, credits, grade, bin(required+0) from student_grade sg, course c where name like '%"
+                + myLesson + "%' and c.cno = sg.cno";
 
         setGradeTable(sqlStr);
     });
