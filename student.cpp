@@ -61,6 +61,8 @@ void student::initbox()
         ui->studenPages->setCurrentIndex(4);
         ui->tWGrade->clearContents();
         ui->tWGrade->setRowCount(0);
+        // 获得学生百分制绩点和排名
+        calGrade();
     });
     connect(ui->pBStuTimetable, &QPushButton::clicked,
          [=]()
@@ -177,7 +179,7 @@ void student::calGrade()
     sqlQuery->prepare("drop view graPoints");
     if(sqlQuery->exec()) qDebug() << "删除百分制绩点视图" ;
     QString sqlStr1 = "create view graPoints(sno,cg) as select sno , sum(credits * grade)/sum(credits) from grade g, course c where sno like '%" + yearMajor + "%' and g.cno = c.cno "
-                        "group by sno" ;
+                        "and grade is not null group by sno" ;
     sqlQuery->prepare(sqlStr1);
     if(sqlQuery->exec()) qDebug() << "建立百分制绩点视图";
 
