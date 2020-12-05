@@ -175,12 +175,11 @@ void student::calGrade()
     // 根据学生学号，获得学生所在年级和专业，建立学号和绩点的视图
     QString yearMajor = cur_student.sno.mid(0, 7);
     sqlQuery->prepare("drop view graPoints");
-    if(sqlQuery->exec()) qDebug() << "delete1" ;
+    if(sqlQuery->exec()) qDebug() << "删除百分制绩点视图" ;
     QString sqlStr1 = "create view graPoints(sno,cg) as select sno , sum(credits * grade)/sum(credits) from grade g, course c where sno like '%" + yearMajor + "%' and g.cno = c.cno "
                         "group by sno" ;
-    qDebug() << sqlStr1;
     sqlQuery->prepare(sqlStr1);
-    if(sqlQuery->exec()) qDebug() << "create1";
+    if(sqlQuery->exec()) qDebug() << "建立百分制绩点视图";
 
     // 获取当前学生的绩点，利用count函数获得排名
     sqlQuery->prepare("select cg from graPoints where sno = '"+ cur_student.sno +"'");
