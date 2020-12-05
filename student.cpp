@@ -172,41 +172,30 @@ void student::calGrade()
 {
     QSqlQuery *sqlQuery = new QSqlQuery;
 
-    // 根据学生已参与的所有考试，获得当前总学分（这里为了省事把未通过的学分也算上了。。）
-    QString sqlStr0 = "select sum(credits) from grade g, course c where sno = '" + cur_student.sno +
-           "' and g.cno = c.cno";
-    sqlQuery->prepare(sqlStr0);
-    QString totalCredits = "";
-    sqlQuery->prepare(sqlStr0);
-    if(sqlQuery->exec())
-    {
-        if(sqlQuery->next())
-            totalCredits = sqlQuery->value(0).toString();
-    }
-
-    // 根据学生学号，获得学生所在年级和专业，按百分制绩点计算公式，获得所有属于该年级和该专业的学生百分制绩点和排名。
+    // 根据学生学号，获得学生所在年级和专业，建立学号和绩点的视图
     QString yearMajor = cur_student.sno.mid(0, 7);
+    sqlQuery->prepare("drop view graPoints");
+    if(sqlQuery->exec()) qDebug() << "delete1" ;
+    QString sqlStr1 = "create view graPoints(sno,cg) as select sno , sum(credits * grade)/sum(credits) from grade g, course c where sno like '%" + yearMajor + "%' and g.cno = c.cno "
+                        "group by sno" ;
+    qDebug() << sqlStr1;
+    sqlQuery->prepare(sqlStr1);
+    if(sqlQuery->exec()) qDebug() << "create1";
 
-    QString sqlStr = "select A.sno, A.graPoint, @rank:=@rank+1 ran from (select sno, sum(credits * grade) / " + totalCredits + " graPoint from grade g, course c where sno like '%" + yearMajor +
-        "%' and g.cno = c.cno group by sno order by graPoint desc) A, (SELECT @rank:=0) B";
-  //  QString sqlStr = "select A.graPoint, count(A.sno) from (select sno, sum(credits * grade) / " + totalCredits + " graPoint from grade g, course c where sno like '%" + yearMajor +
-   //             "%' and g.cno = c.cno group by sno) A where A.graPoint > (select B.graPoint from A B where B.sno = '" + cur_student.sno + "')";
-
+    // 获取当前学生的绩点，利用count函数获得排名
+    sqlQuery->prepare("select cg from graPoints where sno = '"+ cur_student.sno +"'");
+    sqlQuery->exec();
+    sqlQuery->next();
+    QString cur_point = sqlQuery->value(0).toString();
+    QString sqlStr = "select count(1) + 1 from graPoints where cg > '"+ cur_point + "'";
     sqlQuery->prepare(sqlStr);
 
     // 设置当前学生的百分制绩点和排名。
     if(sqlQuery->exec())
     {
-        while(sqlQuery->next())
-        {
-            if(sqlQuery->value(0).toString() == cur_student.sno)
-            {
-                ui->labelGradePoint->setText(sqlQuery->value(1).toString().mid(0, 4));
-                ui->labelGradeRank->setText(sqlQuery->value(2).toString());
-                break;
-            }
-        }
-
+       sqlQuery->next();
+       ui->labelGradeRank->setText(sqlQuery->value(0).toString());
+       ui->labelGradePoint->setText(cur_point.mid(0, 4));
     }
 }
 
