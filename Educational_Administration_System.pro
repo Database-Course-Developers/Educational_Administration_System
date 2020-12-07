@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     MainWindow.cpp \
     admin.cpp \
+    admin_choose_cou_detail.cpp \
     base.cpp \
     database_util.cpp \
     main.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
 HEADERS += \
     MainWindow.h \
     admin.h \
+    admin_choose_cou_detail.h \
     base.h \
     database_util.h \
     student.h \
@@ -37,6 +39,7 @@ HEADERS += \
 FORMS += \
     MainWindow.ui \
     admin.ui \
+    admin_choose_cou_detail.ui \
     student.ui \
     teacher.ui \
     updatepwd.ui

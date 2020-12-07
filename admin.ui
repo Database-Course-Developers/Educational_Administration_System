@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>573</height>
+    <width>1094</width>
+    <height>631</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab_tea">
       <attribute name="title">
@@ -1142,11 +1142,545 @@
       <attribute name="title">
        <string>课程管理</string>
       </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_13">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="2,8">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_15" stretch="0">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_11">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_9">
+               <item row="6" column="1">
+                <widget class="QComboBox" name="cbox_cou_clg">
+                 <item>
+                  <property name="text">
+                   <string>CS</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>EE</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>MA</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QComboBox" name="cbox_cou_required">
+                 <item>
+                  <property name="text">
+                   <string>必修</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>选修</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_43">
+                 <property name="text">
+                  <string>是否考试</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QComboBox" name="cbox_cou_credits">
+                 <item>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>0.5</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1.5</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2.5</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3.5</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>4</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_38">
+                 <property name="text">
+                  <string>学分</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QComboBox" name="cbox_cou_is_exam">
+                 <item>
+                  <property name="text">
+                   <string>是</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>否</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="7" column="1">
+                <widget class="QLineEdit" name="ld_cou_hour"/>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_44">
+                 <property name="text">
+                  <string>课程名</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QLabel" name="label_42">
+                 <property name="text">
+                  <string>课时</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_39">
+                 <property name="text">
+                  <string>课程号</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="ld_cou_name"/>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_40">
+                 <property name="text">
+                  <string>必修/选修</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="ld_cou_cno"/>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_41">
+                 <property name="text">
+                  <string>开课学院号</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <layout class="QGridLayout" name="gridLayout_10">
+               <item row="1" column="1">
+                <widget class="QPushButton" name="btn_cou_reset">
+                 <property name="text">
+                  <string>重置</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="btn_cou_add">
+                 <property name="text">
+                  <string>添加</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="btn_cou_delete">
+                 <property name="text">
+                  <string>删除</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QPushButton" name="btn_cou_query">
+                 <property name="text">
+                  <string>查询</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <item>
+            <widget class="QTableWidget" name="table_cou">
+             <column>
+              <property name="text">
+               <string>课程号</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>课程名</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>学分</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>必修/选修</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>是否考试</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>开课学院号</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>课时</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_choose_cou">
       <attribute name="title">
        <string>选课管理</string>
       </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="2,8">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_13">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_11">
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_56">
+               <property name="text">
+                <string>课程名</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_46">
+               <property name="text">
+                <string>课程代号</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_52">
+               <property name="text">
+                <string>教师号</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_45">
+               <property name="text">
+                <string>课程号</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="ld_choose_cou_tno"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="ld_choose_cou_cno"/>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="ld_choose_cou_name"/>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="ld_choose_cou_rcno"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_12">
+             <item row="0" column="0">
+              <widget class="QPushButton" name="btn_choose_cou_query">
+               <property name="text">
+                <string>查询</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="btn_choose_cou_reset">
+               <property name="text">
+                <string>重置</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QPushButton" name="btn_choose_cou_delete">
+               <property name="text">
+                <string>删除</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_17">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_13">
+               <item row="3" column="1">
+                <widget class="QComboBox" name="cbox_choose_cou_term">
+                 <item>
+                  <property name="text">
+                   <string>20171</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>20172</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>20181</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>20182</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>20191</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>20192</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>20201</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>20202</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_48">
+                 <property name="text">
+                  <string>上课时间</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_53">
+                 <property name="text">
+                  <string>课程号</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="1">
+                <widget class="QComboBox" name="cbox_choose_cou_clr"/>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="ld_choose_cou_daytime">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_47">
+                 <property name="text">
+                  <string>上课周数</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="ld_choose_cou_rcno1"/>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_50">
+                 <property name="text">
+                  <string>课室号</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_51">
+                 <property name="text">
+                  <string>课程代号</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_49">
+                 <property name="text">
+                  <string>开课学期</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_54">
+                 <property name="text">
+                  <string>教师号</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="ld_choose_cou_cno1"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="ld_choose_cou_tno1"/>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLineEdit" name="ld_choose_cou_weektime"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_choose_cou_add">
+             <property name="text">
+              <string>添加</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_16">
+             <item>
+              <widget class="QPushButton" name="btn_choose_cou_turn">
+               <property name="minimumSize">
+                <size>
+                 <width>284</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>个人选课</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <item>
+            <widget class="QTableWidget" name="table_choose_cou">
+             <column>
+              <property name="text">
+               <string>课程代号</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>课程号</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>教师号</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>课程名</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>开课学期</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>上课时间</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>上课周数</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>课室号</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_exam">
       <attribute name="title">
@@ -1622,7 +2156,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
   <tabstop>ld_tea_no</tabstop>
   <tabstop>ld_tea_name</tabstop>
   <tabstop>cbox_tea_sex</tabstop>

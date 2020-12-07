@@ -86,6 +86,19 @@ void admin::initbox(){
     ui->cbox_stu_birth_y->setCurrentIndex(-1);
     ui->cbox_stu_birth_m->setCurrentIndex(-1);
     ui->cbox_stu_birth_d->setCurrentIndex(-1);
+
+    //----课程管理部分----
+    ui->cbox_cou_credits->setCurrentIndex(-1);
+    ui->cbox_cou_clg->setCurrentIndex(-1);
+    ui->cbox_cou_is_exam->setCurrentIndex(-1);
+    ui->cbox_cou_required->setCurrentIndex(-1);
+
+    //----选课管理部分----
+    ui->cbox_choose_cou_term->setCurrentIndex(-1);
+    for(QString& s:clr){
+        ui->cbox_choose_cou_clr->addItem(s);
+    }
+    ui->cbox_choose_cou_clr->setCurrentIndex(-1);
 }
 //-------考务 part -------林嘉欣
 QString admin::get_exam_querysql(){
@@ -448,6 +461,588 @@ void admin::on_bbtn_grade_add_clicked()
             connectErrorMsg=query.lastError().text();
             QMessageBox::information(nullptr,"数据库插入错误！","数据库插入错误，错误信息:"+connectErrorMsg);
         }
+    }
+}
+
+//----------课程管理part----------郑晓峰
+//根据输入框获取查询课程信息的sql语句
+QString admin::get_cou_querysql(){
+    QString sql="select * from course ";
+    QString condition="";
+    QString cno=ui->ld_cou_cno->text();
+    QString name=ui->ld_cou_name->text();
+    QString credits=ui->cbox_cou_credits->currentText();
+    QString required=ui->cbox_cou_required->currentText();
+    QString is_exam=ui->cbox_cou_is_exam->currentText();
+    QString clg=ui->cbox_cou_clg->currentText();
+    QString hour=ui->ld_cou_hour->text();
+    if(cno.size()){
+        condition+=(QString("cno='"+cno+"' and " ));
+    }
+    if(name.size()){
+        condition+=(QString("name='"+name+"' and " ));
+    }
+    if(credits.size()){
+        condition+=(QString("credits='"+credits+"' and " ));
+    }
+    if(required.size()){
+        if(required == "必修"){
+        condition+=(QString("required='1' and " ));}
+        else if(required == "选修")
+            condition+=(QString("required='0' and "));
+    }
+    if(is_exam.size()){
+        if(is_exam == "是"){
+        condition+=(QString("is_exam='1' and " ));}
+        else if (is_exam == "否")
+            condition+=(QString("is_exam='0' and "));
+    }
+    if(clg.size()){
+        condition+=(QString("clg='"+clg+"' and "));
+    }
+    if(hour.size()){
+        hour+=(QString("hour='"+hour+"' and "));
+    }
+
+    if(condition.size()){
+        sql=sql+"where "+ condition.left(condition.size()-4 );//-4去掉最后一个and
+    }
+    return sql;
+
+}
+
+//课程信息查询按钮
+void admin::on_btn_cou_query_clicked(){
+    ui->table_cou->blockSignals(true);
+    QSqlQuery query;
+    QString sql=get_cou_querysql();
+    if(query.exec(sql)){
+        if(query.size()){
+            ui->table_cou->clearContents();
+            ui->table_cou->setRowCount(0);
+            while(query.next()){
+                //执行完query.exec()后query是指向结果集外的
+                //第一次执行query.next()使query指向结果集的第一条记录
+                //接下来的query.next()使query指向下一条记录
+                QTableWidgetItem* item[7];
+                int rowCount=ui->table_cou->rowCount();
+                ui->table_cou->insertRow(rowCount);
+                int i;
+                for(i=0;i<7;i++){
+                    item[i]=new QTableWidgetItem(query.value(i).toString());
+                    if(i==0){
+                        item[i]->setFlags(item[i]->flags()&(~Qt::ItemIsEditable));//设置第一列课程号为不可编辑
+                    }
+                    if(i==3){
+                        if(item[i]->text()==1)
+                            item[i]->setText("必修");
+                        else
+                            item[i]->setText("选修");
+                    }
+                    if(i==4){
+                        if(item[i]->text()==1)
+                            item[i]->setText("是");
+                        else
+                            item[i]->setText("否");
+                    }
+                    ui->table_cou->setItem(rowCount,i,item[i]);
+                  }
+                }
+            }
+
+        else{
+            QMessageBox::information(nullptr,"查询结果","查询结果为空！");
+        }
+    }
+    else{
+        connectErrorMsg=query.lastError().text();
+        QMessageBox::information(nullptr,"数据库查找错误！","数据库查找错误，错误信息:"+connectErrorMsg);
+    }
+    ui->table_cou->blockSignals(false);
+}
+//------修改------
+QString admin::get_cou_column_name(int n){
+    if(n==0) return QString("cno");
+    if(n==1) return QString("name");
+    if(n==2) return QString("credits");
+    if(n==3) return QString("required");
+    if(n==4) return QString("is_exam");
+    if(n==5) return QString("clg");
+    if(n==6) return QString("hour");
+}
+
+//在表格中修改内容
+void admin::on_table_cou_itemChanged(QTableWidgetItem *item)
+{
+    ui->table_cou->blockSignals(true);
+    int row=item->row();
+    QString column_name=get_cou_column_name(item->column());
+    QString updatesql;
+    if(item->text() == "必修"){
+        updatesql="update course set required=1 where cno='"+ui->table_cou->item(row,0)->text()+"'";
+    }
+    else if(item->text() == "选修"){
+       updatesql="update course set required =0 where cno='"+ui->table_cou->item(row,0)->text()+"'";
+    }
+    else if(item->text() == "是"){
+        updatesql="update course set is_exam =1 where cno='"+ui->table_cou->item(row,0)->text()+"'";
+    }
+    else if(item->text() == "否"){
+        updatesql="update course set is_exam =0 where cno='"+ui->table_cou->item(row,0)->text()+"'";
+    }
+    else{
+        updatesql="update course set "+column_name+
+            "='"+item->text()+"' where cno='"+ui->table_cou->item(row,0)->text()+"'";
+    }
+    QSqlQuery query;
+    if(query.exec(updatesql)){
+        QMessageBox::information(nullptr,"修改成功","修改成功！");
+    }
+    else{
+        connectErrorMsg=query.lastError().text();
+        if(connectErrorMsg.contains("foreign key constraint",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的学院号不存在，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("too long for column 'required'",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","请输入“必修”或“选修”，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("too long for column 'is_exam'",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","请输入“是”或“否”，请重新输入！");
+        }
+        else{
+            QMessageBox::information(nullptr,"修改错误","修改错误！错误信息："+connectErrorMsg);
+        }
+    }
+
+    ui->table_cou->blockSignals(false);
+}
+
+//----添加课程信息
+void admin::on_btn_cou_add_clicked()
+{
+    QString cno=ui->ld_cou_cno->text();
+    QString name=ui->ld_cou_name->text();
+    QString credits=ui->cbox_cou_credits->currentText();
+    QString required=ui->cbox_cou_required->currentText();
+    QString is_exam=ui->cbox_cou_is_exam->currentText();
+    QString hour=ui->ld_cou_hour->text();
+    QString clg=ui->cbox_cou_clg->currentText();
+    if(cno.size()==0||name.size()==0||credits.size()==0||required.size()==0||is_exam.size()==0||
+            hour.size()==0||clg.size()==0){
+        QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
+    }
+    else{
+        if(required == "必修"){
+            required = '1';
+        }
+        else if(required == "选修")
+            required = '0';
+        if(is_exam == "是"){
+            is_exam = '1';
+        }
+        else if(is_exam == "否")
+            is_exam = '0';
+        QString sql="insert into course value ('"+cno+"','"+name+"','"+credits+"',"+required+","+is_exam+",'"+clg+"','"+hour+"')";
+        QSqlQuery query;
+        if(query.exec(sql)){
+            ui->ld_cou_cno->setText(""); //清空输入框
+            ui->ld_cou_name->setText("");
+            ui->cbox_cou_credits->setCurrentIndex(-1);
+            ui->cbox_cou_required->setCurrentIndex(-1);
+            ui->cbox_cou_is_exam->setCurrentIndex(-1);
+            ui->cbox_cou_clg->setCurrentIndex(-1);
+            ui->ld_cou_hour->setText("");
+            QMessageBox::information(nullptr,"添加成功","添加成功！");
+        }
+        //输出非法信息提示
+        else{
+            connectErrorMsg=query.lastError().text();
+            if(connectErrorMsg.contains("PRIMARY",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的课程号已存在，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("too long for column 'CNO'",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的课程号太长，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("Incorrect date value",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入非法信息，请重新输入！");
+            }
+            else{
+                QMessageBox::information(nullptr,"数据库插入错误","数据库插入错误，错误信息："+connectErrorMsg);
+            }
+        }
+    }
+}
+//------删除课程信息
+void admin::on_btn_cou_delete_clicked()
+{
+    int row=ui->table_cou->currentRow();
+    if(row!=-1){
+        QPushButton *okbtn = new QPushButton(QString("确定"));
+        QPushButton *cancelbtn = new QPushButton(QString("取消"));
+        QMessageBox *confirmbox = new QMessageBox;
+
+        confirmbox->setIcon(QMessageBox::Warning);
+        confirmbox->setWindowTitle("提示");
+        confirmbox->setText("确认删除？");
+        confirmbox->addButton(okbtn,QMessageBox::AcceptRole);
+        confirmbox->addButton(cancelbtn,QMessageBox::RejectRole);
+        confirmbox->show();
+
+        confirmbox->exec();//使函数“暂停”，等待用户点击按钮
+
+        if(confirmbox->clickedButton()==okbtn){//点击确认按钮
+            QString sql="delete from course where cno='"+ui->table_cou->item(row,0)->text()+"';";
+            QSqlQuery query;
+            if(query.exec(sql)){
+                ui->table_cou->removeRow(row);
+                QMessageBox::information(nullptr,"删除成功","删除成功！");
+            }
+            else{
+                connectErrorMsg=query.lastError().text();
+                QMessageBox::information(nullptr,"数据库删除错误","数据库删除错误，错误信息"+connectErrorMsg);
+            }
+        }
+    }
+    else{
+        QMessageBox::information(nullptr,"未选中","未选中删除行，请选择一行进行删除");
+    }
+}
+//------重置输入框------
+void admin::on_btn_cou_reset_clicked()
+{
+    ui->ld_cou_cno->setText("");
+    ui->ld_cou_name->setText("");
+    ui->cbox_cou_clg->setCurrentIndex(-1);
+    ui->cbox_cou_credits->setCurrentIndex(-1);
+    ui->cbox_cou_is_exam->setCurrentIndex(-1);
+    ui->cbox_cou_required->setCurrentIndex(-1);
+    ui->ld_cou_hour->setText("");
+}
+
+//----------选课管理part----------郑晓峰
+//根据输入框获取查询选课信息sql语句
+QString admin::get_choose_cou_querysql(){
+    QString sql="select r.rcno, r.cno, r.tno, c.name, r.term, bin(r.daytime+0), bin(r.weektime+0), r.clr from real_course r, course c ";
+    QString condition="";
+    QString rcno=ui->ld_choose_cou_rcno->text();
+    QString cno=ui->ld_choose_cou_cno->text();
+    QString tno=ui->ld_choose_cou_tno->text();
+    QString name=ui->ld_choose_cou_name->text();
+    /*QString term=ui->cbox_choose_cou_term->currentText();
+    QString daytime=ui->ld_choose_cou_daytime->text();
+    QString weektime=ui->cbox_choose_cou_weektime->currentText();
+    QString clr=ui->cbox_choose_cou_clr->currentText();*/
+    if(rcno.size()){
+        condition+=QString("rcno='"+rcno+"' and ");
+    }
+    if(cno.size()){
+        condition+=QString("cno='"+cno+"' and ");
+    }
+    if(tno.size()){
+        condition+=QString("tno='"+tno+"' and ");
+    }
+    if(name.size()){
+        condition+=QString("name='"+name+"' and ");
+    }
+    /*if(term.size()){
+        condition+=QString("term='"+term+"' and ");
+    }
+    if(daytime.size()){
+        condition+=QString("daytime='"+daytime+"' and ");
+    }
+    if(weektime.size()){
+        condition+=QString("weektime='"+weektime+"' and ");
+    }
+    if(clr.size()){
+            condition+=QString("clr='"+clr+"' and ");
+    }*/
+    if(condition.size()){
+        sql=sql+"where r.cno=c.cno and "+condition.left(condition.size()-4);//去掉最后一个and和空格
+    }
+    else{
+        sql=sql+"where r.cno=c.cno ";
+    }
+
+    return sql;
+}
+//选课信息查询按钮
+void admin::on_btn_choose_cou_query_clicked()
+{
+    ui->table_choose_cou->blockSignals(true);
+    QSqlQuery query;
+    QString sql=get_choose_cou_querysql();
+    if(query.exec(sql)){
+        if(query.size()){
+            ui->table_choose_cou->clearContents();
+            ui->table_choose_cou->setRowCount(0);
+            while(query.next()){
+                QTableWidgetItem* item[8];
+                int rowCount=ui->table_choose_cou->rowCount();
+                ui->table_choose_cou->insertRow(rowCount);
+                int i;
+                for(i=0;i<8;i++){
+                    item[i]=new QTableWidgetItem(query.value(i).toString());
+                    if(i==0 || i==1 || i==2 || i==3)
+                    {
+                        item[i]->setFlags(item[i]->flags()&(~Qt::ItemIsEditable));//设置前四列为不可编辑
+                    }
+                    if(i==5)
+                    {
+                        QString daytime = query.value(i).toString();
+                        if(daytime.length() != 35)
+                        {
+                            for(int m = 35 - daytime.length(); m > 0; m--)
+                            {
+                                daytime = "0" + daytime;
+                            }
+                        }
+                        QString d="";
+                        QString time;
+                        for(int j = 0; j < daytime.length(); j++)
+                        {
+                            if(daytime[j]=="1"){
+                                int t = i%5;
+                                switch (t) {
+                                case 0: time = "(1-2)";break;
+                                case 1: time = "(3-4)";break;
+                                case 2: time = "(5-6)";break;
+                                case 3: time = "(7-8)";break;
+                                case 4: time = "(9-11)";break;
+                                }
+                             d = d +"周"+(QString::number(int(j/5+1)))+time+" ";
+                            }
+                        }
+                        item[i]->setText(d);
+                    }
+                    if(i==6)
+                    {
+                        int count = 0;
+                        QString weektime = query.value(i).toString();
+                        if(weektime.length() != 20)
+                        {
+                            for(int m = 20 - weektime.length(); m > 0; m--)
+                            {
+                                weektime = "0" + weektime;
+                            }
+                        }
+                        for(int j = 0; j < weektime.length(); j++)
+                        {
+                            if(weektime[j] == '1') count += 1 ;
+                        }
+                        QString count_ = QString::number(count);
+                        item[i]->setText(count_);
+                    }
+                    ui->table_choose_cou->setItem(rowCount,i,item[i]);
+                }
+            }
+        }
+        else{
+            QMessageBox::information(nullptr,"查询结果","查询结果为空！");
+        }
+    }
+    else{
+        connectErrorMsg=query.lastError().text();
+        QMessageBox::information(nullptr,"数据库查找错误！","数据库查找错误，错误信息:"+connectErrorMsg);
+    }
+    ui->table_choose_cou->blockSignals(false);
+
+}
+
+//------修改------
+QString admin::get_choose_cou_column_name(int n){
+    if(n==4) return QString("term");
+    if(n==5) return QString("daytime");
+    if(n==6) return QString("weektime");
+    if(n==7) return QString("clr");
+}
+
+//在表格中修改内容
+void admin::on_table_choose_cou_itemChanged(QTableWidgetItem *item)
+{
+    ui->table_choose_cou->blockSignals(true);
+    int row=item->row();
+    QString column_name=get_choose_cou_column_name(item->column());
+    QString updatesql;
+    updatesql="update real_course set "+column_name+
+            "='"+item->text()+"' where rcno='"+ui->table_choose_cou->item(row,0)->text()+"'";
+    QSqlQuery query;
+    if(query.exec(updatesql)){
+        QMessageBox::information(nullptr,"修改成功","修改成功！");
+    }
+    else{
+        connectErrorMsg=query.lastError().text();
+        if(connectErrorMsg.contains("foreign key constraint",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","输入的学院号不存在，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("too long for column 'required'",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","请输入“必修”或“选修”，请重新输入！");
+        }
+        else if(connectErrorMsg.contains("too long for column 'is_exam'",Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"修改错误","请输入“是”或“否”，请重新输入！");
+        }
+        else{
+            QMessageBox::information(nullptr,"修改错误","修改错误！错误信息："+connectErrorMsg);
+        }
+    }
+
+    ui->table_cou->blockSignals(false);
+}
+
+//----添加选课课程信息
+void admin::on_btn_choose_cou_add_clicked()
+{
+    QString rcno=ui->ld_choose_cou_rcno1->text();
+    QString cno=ui->ld_choose_cou_cno1->text();
+    QString tno=ui->ld_choose_cou_tno1->text();
+    QString term=ui->cbox_choose_cou_term->currentText();
+    QString daytime=ui->ld_choose_cou_daytime->text();
+    QString weektime=ui->ld_choose_cou_weektime->text();
+    QString clr=ui->cbox_choose_cou_clr->currentText();
+    if(rcno.size()==0||cno.size()==0||tno.size()==0||daytime.size()==0||weektime.size()==0||
+            clr.size()==0){
+        QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
+    }
+    else{
+         /*long long int result_daytime = 0;
+         int result_weektime = 0;
+         for (int i = 0; i < 35; i++)
+         {
+             result_daytime <<= 1;
+             if (daytime[i] == '1')
+             {
+                 result_daytime |= 1;
+             }
+         }
+         for (int j = 0; j < 20; j++)
+         {
+             result_weektime <<= 1;
+             if (weektime[j] == '1')
+             {
+                 result_weektime |= 1;
+             }
+         }
+        char result_daytime = 0;
+        char result_weektime = 0;
+        for(int i = 0;i < 35; i++)
+        {
+            if(daytime[i] == '1')
+            {
+                result_daytime |= (1 << i);
+            }
+        }
+        for(int i = 0;i < 20; i++)
+        {
+            if(weektime[i] == '1')
+            {
+                result_weektime |= (1 << i);
+            }
+        }*/
+        QString sql="insert into real_course value ('"+rcno+"','"+cno+"','"+tno+"','"+term+"', 'daytime', 'weektime','"+clr+"')";
+        QSqlQuery query;
+        if(query.exec(sql)){
+            ui->ld_choose_cou_rcno1->setText(""); //清空输入框
+            ui->ld_choose_cou_cno1->setText("");
+            ui->cbox_choose_cou_term->setCurrentIndex(-1);
+            ui->cbox_choose_cou_clr->setCurrentIndex(-1);
+            ui->ld_choose_cou_tno1->setText("");
+            ui->ld_choose_cou_daytime->setText("");
+            ui->ld_choose_cou_weektime->setText("");
+            QMessageBox::information(nullptr,"添加成功","添加成功！");
+        }
+        //输出非法信息提示
+        else{
+            connectErrorMsg=query.lastError().text();
+            if(connectErrorMsg.contains("PRIMARY",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的课程代号已存在，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("too long for column 'rcno'",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入的课程代号太长，请重新输入！");
+            }
+            else if(connectErrorMsg.contains("Incorrect date value",Qt::CaseSensitive)){
+                QMessageBox::information(nullptr,"数据库插入错误","输入非法信息，请重新输入！");
+            }
+            else{
+                QMessageBox::information(nullptr,"数据库插入错误","数据库插入错误，错误信息："+connectErrorMsg);
+            }
+        }
+    }
+}
+//删除选课课程按钮
+void admin::on_btn_choose_cou_delete_clicked()
+{
+    int row=ui->table_choose_cou->currentRow();
+    if(row!=-1){
+        QPushButton *okbtn = new QPushButton(QString("确定"));
+        QPushButton *cancelbtn = new QPushButton(QString("取消"));
+        QMessageBox *mymsgbox = new QMessageBox;
+
+        mymsgbox->setIcon(QMessageBox::Warning);
+        mymsgbox->setWindowTitle(QString("提示"));
+        mymsgbox->setText(QString("确定删除？"));
+        mymsgbox->addButton(okbtn, QMessageBox::AcceptRole);
+        mymsgbox->addButton(cancelbtn, QMessageBox::RejectRole);
+        mymsgbox->show();
+
+        mymsgbox->exec();//阻塞等待用户输入
+        if (mymsgbox->clickedButton()==okbtn)//点击了OK按钮
+        {
+
+            QString sql="delete from real_course where rcno='"+ui->table_choose_cou->item(row,0)->text()+"';";
+            QSqlQuery query;
+            if(query.exec(sql)){
+                ui->table_choose_cou->removeRow(row);
+                QMessageBox::information(nullptr,"删除成功","删除成功");
+            }else{
+                connectErrorMsg=query.lastError().text();
+                QMessageBox::information(nullptr,"数据库删除错误！","数据库删除错误，错误信息:"+connectErrorMsg);
+            }
+        }
+
+
+    }else{
+        QMessageBox::information(nullptr,"未选中","未选中删除行,请选择一行进行删除");
+    }
+}
+//------重置输入框------
+void admin::on_btn_choose_cou_reset_clicked()
+{
+    ui->ld_choose_cou_rcno->setText("");
+    ui->ld_choose_cou_cno->setText("");
+    ui->ld_choose_cou_name->setText("");
+    ui->ld_choose_cou_tno->setText("");
+    ui->cbox_choose_cou_term->setCurrentIndex(-1);
+    ui->ld_choose_cou_daytime->setText("");
+    ui->ld_choose_cou_weektime->setText("");
+    ui->cbox_choose_cou_clr->setCurrentIndex(-1);
+}
+
+//---------跳转到选课学生名单界面-----------
+
+void admin::on_btn_choose_cou_turn_clicked()
+{
+    int row=ui->table_choose_cou->currentRow();
+    if(row!=-1){
+        QPushButton *okbtn = new QPushButton(QString("确定"));
+        QPushButton *cancelbtn = new QPushButton(QString("取消"));
+        QMessageBox *mymsgbox = new QMessageBox;
+
+        mymsgbox->setIcon(QMessageBox::Warning);
+        mymsgbox->setWindowTitle(QString("提示"));
+        mymsgbox->setText(QString("确定进入学生名单页面吗？"));
+        mymsgbox->addButton(okbtn, QMessageBox::AcceptRole);
+        mymsgbox->addButton(cancelbtn, QMessageBox::RejectRole);
+        mymsgbox->show();
+        mymsgbox->exec();//阻塞等待用户输入
+        if (mymsgbox->clickedButton()==okbtn)//点击了OK按钮
+        {
+            QString sql= ui->table_choose_cou->item(row,0)->text();
+            a = new admin_choose_cou_detail();
+            QObject::connect(this,SIGNAL(sendData(QString)), a,SLOT(recevieData(QString)));
+            emit sendData(sql);
+            a->show();
+        }
+    }else{
+        QMessageBox::information(nullptr,"未选中","未选中要查看的课程,请点击要查看的行");
     }
 }
 
