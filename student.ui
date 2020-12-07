@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>5</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -296,7 +296,7 @@
                  <item row="2" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_8">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>专业</string>
@@ -306,7 +306,7 @@
                  <item row="0" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_9">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>姓名</string>
@@ -323,7 +323,7 @@
                  <item row="1" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_10">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>籍贯</string>
@@ -372,7 +372,7 @@
                  <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_6">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>年级</string>
@@ -382,7 +382,7 @@
                  <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_7">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>学号</string>
@@ -392,7 +392,7 @@
                  <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_1">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>出生年月</string>
@@ -427,7 +427,7 @@
                  <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_12">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>学院</string>
@@ -437,7 +437,7 @@
                  <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_11">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>性别 </string>
@@ -447,7 +447,7 @@
                  <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                   <widget class="QLabel" name="label_13">
                    <property name="styleSheet">
-                    <string notr="true">font: 12pt &quot;AcadEref&quot;;</string>
+                    <string notr="true">font: 16pt &quot;AcadEref&quot;;</string>
                    </property>
                    <property name="text">
                     <string>班级</string>
