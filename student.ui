@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="studenPages">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="stuMainPage">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -1293,6 +1293,11 @@
          <column>
           <property name="text">
            <string>五</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>六</string>
           </property>
          </column>
          <column>
