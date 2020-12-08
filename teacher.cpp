@@ -37,6 +37,7 @@ void teacher::on_listWidget_itemClicked()
 
     else
     {
+        ui->butt_submit->setVisible(false);
         ui->major_2->clear();
         ui->stackedWidget->setCurrentIndex(4);
         initial_class(ui->major_2,0);
@@ -390,6 +391,7 @@ void teacher::on_major_2_currentIndexChanged()
 //成绩信息查询
 void teacher::grade_search_function(int desc,int asc,int avg,int level)
 {
+    show_butt_submit();
     ui->score_table->clear();
     ui->score_table->setRowCount(0);
     ui->score_table->setHorizontalHeaderLabels(QStringList()<<"姓名"<<"学号"<<"性别"<<"班级"<<"成绩");
@@ -407,7 +409,6 @@ void teacher::grade_search_function(int desc,int asc,int avg,int level)
     query.exec(sql);
     while(query.next())
     {clsno=query.value(0).toString();}
-    qDebug()<<"clsno:"<<clsno<<endl;
     //输入框为空，默认查找所有学生时
     if(ui->lineedit_input->text().length()==0)
     {
@@ -437,7 +438,6 @@ void teacher::grade_search_function(int desc,int asc,int avg,int level)
             query.exec(sql);
             while(query.next())
             {
-                qDebug()<<query.value(0).toString();
                 ui->label_avg->setText("平均分为：  "+query.value(0).toString());
             }
         }
@@ -648,4 +648,29 @@ void teacher::on_butt_submit_clicked()
         query.exec(sql);
     }
     QMessageBox::information(NULL, "提交成功", "成绩已提交成功！");
+}
+void teacher::show_butt_submit()
+{
+    QString sql;
+    QString clsno;
+    QString exam_time;
+    sql="SELECT CLS FROM _class WHERE `name`='"+ui->major_2->currentText()+"'";
+    query.exec(sql);
+    while(query.next())
+    {clsno=query.value(0).toString();}
+    sql="SELECT begin_time FROM exam_view WHERE (cno IN (SELECT cno FROM course WHERE `name`='"+ui->course_2->currentText()+"')) AND rcno LIKE'%"+clsno+"%'";
+    query.exec(sql);
+    while(query.next())
+    {
+        exam_time=query.value(0).toString();
+    }
+    QDate time1(exam_time.split('T')[0].split('-')[0].toInt(),exam_time.split('T')[0].split('-')[1].toInt(),exam_time.split('T')[0].split('-')[2].toInt());
+
+        QDate time2 = QDate::currentDate();
+        int days = time1.daysTo(time2);
+        if(days>=0 && days<=45)
+            ui->butt_submit->setVisible(true);
+        else
+            ui->butt_submit->setVisible(false);
+
 }
