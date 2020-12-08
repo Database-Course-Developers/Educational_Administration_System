@@ -76,7 +76,7 @@ QString admin_choose_cou_detail::get_detail_querysql()
         condition+=(QString("sname='"+sname+"' and " ));
     }
     if(sno.size()){
-        condition+=(QString("sno='"+sno+"' and " ));
+        condition+=(QString("s.sno='"+sno+"' and " ));
     }
     if(condition.size()){
         sql=sql + condition.left(condition.size()) + "r.cno='"+cno+"' and g.year='"+getyear()+"' and s.cls='"+cls+"'";//-4去掉最后一个and
