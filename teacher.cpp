@@ -412,7 +412,7 @@ void teacher::grade_search_function(int desc,int asc,int avg,int level)
     if(ui->lineedit_input->text().length()==0)
     {
         //加载该班的姓名、学号、成绩、班级、性别
-        sql="SELECT DISTINCT grade_view.sname,grade_view.sno,sex,grade FROM real_course,grade_view,student  WHERE real_course.TNO='"+cur_teacher.tno+"'   AND real_course.CNO=grade_view.cno AND student.sno LIKE'%"+clsno+"%' AND student.sno=grade_view.sno "+str_asc+" "+str_desc;
+        sql="SELECT DISTINCT grade_view.sname,grade_view.sno,sex,grade_view.grade FROM real_course,grade_view,student  WHERE real_course.TNO='"+cur_teacher.tno+"'   AND real_course.CNO=grade_view.cno AND student.sno LIKE'%"+clsno+"%' AND student.sno=grade_view.sno AND RCNO LIKE '%"+clsno+"%' AND cname='"+crsname+"' "+str_asc+" "+str_desc;
         query.exec(sql);
         if(query.size()==0)
         {
@@ -424,11 +424,11 @@ void teacher::grade_search_function(int desc,int asc,int avg,int level)
 
             ui->score_table->insertRow(curr);
             sno_lst.append(query.value(0).toString());//该班的全部人的学号
-            ui->score_table->setItem(curr,0,new QTableWidgetItem(query.value(1).toString()));
-            ui->score_table->setItem(curr,1,new QTableWidgetItem(query.value(0).toString()));
-            ui->score_table->setItem(curr,4,new QTableWidgetItem(query.value(2).toString()));
+            ui->score_table->setItem(curr,0,new QTableWidgetItem(query.value(0).toString()));
+            ui->score_table->setItem(curr,1,new QTableWidgetItem(query.value(1).toString()));
+            ui->score_table->setItem(curr,4,new QTableWidgetItem(query.value(3).toString()));
             ui->score_table->setItem(curr,3,new QTableWidgetItem(clsname));
-            ui->score_table->setItem(curr,2,new QTableWidgetItem(query.value(3).toString()));
+            ui->score_table->setItem(curr,2,new QTableWidgetItem(query.value(2).toString()));
         }
         //平均分功能的实现
         if(avg==1)
@@ -570,7 +570,6 @@ void teacher::on_search_2_clicked()
     query.exec(sql);
     while(query.next())
     {clsno=query.value(0).toString();}
-    qDebug()<<"clsno:"<<clsno<<endl;
     //加载科目、学院、考试开始时间、考试结束时间、考试地点、监考员1、监考员2
     sql="SELECT course.`name`,collegename,begin_time,end_time,clr,tno1,tno2 ,RCNO FROM exam_view,course WHERE (tno1='"+cur_teacher.tno+"' OR tno2='"+cur_teacher.tno+"') AND exam_view.CNO=course.CNO AND rcno LIKE '%"+clsno+"%' AND course.`name`='"+crsname+"'" ;
     query.exec(sql);
@@ -613,4 +612,40 @@ void teacher::on_search_2_clicked()
            curr++;
        }
     ui->exam_table->show();
+}
+
+void teacher::on_butt_submit_clicked()
+{
+    QMessageBox:: StandardButton result= QMessageBox::information(NULL, "确认提交", "是否确认提交成绩？",QMessageBox::Yes|QMessageBox::No);
+    switch (result)
+    {
+    case QMessageBox::Yes:
+        QMessageBox::information(NULL, "请稍后", "成绩正在上传，请稍后！");
+        break;
+    case QMessageBox::No:
+        return;
+        break;
+    default:
+        break;
+    }
+
+    QString clsname=ui->major_2->currentText();
+    QString crsname=ui->course_2->currentText();
+    QString sql="SELECT CLS FROM _class WHERE `name`='"+clsname+"'";
+    QString clsno;
+    query.exec(sql);
+    while(query.next())
+    {clsno=query.value(0).toString();}
+    QString crsno;
+    sql="SELECT CNO FROM course WHERE `name`='"+crsname+"'";
+    query.exec(sql);
+    while(query.next())
+    {crsno=query.value(0).toString();}
+    for(int i=0;i<ui->score_table->rowCount();i++)
+    {
+
+        sql="UPDATE grade SET grade="+ui->score_table->item(i,4)->text()+" WHERE sno='"+ui->score_table->item(i,1)->text()+"' AND cno='"+crsno+"'";
+        query.exec(sql);
+    }
+    QMessageBox::information(NULL, "提交成功", "成绩已提交成功！");
 }

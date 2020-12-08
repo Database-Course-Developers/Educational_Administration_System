@@ -52,6 +52,8 @@ private slots:
 
     void on_search_student_clicked();
 
+    void on_butt_submit_clicked();
+
 private:
     Ui::teacher *ui;
     QString clg_name;
