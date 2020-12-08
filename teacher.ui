@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1250</width>
+    <width>1270</width>
     <height>700</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <x>20</x>
      <y>90</y>
      <width>120</width>
-     <height>491</height>
+     <height>560</height>
     </rect>
    </property>
    <property name="font">
@@ -27,14 +27,20 @@
      <pointsize>13</pointsize>
     </font>
    </property>
+   <property name="lineWidth">
+    <number>1</number>
+   </property>
    <property name="spacing">
     <number>20</number>
    </property>
    <property name="gridSize">
     <size>
      <width>0</width>
-     <height>91</height>
+     <height>110</height>
     </size>
+   </property>
+   <property name="batchSize">
+    <number>100</number>
    </property>
    <property name="currentRow">
     <number>-1</number>
@@ -69,22 +75,22 @@
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>100</y>
-     <width>1081</width>
-     <height>541</height>
+     <y>93</y>
+     <width>1095</width>
+     <height>580</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="pg_personal">
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>73</x>
-       <y>33</y>
-       <width>871</width>
-       <height>451</height>
+       <x>63</x>
+       <y>3</y>
+       <width>1021</width>
+       <height>491</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">
@@ -152,7 +158,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="ledit_sex"/>
+         <widget class="QLineEdit" name="ledit_sex">
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="horizontalSpacer_4">
@@ -280,17 +293,17 @@
     <widget class="QTableWidget" name="lesson_table">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>20</x>
        <y>0</y>
-       <width>1000</width>
-       <height>550</height>
+       <width>1070</width>
+       <height>555</height>
       </rect>
      </property>
      <attribute name="horizontalHeaderMinimumSectionSize">
       <number>20</number>
      </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>158</number>
+      <number>145</number>
      </attribute>
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>104</number>
@@ -347,6 +360,11 @@
      </column>
      <column>
       <property name="text">
+       <string>周六</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>周日</string>
       </property>
      </column>
@@ -358,12 +376,12 @@
       <rect>
        <x>39</x>
        <y>60</y>
-       <width>951</width>
-       <height>480</height>
+       <width>1057</width>
+       <height>488</height>
       </rect>
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>158</number>
+      <number>167</number>
      </attribute>
      <column>
       <property name="text">
@@ -401,7 +419,7 @@
       <rect>
        <x>48</x>
        <y>0</y>
-       <width>931</width>
+       <width>1041</width>
        <height>51</height>
       </rect>
      </property>
@@ -513,9 +531,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>20</y>
-       <width>1061</width>
-       <height>521</height>
+       <y>0</y>
+       <width>1093</width>
+       <height>555</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout" stretch="1,9">
@@ -592,7 +610,7 @@
       <item>
        <widget class="QTableWidget" name="exam_table">
         <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>126</number>
+         <number>130</number>
         </attribute>
         <column>
          <property name="text">
@@ -643,10 +661,10 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>20</x>
        <y>0</y>
-       <width>911</width>
-       <height>541</height>
+       <width>1071</width>
+       <height>551</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -762,7 +780,7 @@
         <item>
          <widget class="QTableWidget" name="score_table">
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>180</number>
+           <number>205</number>
           </attribute>
           <column>
            <property name="text">
@@ -814,8 +832,8 @@
     <widget class="QPushButton" name="butt_submit">
      <property name="geometry">
       <rect>
-       <x>960</x>
-       <y>240</y>
+       <x>520</x>
+       <y>550</y>
        <width>93</width>
        <height>28</height>
       </rect>
@@ -842,10 +860,10 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>10</y>
-       <width>1021</width>
-       <height>521</height>
+       <x>10</x>
+       <y>0</y>
+       <width>1081</width>
+       <height>571</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -918,7 +936,7 @@
         <item>
          <widget class="QTableWidget" name="level_table">
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>202</number>
+           <number>210</number>
           </attribute>
           <column>
            <property name="text">
@@ -971,7 +989,7 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>1161</width>
+     <width>1261</width>
      <height>51</height>
     </rect>
    </property>
