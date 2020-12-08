@@ -75,7 +75,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="pg_personal">
     <widget class="QWidget" name="layoutWidget">
@@ -640,12 +640,12 @@
     </widget>
    </widget>
    <widget class="QWidget" name="pg_score">
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>30</x>
        <y>0</y>
-       <width>898</width>
+       <width>911</width>
        <height>541</height>
       </rect>
      </property>
@@ -762,7 +762,7 @@
         <item>
          <widget class="QTableWidget" name="score_table">
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>200</number>
+           <number>180</number>
           </attribute>
           <column>
            <property name="text">
@@ -811,6 +811,19 @@
       </item>
      </layout>
     </widget>
+    <widget class="QPushButton" name="butt_submit">
+     <property name="geometry">
+      <rect>
+       <x>960</x>
+       <y>240</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>提交成绩</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="pg_level">
     <widget class="QLabel" name="label_9">
@@ -826,7 +839,7 @@
       <string/>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>30</x>
