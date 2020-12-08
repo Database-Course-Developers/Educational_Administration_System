@@ -27,7 +27,7 @@ public:
     QStringList print_daytime(QString);
     void initial_student_info();
     void initial_class(QComboBox*,int);//考试、成绩页面实现QCombobox的可选班级初始化
-    void show_butt_submit();
+    void show_butt_submit();//通过按钮的显示与否实现在一定期限内才能更改成绩
     QString fill_zero(QString, int);
 
 

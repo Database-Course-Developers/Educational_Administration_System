@@ -668,7 +668,8 @@ void teacher::show_butt_submit()
 
         QDate time2 = QDate::currentDate();
         int days = time1.daysTo(time2);
-        if(days>=0 && days<=45)
+        //在考完试的2-45天内教师可以上传更改成绩
+        if(days>=2 && days<=45)
             ui->butt_submit->setVisible(true);
         else
             ui->butt_submit->setVisible(false);
