@@ -74,14 +74,5 @@ QVector<QString> getOneItem(QString sql){
     }
     return res;
 }
-void testinsert(){
-    QSqlQuery query;
-    if(query.exec("insert into tmp values (b'100000100000')")){
-        qDebug()<<"i am ok";
-    }else{
-        QSqlError error=query.lastError().text();
-        qDebug()<<error;
-    }
-}
 
 

@@ -99,7 +99,6 @@ void admin::initbox(){
         ui->cbox_choose_cou_clr->addItem(s);
     }
     ui->cbox_choose_cou_clr->setCurrentIndex(-1);
-
 }
 //-------考务 part -------林嘉欣
 QString admin::get_exam_querysql(){
@@ -736,16 +735,16 @@ QString admin::get_choose_cou_querysql(){
     QString weektime=ui->cbox_choose_cou_weektime->currentText();
     QString clr=ui->cbox_choose_cou_clr->currentText();*/
     if(rcno.size()){
-        condition+=QString("rcno='"+rcno+"' and ");
+        condition+=QString("r.rcno='"+rcno+"' and ");
     }
     if(cno.size()){
-        condition+=QString("cno='"+cno+"' and ");
+        condition+=QString("r.cno='"+cno+"' and ");
     }
     if(tno.size()){
-        condition+=QString("tno='"+tno+"' and ");
+        condition+=QString("r.tno='"+tno+"' and ");
     }
     if(name.size()){
-        condition+=QString("name='"+name+"' and ");
+        condition+=QString("c.name='"+name+"' and ");
     }
     /*if(term.size()){
         condition+=QString("term='"+term+"' and ");
@@ -804,7 +803,7 @@ void admin::on_btn_choose_cou_query_clicked()
                         for(int j = 0; j < daytime.length(); j++)
                         {
                             if(daytime[j]=="1"){
-                                int t = i%5;
+                                int t = j%5;
                                 switch (t) {
                                 case 0: time = "(1-2)";break;
                                 case 1: time = "(3-4)";break;
@@ -866,8 +865,16 @@ void admin::on_table_choose_cou_itemChanged(QTableWidgetItem *item)
     int row=item->row();
     QString column_name=get_choose_cou_column_name(item->column());
     QString updatesql;
-    updatesql="update real_course set "+column_name+
-            "='"+item->text()+"' where rcno='"+ui->table_choose_cou->item(row,0)->text()+"'";
+    if(item->column()==5 || item->column()==6)
+    {
+        updatesql="update real_course set "+column_name+
+                "=b'"+item->text()+"' where rcno='"+ui->table_choose_cou->item(row,0)->text()+"'";
+    }
+    else
+    {
+        updatesql="update real_course set "+column_name+
+                "='"+item->text()+"' where rcno='"+ui->table_choose_cou->item(row,0)->text()+"'";
+    }
     QSqlQuery query;
     if(query.exec(updatesql)){
         QMessageBox::information(nullptr,"修改成功","修改成功！");
@@ -875,13 +882,10 @@ void admin::on_table_choose_cou_itemChanged(QTableWidgetItem *item)
     else{
         connectErrorMsg=query.lastError().text();
         if(connectErrorMsg.contains("foreign key constraint",Qt::CaseSensitive)){
-            QMessageBox::information(nullptr,"修改错误","输入的学院号不存在，请重新输入！");
+            QMessageBox::information(nullptr,"修改错误","输入的课室号不存在，请重新输入！");
         }
-        else if(connectErrorMsg.contains("too long for column 'required'",Qt::CaseSensitive)){
-            QMessageBox::information(nullptr,"修改错误","请输入“必修”或“选修”，请重新输入！");
-        }
-        else if(connectErrorMsg.contains("too long for column 'is_exam'",Qt::CaseSensitive)){
-            QMessageBox::information(nullptr,"修改错误","请输入“是”或“否”，请重新输入！");
+        else if(connectErrorMsg.contains("too long for column" ,Qt::CaseSensitive)){
+            QMessageBox::information(nullptr,"数据库插入错误","输入的位数过长，请重新输入！");
         }
         else{
             QMessageBox::information(nullptr,"修改错误","修改错误！错误信息："+connectErrorMsg);
@@ -906,41 +910,8 @@ void admin::on_btn_choose_cou_add_clicked()
         QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
     }
     else{
-         /*long long int result_daytime = 0;
-         int result_weektime = 0;
-         for (int i = 0; i < 35; i++)
-         {
-             result_daytime <<= 1;
-             if (daytime[i] == '1')
-             {
-                 result_daytime |= 1;
-             }
-         }
-         for (int j = 0; j < 20; j++)
-         {
-             result_weektime <<= 1;
-             if (weektime[j] == '1')
-             {
-                 result_weektime |= 1;
-             }
-         }
-        char result_daytime = 0;
-        char result_weektime = 0;
-        for(int i = 0;i < 35; i++)
-        {
-            if(daytime[i] == '1')
-            {
-                result_daytime |= (1 << i);
-            }
-        }
-        for(int i = 0;i < 20; i++)
-        {
-            if(weektime[i] == '1')
-            {
-                result_weektime |= (1 << i);
-            }
-        }*/
-        QString sql="insert into real_course value ('"+rcno+"','"+cno+"','"+tno+"','"+term+"', 'daytime', 'weektime','"+clr+"')";
+
+        QString sql="insert into real_course value ('"+rcno+"','"+cno+"','"+tno+"','"+term+"', b'"+daytime+"', b'"+weektime+"','"+clr+"')";
         QSqlQuery query;
         if(query.exec(sql)){
             ui->ld_choose_cou_rcno1->setText(""); //清空输入框
