@@ -99,6 +99,7 @@ void admin::initbox(){
         ui->cbox_choose_cou_clr->addItem(s);
     }
     ui->cbox_choose_cou_clr->setCurrentIndex(-1);
+
 }
 //-------考务 part -------林嘉欣
 QString admin::get_exam_querysql(){
@@ -114,7 +115,7 @@ QString admin::get_exam_querysql(){
     QString begin_time=ui->dt_begin_time->dateTime().toString("yyyy-MM-dd hh:mm:ss");
     QString end_time=ui->dt_end_time->dateTime().toString("yyyy-MM-dd hh:mm:ss");
     if(rcno.size()){
-        condition+=(QString("rcnno='"+rcno+"' and " ));
+        condition+=(QString("rcno='"+rcno+"' and " ));
     }
     if(cno.size()){
         condition+=(QString("cno='"+cno+"' and " ));
@@ -132,7 +133,7 @@ QString admin::get_exam_querysql(){
         condition+=(QString("clr='"+clr+"' and " ));
     }
     if(collegename.size()){
-        condition+=(QString("collegename='"+tno2+"' and " ));
+        condition+=(QString("collegename='"+collegename+"' and " ));
     }
     if(begin_time.size()){
         condition+=(QString("begin_time>='"+begin_time+"' and " ));
@@ -265,6 +266,8 @@ void admin::on_btn_exam_clear_clicked()
     ui->ld_exam_tno->setText("");
     ui->ld_exam_tno1->setText("");
     ui->ld_exam_tno2->setText("");
+    ui->cbox_exam_clr->setCurrentIndex(-1);
+    ui->cbox_exam_collegename->setCurrentIndex(-1);
 
 }
 void admin::on_table_exam_itemChanged(QTableWidgetItem *item)
