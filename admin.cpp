@@ -1188,13 +1188,16 @@ void admin::on_btn_tea_add_clicked()
     QString pos=ui->cbox_tea_pos->currentText();
     QString tel=ui->ld_tea_tel->text();
     QString clg=ui->ld_tea_clg->text();
-    if(tno.size()==0||tname.size()==0||sex.size()==0||birth_y.size()==0||birth_m.size()==0||
-            birth_d.size()==0||pos.size()==0||tel.size()==0||clg.size()==0){
+    if(tno.size()==0||tname.size()==0||sex.size()==0||
+            birth_y.size()==0||birth_m.size()==0||birth_d.size()==0||
+            pos.size()==0||tel.size()==0||clg.size()==0){
         QMessageBox::information(nullptr,"错误","添加的信息未填写完全");
     }
     else{
-        QString sql="insert into teacher value ('"+tno+"','"+tname+"','"+sex+"','123456','"+birth_y+"-"+
-                birth_m+"-"+birth_d+"','"+pos+"','"+tel+"','"+clg+"')";
+        QString sql="insert into teacher value ('"+tno+
+                "','"+tname+"','"+sex+"','123456','"+
+                birth_y+"-"+birth_m+"-"+birth_d+"','"+
+                pos+"','"+tel+"','"+clg+"')";
         QSqlQuery query;
         if(query.exec(sql)){
             ui->ld_tea_no->setText(""); //清空输入框
@@ -1252,7 +1255,8 @@ void admin::on_btn_tea_delete_clicked()
         confirmbox->exec();//使函数“暂停”，等待用户点击按钮
 
         if(confirmbox->clickedButton()==okbtn){//点击确认按钮
-            QString sql="delete from teacher where TNO='"+ui->table_tea->item(row,0)->text()+"';";
+            QString sql="delete from teacher where TNO='"+
+                    ui->table_tea->item(row,0)->text()+"';";
             QSqlQuery query;
             if(query.exec(sql)){
                 ui->table_tea->removeRow(row);
@@ -1260,7 +1264,12 @@ void admin::on_btn_tea_delete_clicked()
             }
             else{
                 connectErrorMsg=query.lastError().text();
-                QMessageBox::information(nullptr,"数据库删除错误","数据库删除错误，错误信息"+connectErrorMsg);
+                if(connectErrorMsg.contains("real_course",Qt::CaseSensitive)){
+                    QMessageBox::information(nullptr,"数据库删除错误","该教师当前有课程教学任务，请先为该课程重新安排教师，再进行删除！");
+                }
+                else{
+                    QMessageBox::information(nullptr,"数据库删除错误","数据库删除错误，错误信息"+connectErrorMsg);
+                }
             }
         }
     }
